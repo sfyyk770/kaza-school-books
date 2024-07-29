@@ -1,0 +1,247 @@
+<html><head><base href="https://learnhebrew.letters/%20remove%20the%20need%20for%20submit%20button%20after%20each%20answer%20and%20just%20continue%20to%20next%20question">
+<meta charset="UTF-8">
+<title>משחק אותיות עברית לילדים קטנים</title>
+<style>
+  body {
+    font-family: 'Arial Hebrew', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #E6F3FF;
+    direction: rtl;
+  }
+  #game-container {
+    text-align: center;
+    background-color: #FFFDEB;
+    padding: 2rem;
+    border-radius: 30px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.1);
+    max-width: 90%;
+    width: 600px;
+  }
+  #letter-display {
+    font-size: 15rem;
+    margin-bottom: 1rem;
+    color: #FF9933;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+  }
+  #options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  button {
+    font-size: 2.5rem;
+    padding: 1.5rem;
+    border: none;
+    background-color: #66CC99;
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.3s;
+    box-shadow: 0 6px 0 #4CAF50;
+  }
+  button:hover {
+    background-color: #4CAF50;
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #45a049;
+  }
+  button:active {
+    transform: translateY(6px);
+    box-shadow: none;
+  }
+  #result {
+    margin-top: 1.5rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+    min-height: 3.5rem;
+  }
+  #score {
+    margin-top: 1.5rem;
+    font-size: 2rem;
+  }
+  h1 {
+    color: #FF6B6B;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+  .hidden {
+    display: none;
+  }
+  #celebration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1000;
+  }
+  #celebration-content {
+    font-size: 5rem;
+    color: white;
+    text-align: center;
+  }
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #f0f;
+    animation: fall 5s linear infinite;
+  }
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(720deg);
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="game-container">
+    <h1>בואו נלמד אותיות!</h1>
+    <div id="letter-display"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+    <div id="score">כוכבים: ⭐⭐⭐⭐⭐</div>
+  </div>
+
+  <div id="celebration">
+    <div id="celebration-content">
+      כל הכבוד! 🎉<br>
+      סיימת את המשחק!
+    </div>
+  </div>
+
+  <audio id="success-sound" src="https://learnhebrew.letters/sounds/success.mp3"></audio>
+  <audio id="error-sound" src="https://learnhebrew.letters/sounds/error.mp3"></audio>
+  <audio id="celebration-sound" src="https://learnhebrew.letters/sounds/celebration.mp3"></audio>
+
+  <script>
+    const hebrewAlphabet = [
+      { letter: 'א', name: 'אלף', word: 'אבא', image: '👨' },
+      { letter: 'ב', name: 'בית', word: 'בלון', image: '🎈' },
+      { letter: 'ג', name: 'גימל', word: 'גזר', image: '🥕' },
+      { letter: 'ד', name: 'דלת', word: 'דב', image: '🐻' },
+      { letter: 'ה', name: 'הא', word: 'הר', image: '⛰️' },
+      { letter: 'ו', name: 'וו', word: 'ורד', image: '🌹' },
+      { letter: 'ז', name: 'זין', word: 'זברה', image: '🦓' },
+      { letter: 'ח', name: 'חית', word: 'חתול', image: '🐱' },
+      { letter: 'ט', name: 'טית', word: 'טלה', image: '🐑' },
+      { letter: 'י', name: 'יוד', word: 'יד', image: '👋' }
+    ];
+
+    let currentLetter;
+    let score = 5;
+    let successfulAnswers = 0;
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function newRound() {
+      const letterDisplay = document.getElementById('letter-display');
+      const options = document.getElementById('options');
+      const result = document.getElementById('result');
+
+      result.textContent = '';
+      options.innerHTML = '';
+
+      currentLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
+      letterDisplay.textContent = currentLetter.letter;
+
+      let answerOptions = [currentLetter];
+      while (answerOptions.length < 2) {
+        const randomLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
+        if (!answerOptions.includes(randomLetter)) {
+          answerOptions.push(randomLetter);
+        }
+      }
+
+      shuffleArray(answerOptions);
+
+      answerOptions.forEach(option => {
+        const button = document.createElement('button');
+        button.textContent = `${option.word} ${option.image}`;
+        button.onclick = () => checkAnswer(option);
+        options.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selectedAnswer) {
+      const result = document.getElementById('result');
+      const scoreDisplay = document.getElementById('score');
+      const options = document.getElementById('options');
+      const successSound = document.getElementById('success-sound');
+      const errorSound = document.getElementById('error-sound');
+
+      options.querySelectorAll('button').forEach(button => {
+        button.disabled = true;
+      });
+
+      if (selectedAnswer === currentLetter) {
+        result.textContent = 'נכון מאוד! 🎉';
+        result.style.color = 'green';
+        if (score < 5) score++;
+        successfulAnswers++;
+        successSound.play();
+      } else {
+        result.textContent = `לא נורא, זו האות ${currentLetter.name}.`;
+        result.style.color = 'red';
+        if (score > 0) score--;
+        successfulAnswers = 0;
+        errorSound.play();
+      }
+
+      scoreDisplay.textContent = 'כוכבים: ' + '⭐'.repeat(score);
+
+      if (successfulAnswers === 10 && score >= 4) {
+        celebrate();
+      } else {
+        setTimeout(() => {
+          newRound();
+        }, 2000);
+      }
+    }
+
+    function celebrate() {
+      const celebration = document.getElementById('celebration');
+      const celebrationSound = document.getElementById('celebration-sound');
+      celebration.style.display = 'flex';
+      celebrationSound.play();
+
+      for (let i = 0; i < 100; i++) {
+        createConfetti();
+      }
+
+      setTimeout(() => {
+        celebration.style.display = 'none';
+        successfulAnswers = 0;
+        newRound();
+      }, 5000);
+    }
+
+    function createConfetti() {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      document.body.appendChild(confetti);
+
+      setTimeout(() => {
+        confetti.remove();
+      }, 5000);
+    }
+
+    newRound();
+  </script>
+</body>
+</html>
