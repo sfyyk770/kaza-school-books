@@ -1,4 +1,4 @@
-<html><head><base href="https://learnhebrew.letters/%20add%201/10%20etc.%20on%20each%20question%20displayed">
+<html><head><base href="https://learnhebrew.letters/%20make%20the%20main%20game%20card%20with%20min-width%20wider">
 <meta charset="UTF-8">
 <title>משחק אותיות עברית לילדים קטנים</title>
 <style>
@@ -20,6 +20,7 @@
     box-shadow: 0 0 30px rgba(0,0,0,0.1);
     max-width: 90%;
     width: auto;
+    min-width: 600px; /* Increased min-width */
     min-height: 600px;
     display: flex;
     flex-direction: column;
@@ -214,10 +215,8 @@
       const loaderContainer = document.getElementById('loader-container');
       const questionCounter = document.getElementById('question-counter');
 
-      // Update question counter
       questionCounter.textContent = `${questionNumber}/10`;
 
-      // Show loader while preparing the new question
       loaderContainer.style.display = 'flex';
       letterDisplay.textContent = '';
       options.innerHTML = '';
@@ -244,9 +243,8 @@
           options.appendChild(button);
         });
 
-        // Hide loader after question is ready
         loaderContainer.style.display = 'none';
-      }, 1000); // Simulating loading time
+      }, 1000);
     }
 
     function checkAnswer(selectedAnswer) {
