@@ -21,14 +21,14 @@
     max-width: 90%;
     width: auto;
     min-width: 800px;
-    min-height: 600px;
+    min-height: 700px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
   }
   #letter-display {
-    font-size: 20rem;
+    font-size: 18rem;
     margin-bottom: 1rem;
     color: #FF9933;
     text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
@@ -44,7 +44,7 @@
   }
   button {
     font-size: 2.5rem;
-    padding: 2.5rem;
+    padding: 2rem;
     border: none;
     background-color: #66CC99;
     color: white;
@@ -72,18 +72,18 @@
   }
   #result {
     margin-top: 1.5rem;
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-weight: bold;
-    min-height: 3.5rem;
+    min-height: 2rem;
   }
   #score {
     margin-top: 1.5rem;
-    font-size: 4rem;
+    font-size: 3rem;
   }
   h1 {
     color: #FF6B6B;
     font-size: 4rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   .hidden {
     display: none;
@@ -186,9 +186,9 @@
     </div>
   </div>
 
-  <audio id="success-sound" src="/sounds/success.mp3"></audio>
-  <audio id="error-sound" src="/sounds/error.mp3"></audio>
-  <audio id="celebration-sound" src="/sounds/celebration.mp3"></audio>
+  <audio id="success-sound" src="sounds/success.mp3"></audio>
+  <audio id="error-sound" src="sounds/error.mp3"></audio>
+  <audio id="celebration-sound" src="sounds/celebration.mp3"></audio>
 
   <script>
     const hebrewAlphabet = [
@@ -298,7 +298,12 @@
         result.style.color = 'green';
         if (score < 5) score++;
         successfulAnswers++;
+        try {
         successSound.play();
+      } catch (error) {
+        console.error("Error playing sound:", error);
+      }
+
       } else {
         result.textContent = `אופס, זו האות ${currentLetter.name}.`;
         result.style.color = 'red';
