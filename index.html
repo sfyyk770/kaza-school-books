@@ -1,0 +1,843 @@
+<html><head><base href="https://www.booksforkids.com/%20fix%20button%20position%20to%20be%20in%20centerd%20in%20books%20when%20in%20list%20mode">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SchoolBookExpress: Your One-Stop Shop for School Books</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #6c5ce7;
+    --secondary-color: #00b894;
+    --accent-color: #fdcb6e;
+    --background-color: #f8f9fa;
+    --text-color: #2d3436;
+    --white: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+    --remove-color: #e74c3c;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.8;
+    color: var(--text-color);
+    background-color: var(--background-color);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  header {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 20px 0;
+    box-shadow: var(--shadow);
+  }
+
+  .logo {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo i {
+    margin-right: 15px;
+  }
+
+  nav ul {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+  }
+
+  nav li {
+    margin-left: 30px;
+  }
+
+  nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 400;
+    transition: var(--transition);
+    font-size: 1.1rem;
+  }
+
+  nav a:hover {
+    color: var(--accent-color);
+  }
+
+  h1, h2, h3 {
+    margin-bottom: 25px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-top: 20px;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+  }
+
+  .btn {
+    display: inline-block;
+    background: var(--secondary-color);
+    color: var(--white);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    text-align: center;
+    margin: 15px 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .btn:hover {
+    background: #00a38d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-remove {
+    background: var(--remove-color);
+  }
+
+  .btn-remove:hover {
+    background: #c0392b;
+  }
+
+  #add-child-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--white);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    width: 90%;
+    max-width: 500px;
+  }
+
+  #add-child-form .close-form {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: var(--transition);
+  }
+
+  #add-child-form .close-form:hover {
+    color: var(--remove-color);
+  }
+
+  #add-child-form .btn-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  #add-child-form input,
+  #add-child-form select {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #dfe6e9;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    transition: var(--transition);
+    font-size: 1rem;
+  }
+
+  #add-child-form input:focus,
+  #add-child-form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+  }
+
+  .child-info {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+  }
+
+  .child-info:hover {
+    transform: translateY(-5px);
+  }
+
+  .child-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #f1f3f5;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .child-details {
+    flex: 1;
+  }
+
+  .child-details h3 {
+    margin-bottom: 10px;
+    color: var(--primary-color);
+  }
+
+  .child-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .child-info-icon {
+    margin-right: 10px;
+    color: var(--secondary-color);
+  }
+
+  .book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+  .book-list.list-mode {
+    display: block;
+  }
+
+  .book {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .book-list.list-mode .book {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    text-align: left;
+  }
+
+  .book:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .book-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+
+  .book-list.list-mode .book-image {
+    width: 100px;
+    height: 150px;
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+
+  .book h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .book-list.list-mode .book-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .book-list.list-mode .add-to-cart {
+    margin-left: 20px;
+  }
+
+  #cart {
+    display: none;
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    width: 350px;
+    transition: var(--transition);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  #cart:hover {
+    transform: translateY(-5px);
+  }
+
+  #cart-items {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+
+  #cart-items > li {
+    border-bottom: 1px solid #ecf0f1;
+    padding: 15px 0;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  #cart-items > li:hover {
+    background-color: #f1f2f6;
+  }
+
+  .cart-child-items {
+    display: none;
+    list-style: none;
+    padding: 15px 0 15px 20px;
+    margin-top: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+  }
+
+  .cart-child-items.active {
+    display: block;
+  }
+
+  .cart-child-items li {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed #dfe6e9;
+  }
+
+  .cart-child-items li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 1200px) {
+    .book-list {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+  }
+
+  @media (max-width: 992px) {
+    .book-list {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .book-list {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    #cart {
+      position: static;
+      margin-top: 40px;
+      width: 100%;
+      max-height: none;
+    }
+
+    .child-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .child-actions {
+      margin-top: 20px;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .book-list {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+  }
+
+  .empty-state i {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+  }
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--text-color);
+    color: var(--white);
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.9rem;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .load-books {
+    margin-top: 20px;
+  }
+
+  .add-to-cart {
+    margin-top: auto;
+  }
+
+  #checkout {
+    margin-top: 25px;
+    width: 100%;
+  }
+
+  .view-toggle {
+    display: none;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+
+  .view-toggle.active {
+    display: flex;
+  }
+
+  .view-toggle button {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .view-toggle button:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+
+  .view-toggle button:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+
+  .view-toggle button.active {
+    background: var(--secondary-color);
+  }
+
+  .cart-child-total {
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+  }
+
+  .cart-child-total::after {
+    content: '\f107';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    transition: transform 0.3s ease;
+    margin-left: 10px;
+  }
+
+  .cart-child-total.active::after {
+    transform: rotate(180deg);
+  }
+
+  .cart-child-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+  }
+
+  .child-books {
+    display: none;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  .child-books.active {
+    display: block;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="logo"><i class="fas fa-book-open"></i> SchoolBookExpress</a>
+      <nav>
+        <ul>
+          <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="/booklists"><i class="fas fa-list"></i> Book Lists</a></li>
+          <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+          <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Welcome to SchoolBookExpress</h1>
+    <p>Easily order all the books your children need for the new school year. Add your children's information to get started!</p>
+    
+    <button id="open-add-child-form" class="btn"><i class="fas fa-plus"></i> Add a Child</button>
+    
+    <div id="add-child-form" class="fade-in">
+      <span class="close-form"><i class="fas fa-times"></i></span>
+      <h2>Add a Child</h2>
+      <input type="text" id="child-name" placeholder="Child's Name">
+      <select id="school-select">
+        <option value="">Select School</option>
+        <option value="lincoln-elementary">Lincoln Elementary</option>
+        <option value="washington-middle">Washington Middle School</option>
+        <option value="roosevelt-high">Roosevelt High School</option>
+      </select>
+      <select id="grade-select">
+        <option value="">Select Grade</option>
+        <option value="1">1st Grade</option>
+        <option value="2">2nd Grade</option>
+        <option value="3">3rd Grade</option>
+        <option value="4">4th Grade</option>
+        <option value="5">5th Grade</option>
+      </select>
+      <div class="btn-container">
+        <button id="add-child" class="btn"><i class="fas fa-plus"></i> Add Child</button>
+      </div>
+    </div>
+    
+    <div class="overlay"></div>
+    
+    <div id="children-list"></div>
+    
+    <div id="cart" class="fade-in">
+      <h3><i class="fas fa-shopping-cart"></i> Shopping Cart</h3>
+      <ul id="cart-items"></ul>
+      <p>Total: $<span id="cart-total">0</span></p>
+      <button id="checkout" class="btn"><i class="fas fa-cash-register"></i> Checkout</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      let children = [];
+      let cart = [];
+      
+      const defaultBookImage = "https://via.placeholder.com/200x300.png?text=Book+Cover";
+      
+      const booksByGrade = {
+        '1': [
+          {id: 101, title: "First Grade Math", price: 19.99, image: defaultBookImage},
+          {id: 102, title: "Learn to Read: Level 1", price: 14.99, image: defaultBookImage},
+          {id: 103, title: "Science for Beginners", price: 24.99, image: defaultBookImage},
+          {id: 104, title: "My First Art Book", price: 12.99, image: defaultBookImage},
+          {id: 105, title: "Early Social Studies", price: 22.99, image: defaultBookImage}
+        ],
+        '2': [
+          {id: 201, title: "Second Grade Math", price: 22.99, image: defaultBookImage},
+          {id: 202, title: "Reading Comprehension: Grade 2", price: 17.99, image: defaultBookImage},
+          {id: 203, title: "Our Planet Earth", price: 26.99, image: defaultBookImage},
+          {id: 204, title: "Art and Crafts: Level 2", price: 15.99, image: defaultBookImage},
+          {id: 205, title: "American History for Kids", price: 23.99, image: defaultBookImage}
+        ],
+        '3': [
+          {id: 301, title: "Third Grade Math", price: 24.99, image: defaultBookImage},
+          {id: 302, title: "Advanced Reading: Grade 3", price: 19.99, image: defaultBookImage},
+          {id: 303, title: "Exploring Nature", price: 28.99, image: defaultBookImage},
+          {id: 304, title: "Music Fundamentals", price: 18.99, image: defaultBookImage},
+          {id: 305, title: "World Cultures for Children", price: 25.99, image: defaultBookImage}
+        ],
+        '4': [
+          {id: 401, title: "Fourth Grade Math", price: 26.99, image: defaultBookImage},
+          {id: 402, title: "Literature Studies: Grade 4", price: 21.99, image: defaultBookImage},
+          {id: 403, title: "Human Body Systems", price: 29.99, image: defaultBookImage},
+          {id: 404, title: "Introduction to Coding", price: 27.99, image: defaultBookImage},
+          {id: 405, title: "Geography for Kids", price: 24.99, image: defaultBookImage}
+        ],
+        '5': [
+          {id: 501, title: "Fifth Grade Math", price: 28.99, image: defaultBookImage},
+          {id: 502, title: "Advanced Literature: Grade 5", price: 23.99, image: defaultBookImage},
+          {id: 503, title: "Earth and Space Science", price: 31.99, image: defaultBookImage},
+          {id: 504, title: "Creative Writing Workshop", price: 20.99, image: defaultBookImage},
+          {id: 505, title: "World History: Ancient Civilizations", price: 27.99, image: defaultBookImage}
+        ]
+      };
+      
+      $('#open-add-child-form').click(function() {
+        $('#add-child-form, .overlay').fadeIn();
+      });
+      
+      $('.close-form, .overlay').click(function() {
+        $('#add-child-form, .overlay').fadeOut();
+      });
+      
+      $('#add-child').click(function() {
+        const name = $('#child-name').val();
+        const school = $('#school-select').val();
+        const grade = $('#grade-select').val();
+        
+        if (name && school && grade) {
+          children.push({name, school, grade});
+          updateChildrenList();
+          $('#child-name').val('');
+          $('#school-select').val('');
+          $('#grade-select').val('');
+          $('#add-child-form, .overlay').fadeOut();
+        } else {
+          alert('Please fill in all fields for the child.');
+        }
+      });
+      
+      function updateChildrenList() {
+        let childrenHTML = '';
+        if (children.length === 0) {
+          childrenHTML = `
+            <div class="empty-state fade-in">
+              <i class="fas fa-child"></i>
+              <h3>No Children Added Yet</h3>
+              <p>Add a child to get started!</p>
+            </div>
+          `;
+        } else {
+          children.forEach((child, index) => {
+            childrenHTML += `
+              <div class="child-info fade-in">
+                <div class="child-header">
+                  <div class="child-details">
+                    <h3>${child.name}</h3>
+                    <p><i class="fas fa-school child-info-icon"></i> School: ${child.school}</p>
+                    <p><i class="fas fa-graduation-cap child-info-icon"></i> Grade: ${child.grade}</p>
+                  </div>
+                  <div class="child-actions">
+                    <button class="btn toggle-books" data-index="${index}"><i class="fas fa-book"></i> Load Books</button>
+                    <div class="view-toggle">
+                      <button class="grid-view active"><i class="fas fa-th"></i> Grid</button>
+                      <button class="list-view"><i class="fas fa-list"></i> List</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="child-books" id="child-books-${index}"></div>
+              </div>
+            `;
+          });
+        }
+        $('#children-list').html(childrenHTML);
+      }
+      
+      $(document).on('click', '.toggle-books', function() {
+        const childIndex = $(this).data('index');
+        const $childBooks = $(`#child-books-${childIndex}`);
+        const $button = $(this);
+        
+        if ($childBooks.hasClass('active')) {
+          $childBooks.removeClass('active');
+          $button.html('<i class="fas fa-book"></i> Load Books');
+        } else {
+          const child = children[childIndex];
+          const books = booksByGrade[child.grade];
+          
+          let bookHTML = '<div class="book-list">';
+          books.forEach(book => {
+            const isInCart = cart.some(item => item.id === book.id && item.child === child.name);
+            bookHTML += `
+              <div class="book fade-in">
+                <img src="${book.image}" alt="${book.title}" class="book-image">
+                <div class="book-info">
+                  <h3>${book.title}</h3>
+                  <p>$${book.price}</p>
+                </div>
+                <button class="btn ${isInCart ? 'btn-remove' : ''} add-to-cart" data-id="${book.id}" data-title="${book.title}" data-price="${book.price}" data-child="${child.name}">
+                  <i class="fas ${isInCart ? 'fa-trash-alt' : 'fa-cart-plus'}"></i> ${isInCart ? 'Remove' : 'Add to Cart'}
+                </button>
+              </div>
+            `;
+          });
+          bookHTML += '</div>';
+          
+          $childBooks.html(bookHTML).addClass('active');
+          $button.html('<i class="fas fa-book"></i> Hide Books');
+        }
+        
+        $(this).closest('.child-info').find('.view-toggle').toggleClass('active');
+      });
+      
+      $(document).on('click', '.add-to-cart', function() {
+        const book = {
+          id: $(this).data('id'),
+          title: $(this).data('title'),
+          price: $(this).data('price'),
+          child: $(this).data('child')
+        };
+        
+        const existingBookIndex = cart.findIndex(item => item.id === book.id && item.child === book.child);
+        
+        if (existingBookIndex === -1) {
+          cart.push(book);
+          $(this).addClass('btn-remove');
+          $(this).html('<i class="fas fa-trash-alt"></i> Remove');
+        } else {
+          cart.splice(existingBookIndex, 1);
+          $(this).removeClass('btn-remove');
+          $(this).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+        }
+        
+        updateCart();
+      });
+      
+      function updateCart() {
+        let cartHTML = '';
+        let total = 0;
+        
+        if (cart.length === 0) {
+          $('#cart').hide();
+        } else {
+          $('#cart').show();
+          const childTotals = {};
+          cart.forEach(item => {
+            if (!childTotals[item.child]) {
+              childTotals[item.child] = 0;
+            }
+            childTotals[item.child] += parseFloat(item.price);
+            total += parseFloat(item.price);
+          });
+          
+          Object.keys(childTotals).forEach(child => {
+            cartHTML += `
+              <li class="cart-child-total">
+                ${child}'s Books - $${childTotals[child].toFixed(2)}
+                <ul class="cart-child-items">
+                  ${cart.filter(item => item.child === child).map(item => `
+                    <li>${item.title} - $${parseFloat(item.price).toFixed(2)}</li>
+                  `).join('')}
+                </ul>
+              </li>
+            `;
+          });
+        }
+        
+        $('#cart-items').html(cartHTML);
+        $('#cart-total').text(total.toFixed(2));
+      }
+      
+      $(document).on('click', '.cart-child-total', function() {
+        $(this).toggleClass('active');
+        $(this).find('.cart-child-items').toggleClass('active');
+      });
+      
+      $('#checkout').click(function() {
+        if (cart.length > 0) {
+          alert('Thank you for your order! Total: $' + $('#cart-total').text());
+          cart = [];
+          updateCart();
+          $('.add-to-cart').removeClass('btn-remove').html('<i class="fas fa-cart-plus"></i> Add to Cart');
+        } else {
+          alert('Your cart is empty. Please add some books before checking out.');
+        }
+      });
+      
+      $(document).on('click', '.grid-view', function() {
+        $(this).addClass('active');
+        $(this).siblings('.list-view').removeClass('active');
+        $(this).closest('.child-info').find('.book-list').removeClass('list-mode');
+      });
+      
+      $(document).on('click', '.list-view', function() {
+        $(this).addClass('active');
+        $(this).siblings('.grid-view').removeClass('active');
+        $(this).closest('.child-info').find('.book-list').addClass('list-mode');
+      });
+      
+      // Initialize the children list
+      updateChildrenList();
+      // Initialize the cart
+      updateCart();
+    });
+  </script>
+</body>
+</html>
