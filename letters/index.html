@@ -1,6 +1,6 @@
-<html><head><base href="https://learnhebrew.letters/%20make%20the%20main%20game%20card%20with%20min-width%20wider">
+<html><head><base href="https://learnhebrew.letters/%20make%20the%20entire%20game%20in%20Hebrew%20except%20for%20the%20answer%20button%20text%20witch%20should%20stay%20in%20english">
 <meta charset="UTF-8">
-<title>משחק אותיות עברית לילדים קטנים</title>
+<title>משחק אותיות עברית לידלדים</title>
 <style>
   body {
     font-family: 'Arial Hebrew', Arial, sans-serif;
@@ -20,7 +20,7 @@
     box-shadow: 0 0 30px rgba(0,0,0,0.1);
     max-width: 90%;
     width: auto;
-    min-width: 600px; /* Increased min-width */
+    min-width: 600px;
     min-height: 600px;
     display: flex;
     flex-direction: column;
@@ -43,7 +43,7 @@
     gap: 1.5rem;
   }
   button {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     padding: 1.5rem;
     border: none;
     background-color: #66CC99;
@@ -52,6 +52,10 @@
     border-radius: 20px;
     transition: all 0.3s;
     box-shadow: 0 6px 0 #4CAF50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   button:hover {
     background-color: #4CAF50;
@@ -61,6 +65,10 @@
   button:active {
     transform: translateY(6px);
     box-shadow: none;
+  }
+  .button-image {
+    font-size: 5rem;
+    margin-bottom: 0.5rem;
   }
   #result {
     margin-top: 1.5rem;
@@ -159,7 +167,7 @@
 </head>
 <body>
   <div id="game-container">
-    <h1>בואו נלמד אותיות!</h1>
+    <h1>בואו נלמד אותיות עבריות!</h1>
     <div id="question-counter">1/10</div>
     <div id="letter-display"></div>
     <div id="options"></div>
@@ -184,16 +192,28 @@
 
   <script>
     const hebrewAlphabet = [
-      { letter: 'א', name: 'אלף', word: 'אבא', image: '👨' },
-      { letter: 'ב', name: 'בית', word: 'בלון', image: '🎈' },
-      { letter: 'ג', name: 'גימל', word: 'גזר', image: '🥕' },
-      { letter: 'ד', name: 'דלת', word: 'דב', image: '🐻' },
-      { letter: 'ה', name: 'הא', word: 'הר', image: '⛰️' },
-      { letter: 'ו', name: 'וו', word: 'ורד', image: '🌹' },
-      { letter: 'ז', name: 'זין', word: 'זברה', image: '🦓' },
-      { letter: 'ח', name: 'חית', word: 'חתול', image: '🐱' },
-      { letter: 'ט', name: 'טית', word: 'טלה', image: '🐑' },
-      { letter: 'י', name: 'יוד', word: 'יד', image: '👋' }
+      { letter: 'א', name: 'אלף', word: 'Father', image: '👨', sound: 'א' },
+      { letter: 'ב', name: 'בית', word: 'Balloon', image: '🎈', sound: 'ב' },
+      { letter: 'ג', name: 'גימל', word: 'Camel', image: '🐪', sound: 'ג' },
+      { letter: 'ד', name: 'דלת', word: 'Door', image: '🚪', sound: 'ד' },
+      { letter: 'ה', name: 'הא', word: 'Mountain', image: '⛰️', sound: 'ה' },
+      { letter: 'ו', name: 'וו', word: 'Rose', image: '🌹', sound: 'ו' },
+      { letter: 'ז', name: 'זין', word: 'Zebra', image: '🦓', sound: 'ז' },
+      { letter: 'ח', name: 'חית', word: 'Cat', image: '🐱', sound: 'ח' },
+      { letter: 'ט', name: 'טית', word: 'Lamb', image: '🐑', sound: 'ט' },
+      { letter: 'י', name: 'יוד', word: 'Hand', image: '👋', sound: 'י' },
+      { letter: 'כ', name: 'כף', word: 'Star', image: '⭐', sound: 'כ' },
+      { letter: 'ל', name: 'למד', word: 'Lion', image: '🦁', sound: 'ל' },
+      { letter: 'מ', name: 'מם', word: 'Water', image: '💧', sound: 'מ' },
+      { letter: 'נ', name: 'נון', word: 'Snake', image: '🐍', sound: 'נ' },
+      { letter: 'ס', name: 'סמך', word: 'Book', image: '📚', sound: 'ס' },
+      { letter: 'ע', name: 'עין', word: 'Eye', image: '👁️', sound: 'ע' },
+      { letter: 'פ', name: 'פה', word: 'Mouth', image: '👄', sound: 'פ' },
+      { letter: 'צ', name: 'צדי', word: 'Plant', image: '🌱', sound: 'צ' },
+      { letter: 'ק', name: 'קוף', word: 'Monkey', image: '🐵', sound: 'ק' },
+      { letter: 'ר', name: 'ריש', word: 'Head', image: '👤', sound: 'ר' },
+      { letter: 'ש', name: 'שין', word: 'Sun', image: '☀️', sound: 'ש' },
+      { letter: 'ת', name: 'תו', word: 'Apple', image: '🍎', sound: 'ת' }
     ];
 
     let currentLetter;
@@ -224,7 +244,21 @@
 
       setTimeout(() => {
         currentLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
-        letterDisplay.textContent = currentLetter.letter;
+        
+        // Randomly choose question type
+        const questionType = Math.floor(Math.random() * 3);
+        
+        switch(questionType) {
+          case 0:
+            letterDisplay.textContent = currentLetter.letter;
+            break;
+          case 1:
+            letterDisplay.textContent = currentLetter.letter;
+            break;
+          case 2:
+            letterDisplay.textContent = `צליל: "${currentLetter.sound}"`;
+            break;
+        }
 
         let answerOptions = [currentLetter];
         while (answerOptions.length < 2) {
@@ -238,7 +272,7 @@
 
         answerOptions.forEach(option => {
           const button = document.createElement('button');
-          button.textContent = `${option.word} ${option.image}`;
+          button.innerHTML = `<span class="button-image">${option.image}</span>${option.word}`;
           button.onclick = () => checkAnswer(option);
           options.appendChild(button);
         });
@@ -265,7 +299,7 @@
         successfulAnswers++;
         successSound.play();
       } else {
-        result.textContent = `לא נורא, זו האות ${currentLetter.name}.`;
+        result.textContent = `אופס, זו האות ${currentLetter.name}.`;
         result.style.color = 'red';
         if (score > 0) score--;
         successfulAnswers = 0;
@@ -308,7 +342,7 @@
     }
 
     function endGame() {
-      alert('המשחק נגמר! נסה שוב להשיג יותר כוכבים.');
+      alert('המשחק נגמר! נסה שוב להשיג יותר כוכבים!');
       resetGame();
     }
 
