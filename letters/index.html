@@ -1,6 +1,6 @@
 <html><head><base href="https://learnhebrew.letters/%20make%20the%20entire%20game%20in%20Hebrew%20except%20for%20the%20answer%20button%20text%20witch%20should%20stay%20in%20english">
 <meta charset="UTF-8">
-<title>משחק אותיות עברית לידלדים</title>
+<title>משחק אותיות עברית לילדים</title>
 <style>
   body {
     font-family: 'Arial Hebrew', Arial, sans-serif;
@@ -20,7 +20,7 @@
     box-shadow: 0 0 30px rgba(0,0,0,0.1);
     max-width: 90%;
     width: auto;
-    min-width: 600px;
+    min-width: 800px;
     min-height: 600px;
     display: flex;
     flex-direction: column;
@@ -28,7 +28,7 @@
     position: relative;
   }
   #letter-display {
-    font-size: 15rem;
+    font-size: 20rem;
     margin-bottom: 1rem;
     color: #FF9933;
     text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
@@ -43,8 +43,8 @@
     gap: 1.5rem;
   }
   button {
-    font-size: 1.5rem;
-    padding: 1.5rem;
+    font-size: 2.5rem;
+    padding: 2.5rem;
     border: none;
     background-color: #66CC99;
     color: white;
@@ -67,7 +67,7 @@
     box-shadow: none;
   }
   .button-image {
-    font-size: 5rem;
+    font-size: 10rem;
     margin-bottom: 0.5rem;
   }
   #result {
@@ -78,11 +78,11 @@
   }
   #score {
     margin-top: 1.5rem;
-    font-size: 2rem;
+    font-size: 4rem;
   }
   h1 {
     color: #FF6B6B;
-    font-size: 3rem;
+    font-size: 4rem;
     margin-bottom: 1.5rem;
   }
   .hidden {
@@ -246,14 +246,15 @@
         currentLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
         
         // Randomly choose question type
-        const questionType = Math.floor(Math.random() * 3);
+        // const questionType = Math.floor(Math.random() * 3);
+        const questionType = 0;
         
         switch(questionType) {
           case 0:
             letterDisplay.textContent = currentLetter.letter;
             break;
           case 1:
-            letterDisplay.textContent = currentLetter.letter;
+            letterDisplay.textContent = currentLetter.name;
             break;
           case 2:
             letterDisplay.textContent = `צליל: "${currentLetter.sound}"`;
