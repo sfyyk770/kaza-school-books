@@ -1,6 +1,7 @@
-<html><head><base href="https://learnhebrew.letters/%20flip%20the%20game%20concept%20to%20be%20same%20idea%20but%20display%20a%20picture%20on%20the%20top%20and%20button%20with%20a%20letter%20inside%20each%20one">
+<html><head>
 <meta charset="UTF-8">
 <title>משחק אותיות עברית לילדים 2</title>
+<meta name="viewport" content="width=device-width, user-scalable=no">
 <style>
   body {
     font-family: 'Arial Hebrew', Arial, sans-serif;
@@ -155,7 +156,7 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #FF6B6B;
   }
 </style>
@@ -358,7 +359,7 @@
         let answerOptions = [currentLetter];
         while (answerOptions.length < 3) {
           const randomLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
-          if (!answerOptions.includes(randomLetter)) {
+          if (!answerOptions.some(option => option.letter === randomLetter.letter)) { // Check the 'letter' property
             answerOptions.push(randomLetter);
           }
         }
