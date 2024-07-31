@@ -1,9 +1,10 @@
-<html><head><base href="https://learnhebrew.letters/%20make%20the%20entire%20game%20in%20Hebrew%20except%20for%20the%20answer%20button%20text%20witch%20should%20stay%20in%20english">
+<html><head>
 <meta charset="UTF-8">
 <title>משחק אותיות עברית לילדים</title>
+<meta name="viewport" content="width=device-width, user-scalable=no">
 <style>
   body {
-    font-family: 'Arial Hebrew', Arial, sans-serif;
+    /* font-family: 'Arial Hebrew', Arial, s ans-serif; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,13 +30,15 @@
   }
   #letter-display {
     font-size: 18rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: #FF9933;
     text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
     min-height: 240px;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: bold;
+    line-height: 1;
   }
   #options {
     display: grid;
@@ -160,7 +163,7 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    font-size: 2rem;
+    font-size: 3rem;
     color: #FF6B6B;
   }
 </style>
@@ -366,18 +369,18 @@
           case 0:
             letterDisplay.textContent = currentLetter.letter;
             break;
-          case 1:
-            letterDisplay.textContent = currentLetter.name;
-            break;
-          case 2:
-            letterDisplay.textContent = `צליל: "${currentLetter.sound}"`;
-            break;
+          // case 1:
+          //   letterDisplay.textContent = currentLetter.name;
+          //   break;
+          // case 2:
+          //   letterDisplay.textContent = `צליל: "${currentLetter.sound}"`;
+          //   break;
         }
 
         let answerOptions = [currentLetter];
         while (answerOptions.length < 2) {
           const randomLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
-          if (!answerOptions.includes(randomLetter)) {
+          if (!answerOptions.some(option => option.letter === randomLetter.letter)) { // Check the 'letter' property
             answerOptions.push(randomLetter);
           }
         }
