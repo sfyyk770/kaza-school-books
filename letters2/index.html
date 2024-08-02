@@ -213,6 +213,7 @@
     <div id="image-display"></div>
     <div id="options"></div>
     <div id="result"></div>
+    <button id="start-button">התחל!</button>
     <div id="score">כוכבים: ⭐⭐⭐⭐⭐</div>
   </div>
 
@@ -230,6 +231,7 @@
   <audio id="success-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/success.mp3"></audio>
   <audio id="error-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/error.mp3"></audio>
   <audio id="celebration-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/celebration.mp3"></audio>
+  <audio id="letter-sound"></audio>
 
   <script>
     const hebrewAlphabet = [
@@ -247,7 +249,7 @@
       { letter: 'ל', name: 'למד', word: 'Lion', image: '🦁', sound: 'ל' },
       { letter: 'מ', name: 'מם', word: 'Water', image: '💧', sound: 'מ' },
       { letter: 'נ', name: 'נון', word: 'Snake', image: '🐍', sound: 'נ' },
-      { letter: 'ס', name: 'סמך', word: 'Book', image: '📚', sound: 'ס' },
+      { letter: 'ס', name: 'סמך', word: 'Books', image: '📚', sound: 'ס' },
       { letter: 'ע', name: 'עין', word: 'Eye', image: '👁️', sound: 'ע' },
       { letter: 'פּ', name: 'פה', word: 'Mouth', image: '👄', sound: 'פּ' },
       { letter: 'צ', name: 'צדי', word: 'Plant', image: '🌱', sound: 'צ' },
@@ -256,118 +258,118 @@
       { letter: 'שׁ', name: 'שין', word: 'Sun', image: '☀️', sound: 'שׁ' },
       { letter: 'תּ', name: 'תו', word: 'Apple', image: '🍎', sound: 'תּ' },
 
-      { letter: 'א', name: 'אלף', word: 'Bus', image: '🚌', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Pineapple', image: '🍍', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Watermelon', image: '🍉', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Avocado', image: '🥑', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Box', image: '📦', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Car', image: '🚗', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Motorcycle', image: '🛵', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Bycycle', image: '🚲', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Ambulance', image: '🚑', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Cranberries', image: '🫐', sound: 'א' },
-      { letter: 'בּ', name: 'בית', word: 'Bottle', image: '🍼', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Banana', image: '🍌', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'House', image: '🏠', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Duck', image: '🦆', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Foset', image: '🚰', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Screw', image: '🔩', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Pretzels', image: '🥨', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Onion', image: '🧅', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Thunder', image: '🌩️', sound: 'בּ' },
-      { letter: 'ג', name: 'גימל', word: 'Guitar', image: '🎸', sound: 'ג' },
-      { letter: 'ג', name: 'גימל', word: 'Cheese', image: '🧀', sound: 'ג' },
-      { letter: 'ג', name: 'גימל', word: 'Ice-cream', image: '🍦', sound: 'ג' },
-      { letter: 'ג', name: 'גימל', word: 'Wheel', image: '🛞', sound: 'ג' },
-      { letter: 'ג', name: 'גימל', word: 'Carrot', image: '🥕', sound: 'ג' },
-      { letter: 'ג', name: 'גימל', word: 'Rain', image: '🌧️', sound: 'ג' },
-      { letter: 'ד', name: 'דלת', word: 'Dolphin', image: '🐬', sound: 'ד' },
-      { letter: 'ד', name: 'דלת', word: 'Fish', image: '🐠', sound: 'ד' },
-      { letter: 'ד', name: 'דלת', word: 'Flag', image: '🏳️', sound: 'ד' },
-      { letter: 'ד', name: 'דלת', word: 'Bee', image: '🐝', sound: 'ד' },
-      { letter: 'ה', name: 'הא', word: 'Helicopter', image: '🚁', sound: 'ה' },
-      // { letter: 'ו', name: 'וו', word: 'Volcano', image: '🌋', sound: 'ו' },
-      { letter: 'ו', name: 'וו', word: 'Curtain', image: '🪟', sound: 'ו' },
-      { letter: 'ז', name: 'זין', word: 'Olive', image: '🫒', sound: 'ז' },
-      { letter: 'ח', name: 'חית', word: 'Wheat', image: '🌾', sound: 'ח' },
-      { letter: 'ח', name: 'חית', word: 'Milk', image: '🥛', sound: 'ח' },
-      { letter: 'ח', name: 'חית', word: 'Eggplant', image: '🍆', sound: 'ח' },
-      { letter: 'ח', name: 'חית', word: 'Shirt', image: '👕', sound: 'ח' },
-      { letter: 'ט', name: 'טית', word: 'Telephone', image: '☎️', sound: 'ט' },
-      { letter: 'ט', name: 'טית', word: 'Peacock', image: '🦚', sound: 'ט' },
-      { letter: 'ט', name: 'טית', word: 'Tractor', image: '🚜', sound: 'ט' },
-      // { letter: 'י', name: 'יוד', word: 'Yogurt', image: '🥛', sound: 'י' },
-      // { letter: 'י', name: 'יוד', word: 'Moon', image: '🌙', sound: 'י' },
-      { letter: 'י', name: 'יוד', word: 'Dove', image: '🕊️', sound: 'י' },
-      { letter: 'י', name: 'יוד', word: 'Diamond', image: '💎', sound: 'י' },
-      { letter: 'י', name: 'יוד', word: 'Wine', image: '🍾', sound: 'י' },
-      { letter: 'כּ', name: 'כף', word: 'Spoon', image: '🥄', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Crown', image: '👑', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Ball', image: '⚽', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Glove', image: '🧤', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Cap', image: '🧢', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Violin', image: '🎻', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Fire-truck', image: '🚒', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Road', image: '🛣️', sound: 'כּ' },
-      { letter: 'ל', name: 'למד', word: 'Lemon', image: '🍋', sound: 'ל' },
-      { letter: 'ל', name: 'למד', word: 'Heart', image: '❤️', sound: 'ל' },
-      { letter: 'ל', name: 'למד', word: 'Bread', image: '🍞', sound: 'ל' },
-      { letter: 'ל', name: 'למד', word: 'Moon', image: '🌙', sound: 'ל' },
-      { letter: 'מ', name: 'מם', word: 'Bed', image: '🛏️', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Airplane', image: '✈️', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Computer', image: '💻', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Umbrella', image: '☂️', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Mirror', image: '🪞', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Cucumber', image: '🥒', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Screw-driver', image: '🪛', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Key', image: '🔑', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Glasses', image: '👓', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Truck', image: '🚚', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Police', image: '🚔', sound: 'מ' },
-      { letter: 'נ', name: 'נון', word: 'Shoe', image: '👟', sound: 'נ' },
-      { letter: 'נ', name: 'נון', word: 'Candle', image: '🕯️', sound: 'נ' },
-      { letter: 'ס', name: 'סמך', word: 'Sandwich', image: '🥪', sound: 'ס' },
-      { letter: 'ס', name: 'סמך', word: 'Horse', image: '🐴', sound: 'ס' },
-      { letter: 'ס', name: 'סמך', word: 'Boat', image: '⛵', sound: 'ס' },
-      { letter: 'ס', name: 'סמך', word: 'Soap', image: '🧴', sound: 'ס' },
-      { letter: 'ע', name: 'עין', word: 'Eagle', image: '🦅', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Pencil', image: '✏️', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Cake', image: '🍰', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Pen', image: '🖊️', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Cart', image: '🛒', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Chicken', image: '🍗', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Cookie', image: '🍪', sound: 'ע' },
-      { letter: 'פּ', name: 'פה', word: 'Penguin', image: '🐧', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Zipper', image: '🦋', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Flower', image: '🌺', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Elephant', image: '🐘', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Hammer', image: '🔨', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Pop-corn', image: '🍿', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Flashlight', image: '🔦', sound: 'פּ' },
-      // { letter: 'צ', name: 'צדי', word: 'Turtle', image: '🐢', sound: 'צ' },
-      { letter: 'צ', name: 'צדי', word: 'Bird', image: '🐦', sound: 'צ' },
-      { letter: 'ק', name: 'קוף', word: 'Kangaroo', image: '🦘', sound: 'ק' },
-      { letter: 'ק', name: 'קוף', word: 'Rainbow', image: '🌈', sound: 'ק' },
-      { letter: 'ק', name: 'קוף', word: 'Nest', image: '🪺', sound: 'ק' },
-      { letter: 'ק', name: 'קוף', word: 'Scooter', image: '🛴', sound: 'ק' },
-      { letter: 'ר', name: 'ריש', word: 'Robot', image: '🤖', sound: 'ר' },
-      { letter: 'ר', name: 'ריש', word: 'Train', image: '🚂', sound: 'ר' },
-      // { letter: 'ר', name: 'ריש', word: 'Wind', image: '🌬️', sound: 'ר' },
-      { letter: 'ר', name: 'ריש', word: 'Doctor', image: '👨‍⚕️', sound: 'ר' },
-      { letter: 'ר', name: 'ריש', word: 'Microphone', image: '🎤', sound: 'ר' },
-      { letter: 'ר', name: 'ריש', word: 'Traffic light', image: '🚦', sound: 'ר' },
-      { letter: 'שׁ', name: 'שין', word: 'Clock', image: '🕰️', sound: 'שׁ' },
-      { letter: 'שׁ', name: 'שין', word: 'Tooth', image: '🦷', sound: 'שׁ' },
-      { letter: 'שׁ', name: 'שין', word: 'Garlic', image: '🧄', sound: 'שׁ' },
-      // { letter: 'ש', name: 'שין', word: 'Shark', image: '🦈', sound: 'ש' },
-      { letter: 'תּ', name: 'תו', word: 'Strawberry', image: '🍓', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Orange', image: '🍊', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Drum', image: '🥁', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Parrot', image: '🦜', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Rooster', image: '🐓', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Corn', image: '🌽', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Backpack', image: '🎒', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Medicine', image: '💊', sound: 'תּ' }
+      // { letter: 'א', name: 'אלף', word: 'Bus', image: '🚌', sound: 'א' },
+      // { letter: 'א', name: 'אלף', word: 'Pineapple', image: '🍍', sound: 'א' },
+      // { letter: 'א', name: 'אלף', word: 'Watermelon', image: '🍉', sound: 'א' },
+      // { letter: 'א', name: 'אלף', word: 'Avocado', image: '🥑', sound: 'א' },
+      // { letter: 'א', name: 'אלף', word: 'Box', image: '📦', sound: 'א' },
+      // { letter: 'א', name: 'אלף', word: 'Car', image: '🚗', sound: 'א' },
+      // { letter: 'א', name: 'אלף', word: 'Motorcycle', image: '🛵', sound: 'א' },
+      // { letter: 'א', name: 'אלף', word: 'Bycycle', image: '🚲', sound: 'א' },
+      // { letter: 'א', name: 'אלף', word: 'Ambulance', image: '🚑', sound: 'א' },
+      // { letter: 'א', name: 'אלף', word: 'Cranberries', image: '🫐', sound: 'א' },
+      // { letter: 'בּ', name: 'בית', word: 'Bottle', image: '🍼', sound: 'בּ' },
+      // { letter: 'בּ', name: 'בית', word: 'Banana', image: '🍌', sound: 'בּ' },
+      // { letter: 'בּ', name: 'בית', word: 'House', image: '🏠', sound: 'בּ' },
+      // { letter: 'בּ', name: 'בית', word: 'Duck', image: '🦆', sound: 'בּ' },
+      // { letter: 'בּ', name: 'בית', word: 'Foset', image: '🚰', sound: 'בּ' },
+      // { letter: 'בּ', name: 'בית', word: 'Screw', image: '🔩', sound: 'בּ' },
+      // { letter: 'בּ', name: 'בית', word: 'Pretzels', image: '🥨', sound: 'בּ' },
+      // { letter: 'בּ', name: 'בית', word: 'Onion', image: '🧅', sound: 'בּ' },
+      // { letter: 'בּ', name: 'בית', word: 'Thunder', image: '🌩️', sound: 'בּ' },
+      // { letter: 'ג', name: 'גימל', word: 'Guitar', image: '🎸', sound: 'ג' },
+      // { letter: 'ג', name: 'גימל', word: 'Cheese', image: '🧀', sound: 'ג' },
+      // { letter: 'ג', name: 'גימל', word: 'Ice-cream', image: '🍦', sound: 'ג' },
+      // { letter: 'ג', name: 'גימל', word: 'Wheel', image: '🛞', sound: 'ג' },
+      // { letter: 'ג', name: 'גימל', word: 'Carrot', image: '🥕', sound: 'ג' },
+      // { letter: 'ג', name: 'גימל', word: 'Rain', image: '🌧️', sound: 'ג' },
+      // { letter: 'ד', name: 'דלת', word: 'Dolphin', image: '🐬', sound: 'ד' },
+      // { letter: 'ד', name: 'דלת', word: 'Fish', image: '🐠', sound: 'ד' },
+      // { letter: 'ד', name: 'דלת', word: 'Flag', image: '🏳️', sound: 'ד' },
+      // { letter: 'ד', name: 'דלת', word: 'Bee', image: '🐝', sound: 'ד' },
+      // { letter: 'ה', name: 'הא', word: 'Helicopter', image: '🚁', sound: 'ה' },
+      // // { letter: 'ו', name: 'וו', word: 'Volcano', image: '🌋', sound: 'ו' },
+      // { letter: 'ו', name: 'וו', word: 'Curtain', image: '🪟', sound: 'ו' },
+      // { letter: 'ז', name: 'זין', word: 'Olive', image: '🫒', sound: 'ז' },
+      // { letter: 'ח', name: 'חית', word: 'Wheat', image: '🌾', sound: 'ח' },
+      // { letter: 'ח', name: 'חית', word: 'Milk', image: '🥛', sound: 'ח' },
+      // { letter: 'ח', name: 'חית', word: 'Eggplant', image: '🍆', sound: 'ח' },
+      // { letter: 'ח', name: 'חית', word: 'Shirt', image: '👕', sound: 'ח' },
+      // { letter: 'ט', name: 'טית', word: 'Telephone', image: '☎️', sound: 'ט' },
+      // { letter: 'ט', name: 'טית', word: 'Peacock', image: '🦚', sound: 'ט' },
+      // { letter: 'ט', name: 'טית', word: 'Tractor', image: '🚜', sound: 'ט' },
+      // // { letter: 'י', name: 'יוד', word: 'Yogurt', image: '🥛', sound: 'י' },
+      // // { letter: 'י', name: 'יוד', word: 'Moon', image: '🌙', sound: 'י' },
+      // { letter: 'י', name: 'יוד', word: 'Dove', image: '🕊️', sound: 'י' },
+      // { letter: 'י', name: 'יוד', word: 'Diamond', image: '💎', sound: 'י' },
+      // { letter: 'י', name: 'יוד', word: 'Wine', image: '🍾', sound: 'י' },
+      // { letter: 'כּ', name: 'כף', word: 'Spoon', image: '🥄', sound: 'כּ' },
+      // { letter: 'כּ', name: 'כף', word: 'Crown', image: '👑', sound: 'כּ' },
+      // { letter: 'כּ', name: 'כף', word: 'Ball', image: '⚽', sound: 'כּ' },
+      // { letter: 'כּ', name: 'כף', word: 'Glove', image: '🧤', sound: 'כּ' },
+      // { letter: 'כּ', name: 'כף', word: 'Cap', image: '🧢', sound: 'כּ' },
+      // { letter: 'כּ', name: 'כף', word: 'Violin', image: '🎻', sound: 'כּ' },
+      // { letter: 'כּ', name: 'כף', word: 'Fire-truck', image: '🚒', sound: 'כּ' },
+      // { letter: 'כּ', name: 'כף', word: 'Road', image: '🛣️', sound: 'כּ' },
+      // { letter: 'ל', name: 'למד', word: 'Lemon', image: '🍋', sound: 'ל' },
+      // { letter: 'ל', name: 'למד', word: 'Heart', image: '❤️', sound: 'ל' },
+      // { letter: 'ל', name: 'למד', word: 'Bread', image: '🍞', sound: 'ל' },
+      // { letter: 'ל', name: 'למד', word: 'Moon', image: '🌙', sound: 'ל' },
+      // { letter: 'מ', name: 'מם', word: 'Bed', image: '🛏️', sound: 'מ' },
+      // { letter: 'מ', name: 'מם', word: 'Airplane', image: '✈️', sound: 'מ' },
+      // { letter: 'מ', name: 'מם', word: 'Computer', image: '💻', sound: 'מ' },
+      // { letter: 'מ', name: 'מם', word: 'Umbrella', image: '☂️', sound: 'מ' },
+      // { letter: 'מ', name: 'מם', word: 'Mirror', image: '🪞', sound: 'מ' },
+      // { letter: 'מ', name: 'מם', word: 'Cucumber', image: '🥒', sound: 'מ' },
+      // { letter: 'מ', name: 'מם', word: 'Screw-driver', image: '🪛', sound: 'מ' },
+      // { letter: 'מ', name: 'מם', word: 'Key', image: '🔑', sound: 'מ' },
+      // { letter: 'מ', name: 'מם', word: 'Glasses', image: '👓', sound: 'מ' },
+      // { letter: 'מ', name: 'מם', word: 'Truck', image: '🚚', sound: 'מ' },
+      // { letter: 'מ', name: 'מם', word: 'Police', image: '🚔', sound: 'מ' },
+      // { letter: 'נ', name: 'נון', word: 'Shoe', image: '👟', sound: 'נ' },
+      // { letter: 'נ', name: 'נון', word: 'Candle', image: '🕯️', sound: 'נ' },
+      // { letter: 'ס', name: 'סמך', word: 'Sandwich', image: '🥪', sound: 'ס' },
+      // { letter: 'ס', name: 'סמך', word: 'Horse', image: '🐴', sound: 'ס' },
+      // { letter: 'ס', name: 'סמך', word: 'Boat', image: '⛵', sound: 'ס' },
+      // { letter: 'ס', name: 'סמך', word: 'Soap', image: '🧴', sound: 'ס' },
+      // { letter: 'ע', name: 'עין', word: 'Eagle', image: '🦅', sound: 'ע' },
+      // { letter: 'ע', name: 'עין', word: 'Pencil', image: '✏️', sound: 'ע' },
+      // { letter: 'ע', name: 'עין', word: 'Cake', image: '🍰', sound: 'ע' },
+      // { letter: 'ע', name: 'עין', word: 'Pen', image: '🖊️', sound: 'ע' },
+      // { letter: 'ע', name: 'עין', word: 'Cart', image: '🛒', sound: 'ע' },
+      // { letter: 'ע', name: 'עין', word: 'Chicken', image: '🍗', sound: 'ע' },
+      // { letter: 'ע', name: 'עין', word: 'Cookie', image: '🍪', sound: 'ע' },
+      // { letter: 'פּ', name: 'פה', word: 'Penguin', image: '🐧', sound: 'פּ' },
+      // { letter: 'פּ', name: 'פה', word: 'Zipper', image: '🦋', sound: 'פּ' },
+      // { letter: 'פּ', name: 'פה', word: 'Flower', image: '🌺', sound: 'פּ' },
+      // { letter: 'פּ', name: 'פה', word: 'Elephant', image: '🐘', sound: 'פּ' },
+      // { letter: 'פּ', name: 'פה', word: 'Hammer', image: '🔨', sound: 'פּ' },
+      // { letter: 'פּ', name: 'פה', word: 'Pop-corn', image: '🍿', sound: 'פּ' },
+      // { letter: 'פּ', name: 'פה', word: 'Flashlight', image: '🔦', sound: 'פּ' },
+      // // { letter: 'צ', name: 'צדי', word: 'Turtle', image: '🐢', sound: 'צ' },
+      // { letter: 'צ', name: 'צדי', word: 'Bird', image: '🐦', sound: 'צ' },
+      // { letter: 'ק', name: 'קוף', word: 'Kangaroo', image: '🦘', sound: 'ק' },
+      // { letter: 'ק', name: 'קוף', word: 'Rainbow', image: '🌈', sound: 'ק' },
+      // { letter: 'ק', name: 'קוף', word: 'Nest', image: '🪺', sound: 'ק' },
+      // { letter: 'ק', name: 'קוף', word: 'Scooter', image: '🛴', sound: 'ק' },
+      // { letter: 'ר', name: 'ריש', word: 'Robot', image: '🤖', sound: 'ר' },
+      // { letter: 'ר', name: 'ריש', word: 'Train', image: '🚂', sound: 'ר' },
+      // // { letter: 'ר', name: 'ריש', word: 'Wind', image: '🌬️', sound: 'ר' },
+      // { letter: 'ר', name: 'ריש', word: 'Doctor', image: '👨‍⚕️', sound: 'ר' },
+      // { letter: 'ר', name: 'ריש', word: 'Microphone', image: '🎤', sound: 'ר' },
+      // { letter: 'ר', name: 'ריש', word: 'Traffic light', image: '🚦', sound: 'ר' },
+      // { letter: 'שׁ', name: 'שין', word: 'Clock', image: '🕰️', sound: 'שׁ' },
+      // { letter: 'שׁ', name: 'שין', word: 'Tooth', image: '🦷', sound: 'שׁ' },
+      // { letter: 'שׁ', name: 'שין', word: 'Garlic', image: '🧄', sound: 'שׁ' },
+      // // { letter: 'ש', name: 'שין', word: 'Shark', image: '🦈', sound: 'ש' },
+      // { letter: 'תּ', name: 'תו', word: 'Strawberry', image: '🍓', sound: 'תּ' },
+      // { letter: 'תּ', name: 'תו', word: 'Orange', image: '🍊', sound: 'תּ' },
+      // { letter: 'תּ', name: 'תו', word: 'Drum', image: '🥁', sound: 'תּ' },
+      // { letter: 'תּ', name: 'תו', word: 'Parrot', image: '🦜', sound: 'תּ' },
+      // { letter: 'תּ', name: 'תו', word: 'Rooster', image: '🐓', sound: 'תּ' },
+      // { letter: 'תּ', name: 'תו', word: 'Corn', image: '🌽', sound: 'תּ' },
+      // { letter: 'תּ', name: 'תו', word: 'Backpack', image: '🎒', sound: 'תּ' },
+      // { letter: 'תּ', name: 'תו', word: 'Medicine', image: '💊', sound: 'תּ' }
     ];
 
     let currentLetter;
@@ -388,6 +390,7 @@
       const result = document.getElementById('result');
       const loaderContainer = document.getElementById('loader-container');
       const questionCounter = document.getElementById('question-counter');
+      const letterSound = document.getElementById('letter-sound'); // Get the audio element
 
       questionCounter.textContent = `${questionNumber}/10`;
 
@@ -419,6 +422,15 @@
         });
 
         loaderContainer.style.display = 'none';
+
+        // Load the audio file dynamically
+        letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/names/${currentLetter.word}.mp3`;
+        letterSound.addEventListener('loadeddata', () => {
+          letterSound.play(); // Play the sound only after it's loaded
+        });
+        letterSound.addEventListener('error', (event) => {
+          console.error('Audio error:', event);
+        });
       }, 1000);
     }
 
@@ -507,7 +519,10 @@
       }, 5000);
     }
 
-    newRound();
+    document.getElementById('start-button').addEventListener('click', () => {
+      newRound();
+      document.getElementById('start-button').style.display = 'none';
+    });
   </script>
 </body>
 </html>
