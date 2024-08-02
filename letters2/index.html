@@ -159,6 +159,14 @@
     font-size: 2rem;
     color: #FF6B6B;
   }
+  #repeat-button {
+    position: absolute;
+    top: 130px;
+    left: 10px;
+    font-size: 2rem;
+    color: #FF6B6B;
+    cursor: pointer;
+  }
   @media screen and (max-width: 768px) {
     #game-container {
       padding: 2rem;
@@ -210,6 +218,7 @@
   <div id="game-container">
     <h1>בואו נלמד אותיות עבריות!</h1>
     <div id="question-counter">1/10</div>
+    <button id="repeat-button" style="display: none;"><img src="https://sfyyk770.github.io/kaza-school-books/letters/icons/repeat-svgrepo-com.svg" alt="שוב"></button>
     <div id="image-display"></div>
     <div id="options"></div>
     <div id="result"></div>
@@ -237,14 +246,14 @@
     const hebrewAlphabet = [
       { letter: 'א', name: 'אלף', word: 'Father', image: '👨', sound: 'א' },
       { letter: 'בּ', name: 'בית', word: 'Balloon', image: '🎈', sound: 'בּ' },
-      // { letter: 'ג', name: 'גימל', word: 'Camel', image: '🐪', sound: 'ג' },
-      // { letter: 'ד', name: 'דלת', word: 'Door', image: '🚪', sound: 'ד' },
-      // { letter: 'ה', name: 'הא', word: 'Mountain', image: '⛰️', sound: 'ה' },
-      // { letter: 'ו', name: 'וו', word: 'Rose', image: '🌹', sound: 'ו' },
-      // { letter: 'ז', name: 'זין', word: 'Zebra', image: '🦓', sound: 'ז' },
-      // // { letter: 'ח', name: 'חית', word: 'Cat', image: '🐱', sound: 'ח' },
-      // { letter: 'ט', name: 'טית', word: 'Lamb', image: '🐑', sound: 'ט' },
-      // { letter: 'י', name: 'יוד', word: 'Hand', image: '👋', sound: 'י' },
+      { letter: 'ג', name: 'גימל', word: 'Camel', image: '🐪', sound: 'ג' },
+      { letter: 'ד', name: 'דלת', word: 'Door', image: '🚪', sound: 'ד' },
+      { letter: 'ה', name: 'הא', word: 'Mountain', image: '⛰️', sound: 'ה' },
+      { letter: 'ו', name: 'וו', word: 'Rose', image: '🌹', sound: 'ו' },
+      { letter: 'ז', name: 'זין', word: 'Zebra', image: '🦓', sound: 'ז' },
+      // { letter: 'ח', name: 'חית', word: 'Cat', image: '🐱', sound: 'ח' },
+      { letter: 'ט', name: 'טית', word: 'Lamb', image: '🐑', sound: 'ט' },
+      { letter: 'י', name: 'יוד', word: 'Hand', image: '👋', sound: 'י' },
       // { letter: 'כּ', name: 'כף', word: 'Star', image: '⭐', sound: 'כּ' },
       // { letter: 'ל', name: 'למד', word: 'Lion', image: '🦁', sound: 'ל' },
       // { letter: 'מ', name: 'מם', word: 'Water', image: '💧', sound: 'מ' },
@@ -277,32 +286,32 @@
       { letter: 'בּ', name: 'בית', word: 'Pretzels', image: '🥨', sound: 'בּ' },
       { letter: 'בּ', name: 'בית', word: 'Onion', image: '🧅', sound: 'בּ' },
       { letter: 'בּ', name: 'בית', word: 'Thunder', image: '🌩️', sound: 'בּ' },
-      // { letter: 'ג', name: 'גימל', word: 'Guitar', image: '🎸', sound: 'ג' },
-      // { letter: 'ג', name: 'גימל', word: 'Cheese', image: '🧀', sound: 'ג' },
-      // { letter: 'ג', name: 'גימל', word: 'Ice-cream', image: '🍦', sound: 'ג' },
-      // { letter: 'ג', name: 'גימל', word: 'Wheel', image: '🛞', sound: 'ג' },
-      // { letter: 'ג', name: 'גימל', word: 'Carrot', image: '🥕', sound: 'ג' },
-      // { letter: 'ג', name: 'גימל', word: 'Rain', image: '🌧️', sound: 'ג' },
-      // { letter: 'ד', name: 'דלת', word: 'Dolphin', image: '🐬', sound: 'ד' },
-      // { letter: 'ד', name: 'דלת', word: 'Fish', image: '🐠', sound: 'ד' },
-      // { letter: 'ד', name: 'דלת', word: 'Flag', image: '🏳️', sound: 'ד' },
-      // { letter: 'ד', name: 'דלת', word: 'Bee', image: '🐝', sound: 'ד' },
-        // { letter: 'ה', name: 'הא', word: 'Helicopter', image: '🚁', sound: 'ה' },
-        // // { letter: 'ו', name: 'וו', word: 'Volcano', image: '🌋', sound: 'ו' },
-        // { letter: 'ו', name: 'וו', word: 'Curtain', image: '🪟', sound: 'ו' },
-        // { letter: 'ז', name: 'זין', word: 'Olive', image: '🫒', sound: 'ז' },
-        // { letter: 'ח', name: 'חית', word: 'Wheat', image: '🌾', sound: 'ח' },
-        // { letter: 'ח', name: 'חית', word: 'Milk', image: '🥛', sound: 'ח' },
-        // { letter: 'ח', name: 'חית', word: 'Eggplant', image: '🍆', sound: 'ח' },
-        // { letter: 'ח', name: 'חית', word: 'Shirt', image: '👕', sound: 'ח' },
-        // { letter: 'ט', name: 'טית', word: 'Telephone', image: '☎️', sound: 'ט' },
-        // { letter: 'ט', name: 'טית', word: 'Peacock', image: '🦚', sound: 'ט' },
-        // { letter: 'ט', name: 'טית', word: 'Tractor', image: '🚜', sound: 'ט' },
-        // // { letter: 'י', name: 'יוד', word: 'Yogurt', image: '🥛', sound: 'י' },
-        // // { letter: 'י', name: 'יוד', word: 'Moon', image: '🌙', sound: 'י' },
-        // { letter: 'י', name: 'יוד', word: 'Dove', image: '🕊️', sound: 'י' },
-        // { letter: 'י', name: 'יוד', word: 'Diamond', image: '💎', sound: 'י' },
-        // { letter: 'י', name: 'יוד', word: 'Wine', image: '🍾', sound: 'י' },
+      { letter: 'ג', name: 'גימל', word: 'Guitar', image: '🎸', sound: 'ג' },
+      { letter: 'ג', name: 'גימל', word: 'Cheese', image: '🧀', sound: 'ג' },
+      { letter: 'ג', name: 'גימל', word: 'Ice-cream', image: '🍦', sound: 'ג' },
+      { letter: 'ג', name: 'גימל', word: 'Wheel', image: '🛞', sound: 'ג' },
+      { letter: 'ג', name: 'גימל', word: 'Carrot', image: '🥕', sound: 'ג' },
+      { letter: 'ג', name: 'גימל', word: 'Rain', image: '🌧️', sound: 'ג' },
+      { letter: 'ד', name: 'דלת', word: 'Dolphin', image: '🐬', sound: 'ד' },
+      { letter: 'ד', name: 'דלת', word: 'Fish', image: '🐠', sound: 'ד' },
+      { letter: 'ד', name: 'דלת', word: 'Flag', image: '🏳️', sound: 'ד' },
+      { letter: 'ד', name: 'דלת', word: 'Bee', image: '🐝', sound: 'ד' },
+      { letter: 'ה', name: 'הא', word: 'Helicopter', image: '🚁', sound: 'ה' },
+      // { letter: 'ו', name: 'וו', word: 'Volcano', image: '🌋', sound: 'ו' },
+      { letter: 'ו', name: 'וו', word: 'Curtain', image: '🪟', sound: 'ו' },
+      { letter: 'ז', name: 'זין', word: 'Olive', image: '🫒', sound: 'ז' },
+      { letter: 'ח', name: 'חית', word: 'Wheat', image: '🌾', sound: 'ח' },
+      { letter: 'ח', name: 'חית', word: 'Milk', image: '🥛', sound: 'ח' },
+      { letter: 'ח', name: 'חית', word: 'Eggplant', image: '🍆', sound: 'ח' },
+      { letter: 'ח', name: 'חית', word: 'Shirt', image: '👕', sound: 'ח' },
+      { letter: 'ט', name: 'טית', word: 'Telephone', image: '☎️', sound: 'ט' },
+      { letter: 'ט', name: 'טית', word: 'Peacock', image: '🦚', sound: 'ט' },
+      { letter: 'ט', name: 'טית', word: 'Tractor', image: '🚜', sound: 'ט' },
+      // { letter: 'י', name: 'יוד', word: 'Yogurt', image: '🥛', sound: 'י' },
+      // { letter: 'י', name: 'יוד', word: 'Moon', image: '🌙', sound: 'י' },
+      { letter: 'י', name: 'יוד', word: 'Dove', image: '🕊️', sound: 'י' },
+      { letter: 'י', name: 'יוד', word: 'Diamond', image: '💎', sound: 'י' },
+      { letter: 'י', name: 'יוד', word: 'Wine', image: '🍾', sound: 'י' },
       // { letter: 'כּ', name: 'כף', word: 'Spoon', image: '🥄', sound: 'כּ' },
       // { letter: 'כּ', name: 'כף', word: 'Crown', image: '👑', sound: 'כּ' },
       // { letter: 'כּ', name: 'כף', word: 'Ball', image: '⚽', sound: 'כּ' },
@@ -391,10 +400,12 @@
       const loaderContainer = document.getElementById('loader-container');
       const questionCounter = document.getElementById('question-counter');
       const letterSound = document.getElementById('letter-sound'); // Get the audio element
+      const repeatButton = document.getElementById('repeat-button'); // Repeat button
 
       questionCounter.textContent = `${questionNumber}/10`;
 
       loaderContainer.style.display = 'flex';
+      repeatButton.style.display = 'none';
       imageDisplay.textContent = '';
       options.innerHTML = '';
       result.textContent = '';
@@ -422,6 +433,7 @@
         });
 
         loaderContainer.style.display = 'none';
+        repeatButton.style.display = 'block';
 
         // Load the audio file dynamically
         letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/names/${currentLetter.word}.mp3`;
@@ -430,6 +442,10 @@
         });
         letterSound.addEventListener('error', (event) => {
           console.error('Audio error:', event);
+        });
+        document.getElementById('repeat-button').addEventListener('click', () => {
+          letterSound.currentTime = 0; // Reset to the beginning
+          letterSound.play();
         });
       }, 1000);
     }
