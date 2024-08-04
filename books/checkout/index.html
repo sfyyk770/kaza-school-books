@@ -487,6 +487,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
+      console.log(JSON.parse(localStorage.getItem('orderData')));
       const TAX_RATE = 0.08875; // 8.875%
 
       $('.payment-option').click(function() {
