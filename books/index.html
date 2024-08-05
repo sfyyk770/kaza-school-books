@@ -109,6 +109,13 @@
         ]
       };
       
+      // Load data from localStorage on page load
+      const storedData = JSON.parse(localStorage.getItem('orderData'));
+      if (storedData) {
+        children = storedData.children;
+        cart = storedData.cart;
+      }
+      
       $('#open-add-child-form').click(function() {
         $('#add-child-form, .overlay').fadeIn();
       });
@@ -168,6 +175,8 @@
           });
         }
         $('#children-list').html(childrenHTML);
+        // Update cart after children list is updated
+        updateCart();
       }
       
       $(document).on('click', '.toggle-books', function() {
