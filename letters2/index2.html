@@ -257,6 +257,7 @@
   <audio id="error-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/error.mp3"></audio>
   <audio id="celebration-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/celebration.mp3"></audio>
   <audio id="letter-sound"></audio>
+  <audio id="error-letter-sound"></audio>
 
   <script>
     const hebrewAlphabet = [
@@ -471,7 +472,7 @@
       const options = document.getElementById('options');
       const successSound = document.getElementById('success-sound');
       const errorSound = document.getElementById('error-sound');
-      const letterSound = document.getElementById('letter-sound'); // Get the audio element
+      const letterSound = document.getElementById('error-letter-sound'); // Get the audio element
 
       options.querySelectorAll('button').forEach(button => {
         button.disabled = true;

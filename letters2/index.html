@@ -1,569 +1,601 @@
 <html><head>
-<meta charset="UTF-8">
-<title>משחק אותיות עברית לילדים 2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=David+Libre:wght@400;500;700&display=swap" rel="stylesheet">
-
-<style>
-  body {
-    font-family: "David Libre", serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #E6F3FF;
-    direction: rtl;
-  }
-  div {
-    font-family: "David Libre", serif;
-  }
-  #game-container {
-    text-align: center;
-    background-color: #FFFDEB;
-    padding: 2rem;
-    border-radius: 30px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.1);
-    max-width: 90%;
-    width: auto;
-    min-width: 600px;
-    min-height: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-  }
-  #image-display {
-    font-size: 15rem;
-    margin-bottom: 1rem;
-    color: #FF9933;
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
-    min-height: 240px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  #options {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-  button {
-    font-family: "David Libre", serif;
-    font-size: 4rem;
-    padding: 1.5rem;
-    border: none;
-    background-color: #66CC99;
-    color: white;
-    cursor: pointer;
-    border-radius: 20px;
-    transition: all 0.3s;
-    box-shadow: 0 6px 0 #4CAF50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-  }
-  button:hover {
-    background-color: #4CAF50;
-    transform: translateY(3px);
-    box-shadow: 0 3px 0 #45a049;
-  }
-  button:active {
-    transform: translateY(6px);
-    box-shadow: none;
-  }
-  #result {
-    margin-top: 1.5rem;
-    font-size: 2.5rem;
-    font-weight: bold;
-    min-height: 3.5rem;
-  }
-  #score {
-    margin-top: 1.5rem;
-    font-size: 2rem;
-  }
-  h1 {
-    color: #FF6B6B;
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-  }
-  .hidden {
-    display: none;
-  }
-  #celebration {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0,0,0,0.7);
-    z-index: 1000;
-  }
-  #celebration-content {
-    font-size: 5rem;
-    color: white;
-    text-align: center;
-  }
-  .confetti {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: #f0f;
-    animation: fall 5s linear infinite;
-  }
-  @keyframes fall {
-    to {
-      transform: translateY(100vh) rotate(720deg);
+  <meta charset="UTF-8">
+  <title>משחק אותיות עברית לילדים 2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=David+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: "David Libre", serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #E6F3FF;
+      direction: rtl;
     }
-  }
-  #loader-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(230, 243, 255, 0.8);
-    z-index: 1000;
-  }
-  #loader {
-    width: 80px;
-    height: 80px;
-    position: relative;
-  }
-  #loader:before,
-  #loader:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #FF9933;
-    opacity: 0.6;
-    animation: pulse 2s ease-in-out infinite;
-  }
-  #loader:after {
-    animation-delay: -1s;
-  }
-  @keyframes pulse {
-    0%, 100% {
-      transform: scale(0);
+    div {
+      font-family: "David Libre", serif;
     }
-    50% {
-      transform: scale(1);
-    }
-  }
-  #question-counter {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 2rem;
-    color: #FF6B6B;
-  }
-  #repeat-button {
-    position: absolute;
-    top: 130px;
-    left: 10px;
-    font-size: 2rem;
-    background-color: #9df4ff;
-    cursor: pointer;
-    border-radius: 5rem;
-
-  }
-  #repeat-button img {
-    width: 60px;
-    height: 60px;
-  }
-  @media screen and (max-width: 768px) {
     #game-container {
+      text-align: center;
+      background-color: #FFFDEB;
       padding: 2rem;
+      border-radius: 30px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
       max-width: 90%;
       width: auto;
-      min-width: 365px;
+      min-width: 600px;
       min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
     }
-    #letter-display {
-      font-size: 14rem;
-      margin-bottom: 2rem;
+    #image-display {
+      font-size: 15rem;
+      margin-bottom: 1rem;
       color: #FF9933;
-      min-height: 150px;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+      min-height: 240px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    h1 {
-      color: #FF6B6B;
-      font-size: 1.5rem;
+    #options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    button {
+      font-family: "David Libre", serif;
+      font-size: 4rem;
+      padding: 1.5rem;
+      border: none;
+      background-color: #66CC99;
+      color: white;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.3s;
+      box-shadow: 0 6px 0 #4CAF50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #4CAF50;
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 #45a049;
+    }
+    button:active {
+      transform: translateY(6px);
+      box-shadow: none;
     }
     #result {
       margin-top: 1.5rem;
-      font-size: 2rem;
+      font-size: 2.5rem;
       font-weight: bold;
-      min-height: 2rem;
+      min-height: 3.5rem;
     }
     #score {
-      margin-top: 1rem;
-      font-size: 1.5rem;
-    }
-    button {
+      margin-top: 1.5rem;
       font-size: 2rem;
-      padding: 1rem;
     }
-    .button-image {
-      font-size: 6rem;
+    h1 {
+      color: #FF6B6B;
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
     }
-    #question-counter {
-      font-size: 1.5rem;
+    .hidden {
+      display: none;
     }
-    #options {
-      gap: 1rem;
+    #celebration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 1000;
     }
     #celebration-content {
-      font-size: 3rem;
+      font-size: 5rem;
+      color: white;
+      text-align: center;
     }
-  }
-</style>
-</head>
-<body>
-  <div id="game-container">
-    <h1>בואו נלמד אותיות עבריות!</h1>
-    <div id="question-counter">1/10</div>
-    <button id="repeat-button" style="display: none;"><img src="https://sfyyk770.github.io/kaza-school-books/letters/icons/repeat-svgrepo-com.svg" alt="שוב"></button>
-    <div id="image-display"></div>
-    <div id="options"></div>
-    <div id="result"></div>
-    <button id="start-button">התחל!</button>
-    <div id="score">כוכבים: ⭐⭐⭐⭐⭐</div>
-  </div>
-
-  <div id="loader-container" style="display: none;">
-    <div id="loader"></div>
-  </div>
-
-  <div id="celebration">
-    <div id="celebration-content">
-      כל הכבוד! 🎉<br>
-      סיימת את המשחק!
-      <br><span id="celebration-score" style="font-size: 2rem;"></span>
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #f0f;
+      animation: fall 5s linear infinite;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+      }
+    }
+    #loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(230, 243, 255, 0.8);
+      z-index: 1000;
+    }
+    #loader {
+      width: 80px;
+      height: 80px;
+      position: relative;
+    }
+    #loader:before,
+    #loader:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: #FF9933;
+      opacity: 0.6;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    #loader:after {
+      animation-delay: -1s;
+    }
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(1);
+      }
+    }
+    #question-counter {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 2rem;
+      color: #FF6B6B;
+    }
+    #repeat-button {
+      position: absolute;
+      top: 130px;
+      left: 10px;
+      font-size: 2rem;
+      background-color: #9df4ff;
+      cursor: pointer;
+      border-radius: 5rem;
+  
+    }
+    #repeat-button img {
+      width: 60px;
+      height: 60px;
+    }
+    @media screen and (max-width: 768px) {
+      #game-container {
+        padding: 2rem;
+        max-width: 90%;
+        width: auto;
+        min-width: 365px;
+        min-height: 600px;
+      }
+      #letter-display {
+        font-size: 14rem;
+        margin-bottom: 2rem;
+        color: #FF9933;
+        min-height: 150px;
+      }
+      h1 {
+        color: #FF6B6B;
+        font-size: 1.5rem;
+      }
+      #result {
+        margin-top: 1.5rem;
+        font-size: 2rem;
+        font-weight: bold;
+        min-height: 2rem;
+      }
+      #score {
+        margin-top: 1rem;
+        font-size: 1.5rem;
+      }
+      button {
+        font-size: 2rem;
+        padding: 1rem;
+      }
+      .button-image {
+        font-size: 6rem;
+      }
+      #question-counter {
+        font-size: 1.5rem;
+      }
+      #options {
+        gap: 1rem;
+      }
+      #celebration-content {
+        font-size: 3rem;
+      }
+    }
+  </style>
+  </head>
+  <body>
+    <div id="game-container">
+      <h1>בואו נלמד אותיות עבריות!</h1>
+      <div id="question-counter">1/10</div>
+      <button id="repeat-button" style="display: none;"><img src="https://sfyyk770.github.io/kaza-school-books/letters/icons/repeat-svgrepo-com.svg" alt="שוב"></button>
+      <div id="image-display"></div>
+      <div id="options"></div>
+      <div id="result"></div>
+      <button id="start-button">התחל!</button>
+      <div id="score">כוכבים: ⭐⭐⭐⭐⭐</div>
     </div>
-  </div>
-
-  <audio id="success-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/success.mp3"></audio>
-  <audio id="error-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/error.mp3"></audio>
-  <audio id="celebration-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/celebration.mp3"></audio>
-  <audio id="letter-sound"></audio>
-
-  <script>
-    const hebrewAlphabet = [
-      { letter: 'א', name: 'אלף', word: 'Father', image: '👨', sound: 'א' },
-      { letter: 'בּ', name: 'בית', word: 'Balloon', image: '🎈', sound: 'בּ' },
-      { letter: 'ג', name: 'גימל', word: 'Camel', image: '🐪', sound: 'ג' },
-      { letter: 'ד', name: 'דלת', word: 'Door', image: '🚪', sound: 'ד' },
-      { letter: 'ה', name: 'הא', word: 'Mountain', image: '⛰️', sound: 'ה' },
-      { letter: 'ו', name: 'וו', word: 'Rose', image: '🌹', sound: 'ו' },
-      { letter: 'ז', name: 'זין', word: 'Zebra', image: '🦓', sound: 'ז' },
-      // { letter: 'ח', name: 'חית', word: 'Cat', image: '🐱', sound: 'ח' },
-      { letter: 'ט', name: 'טית', word: 'Lamb', image: '🐑', sound: 'ט' },
-      { letter: 'י', name: 'יוד', word: 'Hand', image: '👋', sound: 'י' },
-      { letter: 'כּ', name: 'כף', word: 'Star', image: '⭐', sound: 'כּ' },
-      { letter: 'ל', name: 'למד', word: 'Lion', image: '🦁', sound: 'ל' },
-      { letter: 'מ', name: 'מם', word: 'Water', image: '💧', sound: 'מ' },
-      { letter: 'נ', name: 'נון', word: 'Snake', image: '🐍', sound: 'נ' },
-      { letter: 'ס', name: 'סמך', word: 'Books', image: '📚', sound: 'ס' },
-      { letter: 'ע', name: 'עין', word: 'Eye', image: '👁️', sound: 'ע' },
-      { letter: 'פּ', name: 'פה', word: 'Mouth', image: '👄', sound: 'פּ' },
-      { letter: 'צ', name: 'צדי', word: 'Plant', image: '🌱', sound: 'צ' },
-      // { letter: 'ק', name: 'קוף', word: 'Monkey', image: '🐵', sound: 'ק' },
-      { letter: 'ר', name: 'ריש', word: 'Head', image: '👤', sound: 'ר' },
-      { letter: 'שׁ', name: 'שין', word: 'Sun', image: '☀️', sound: 'שׁ' },
-      { letter: 'תּ', name: 'תו', word: 'Apple', image: '🍎', sound: 'תּ' },
-
-      { letter: 'א', name: 'אלף', word: 'Bus', image: '🚌', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Pineapple', image: '🍍', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Watermelon', image: '🍉', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Avocado', image: '🥑', sound: 'א' },
-      // { letter: 'ק', name: 'קוף', word: 'Box', image: '📦', sound: 'ק' },
-      // { letter: 'א', name: 'אלף', word: 'Car', image: '🚗', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Motorcycle', image: '🛵', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Bycycle', image: '🚲', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Ambulance', image: '🚑', sound: 'א' },
-      { letter: 'א', name: 'אלף', word: 'Cranberries', image: '🫐', sound: 'א' },
-      { letter: 'בּ', name: 'בית', word: 'Bottle', image: '🍼', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Banana', image: '🍌', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'House', image: '🏠', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Duck', image: '🦆', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Foset', image: '🚰', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Screw', image: '🔩', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Pretzels', image: '🥨', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Onion', image: '🧅', sound: 'בּ' },
-      { letter: 'בּ', name: 'בית', word: 'Thunder', image: '🌩️', sound: 'בּ' },
-      { letter: 'ג', name: 'גימל', word: 'Guitar', image: '🎸', sound: 'ג' },
-      { letter: 'ג', name: 'גימל', word: 'Cheese', image: '🧀', sound: 'ג' },
-      { letter: 'ג', name: 'גימל', word: 'Ice-cream', image: '🍦', sound: 'ג' },
-      { letter: 'ג', name: 'גימל', word: 'Wheel', image: '🛞', sound: 'ג' },
-      { letter: 'ג', name: 'גימל', word: 'Carrot', image: '🥕', sound: 'ג' },
-      { letter: 'ג', name: 'גימל', word: 'Rain', image: '🌧️', sound: 'ג' },
-      { letter: 'ד', name: 'דלת', word: 'Dolphin', image: '🐬', sound: 'ד' },
-      { letter: 'ד', name: 'דלת', word: 'Fish', image: '🐠', sound: 'ד' },
-      { letter: 'ד', name: 'דלת', word: 'Flag', image: '🏳️', sound: 'ד' },
-      { letter: 'ד', name: 'דלת', word: 'Bee', image: '🐝', sound: 'ד' },
-      { letter: 'ה', name: 'הא', word: 'Helicopter', image: '🚁', sound: 'ה' },
-      // { letter: 'ו', name: 'וו', word: 'Volcano', image: '🌋', sound: 'ו' },
-      { letter: 'ו', name: 'וו', word: 'Curtain', image: '🪟', sound: 'ו' },
-      { letter: 'ז', name: 'זין', word: 'Olive', image: '🫒', sound: 'ז' },
-      { letter: 'ח', name: 'חית', word: 'Wheat', image: '🌾', sound: 'ח' },
-      { letter: 'ח', name: 'חית', word: 'Milk', image: '🥛', sound: 'ח' },
-      { letter: 'ח', name: 'חית', word: 'Eggplant', image: '🍆', sound: 'ח' },
-      { letter: 'ח', name: 'חית', word: 'Shirt', image: '👕', sound: 'ח' },
-      { letter: 'ט', name: 'טית', word: 'Telephone', image: '☎️', sound: 'ט' },
-      { letter: 'ט', name: 'טית', word: 'Peacock', image: '🦚', sound: 'ט' },
-      { letter: 'ט', name: 'טית', word: 'Tractor', image: '🚜', sound: 'ט' },
-      // { letter: 'י', name: 'יוד', word: 'Yogurt', image: '🥛', sound: 'י' },
-      // { letter: 'י', name: 'יוד', word: 'Moon', image: '🌙', sound: 'י' },
-      { letter: 'י', name: 'יוד', word: 'Dove', image: '🕊️', sound: 'י' },
-      { letter: 'י', name: 'יוד', word: 'Diamond', image: '💎', sound: 'י' },
-      { letter: 'י', name: 'יוד', word: 'Wine', image: '🍾', sound: 'י' },
-      { letter: 'כּ', name: 'כף', word: 'Spoon', image: '🥄', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Crown', image: '👑', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Ball', image: '⚽', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Glove', image: '🧤', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Cap', image: '🧢', sound: 'כּ' },
-      // { letter: 'כּ', name: 'כף', word: 'Violin', image: '🎻', sound: 'כּ' },
-      { letter: 'כּ', name: 'כף', word: 'Fire-truck', image: '🚒', sound: 'כּ' },
-      // { letter: 'כּ', name: 'כף', word: 'Road', image: '🛣️', sound: 'כּ' },
-      { letter: 'ל', name: 'למד', word: 'Lemon', image: '🍋', sound: 'ל' },
-      { letter: 'ל', name: 'למד', word: 'Heart', image: '❤️', sound: 'ל' },
-      { letter: 'ל', name: 'למד', word: 'Bread', image: '🍞', sound: 'ל' },
-      { letter: 'ל', name: 'למד', word: 'Moon', image: '🌙', sound: 'ל' },
-      { letter: 'מ', name: 'מם', word: 'Bed', image: '🛏️', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Airplane', image: '✈️', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Computer', image: '💻', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Umbrella', image: '☂️', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Mirror', image: '🪞', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Cucumber', image: '🥒', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Screw-driver', image: '🪛', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Key', image: '🔑', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Glasses', image: '👓', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Truck', image: '🚚', sound: 'מ' },
-      { letter: 'מ', name: 'מם', word: 'Police', image: '🚔', sound: 'מ' },
-      { letter: 'נ', name: 'נון', word: 'Shoe', image: '👟', sound: 'נ' },
-      { letter: 'נ', name: 'נון', word: 'Candle', image: '🕯️', sound: 'נ' },
-      { letter: 'ס', name: 'סמך', word: 'Sandwich', image: '🥪', sound: 'ס' },
-      { letter: 'ס', name: 'סמך', word: 'Horse', image: '🐴', sound: 'ס' },
-      { letter: 'ס', name: 'סמך', word: 'Boat', image: '⛵', sound: 'ס' },
-      { letter: 'ס', name: 'סמך', word: 'Soap', image: '🧴', sound: 'ס' },
-      { letter: 'ע', name: 'עין', word: 'Eagle', image: '🦅', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Pencil', image: '✏️', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Cake', image: '🍰', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Pen', image: '🖊️', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Cart', image: '🛒', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Chicken', image: '🍗', sound: 'ע' },
-      { letter: 'ע', name: 'עין', word: 'Cookie', image: '🍪', sound: 'ע' },
-      { letter: 'פּ', name: 'פה', word: 'Penguin', image: '🐧', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Butterfly', image: '🦋', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Flower', image: '🌺', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Elephant', image: '🐘', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Hammer', image: '🔨', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Pop-corn', image: '🍿', sound: 'פּ' },
-      { letter: 'פּ', name: 'פה', word: 'Flashlight', image: '🔦', sound: 'פּ' },
-      // { letter: 'צ', name: 'צדי', word: 'Turtle', image: '🐢', sound: 'צ' },
-      { letter: 'צ', name: 'צדי', word: 'Bird', image: '🐦', sound: 'צ' },
-      { letter: 'ק', name: 'קוף', word: 'Kangaroo', image: '🦘', sound: 'ק' },
-      { letter: 'ק', name: 'קוף', word: 'Rainbow', image: '🌈', sound: 'ק' },
-      { letter: 'ק', name: 'קוף', word: 'Nest', image: '🪺', sound: 'ק' },
-      { letter: 'ק', name: 'קוף', word: 'Scooter', image: '🛴', sound: 'ק' },
-      { letter: 'ר', name: 'ריש', word: 'Robot', image: '🤖', sound: 'ר' },
-      { letter: 'ר', name: 'ריש', word: 'Train', image: '🚂', sound: 'ר' },
-      // { letter: 'ר', name: 'ריש', word: 'Wind', image: '🌬️', sound: 'ר' },
-      { letter: 'ר', name: 'ריש', word: 'Doctor', image: '👨‍⚕️', sound: 'ר' },
-      { letter: 'ר', name: 'ריש', word: 'Microphone', image: '🎤', sound: 'ר' },
-      { letter: 'ר', name: 'ריש', word: 'Traffic-light', image: '🚦', sound: 'ר' },
-      { letter: 'שׁ', name: 'שין', word: 'Clock', image: '🕰️', sound: 'שׁ' },
-      { letter: 'שׁ', name: 'שין', word: 'Tooth', image: '🦷', sound: 'שׁ' },
-      { letter: 'שׁ', name: 'שין', word: 'Garlic', image: '🧄', sound: 'שׁ' },
-      // { letter: 'ש', name: 'שין', word: 'Shark', image: '🦈', sound: 'ש' },
-      { letter: 'תּ', name: 'תו', word: 'Strawberry', image: '🍓', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Orange', image: '🍊', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Drum', image: '🥁', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Parrot', image: '🦜', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Rooster', image: '🐓', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Corn', image: '🌽', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Backpack', image: '🎒', sound: 'תּ' },
-      { letter: 'תּ', name: 'תו', word: 'Medicine', image: '💊', sound: 'תּ' }
-    ];
-
-    let currentLetter;
-    let score = 5;
-    let successfulAnswers = 0;
-    let questionNumber = 1;
-
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-    }
-
-    function newRound() {
-      const imageDisplay = document.getElementById('image-display');
-      const options = document.getElementById('options');
-      const result = document.getElementById('result');
-      const loaderContainer = document.getElementById('loader-container');
-      const questionCounter = document.getElementById('question-counter');
-      const letterSound = document.getElementById('letter-sound'); // Get the audio element
-      const repeatButton = document.getElementById('repeat-button'); // Repeat button
-
-      questionCounter.textContent = `${questionNumber}/10`;
-
-      loaderContainer.style.display = 'flex';
-      repeatButton.style.display = 'none';
-      imageDisplay.textContent = '';
-      options.innerHTML = '';
-      result.textContent = '';
-
-      setTimeout(() => {
-        currentLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
-        
-        imageDisplay.textContent = currentLetter.image;
-
-        let answerOptions = [currentLetter];
-        while (answerOptions.length < 3) {
-          const randomLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
-          if (!answerOptions.some(option => option.letter === randomLetter.letter)) { // Check the 'letter' property
-            answerOptions.push(randomLetter);
-          }
+  
+    <div id="loader-container" style="display: none;">
+      <div id="loader"></div>
+    </div>
+  
+    <div id="celebration">
+      <div id="celebration-content">
+        כל הכבוד! 🎉<br>
+        סיימת את המשחק!
+        <br><span id="celebration-score" style="font-size: 2rem;"></span>
+      </div>
+    </div>
+  
+    <audio id="success-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/success.mp3"></audio>
+    <audio id="error-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/error.mp3"></audio>
+    <audio id="celebration-sound" src="https://sfyyk770.github.io/kaza-school-books/letters/sounds/celebration.mp3"></audio>
+    <audio id="letter-sound"></audio>
+    <audio id="error-letter-sound"></audio>
+  
+    <script>
+      const hebrewAlphabet = [
+        { letter: 'א', name: 'אלף', word: 'Father', image: '👨', sound: 'א' },
+        { letter: 'בּ', name: 'בית', word: 'Balloon', image: '🎈', sound: 'בּ' },
+        { letter: 'ג', name: 'גימל', word: 'Camel', image: '🐪', sound: 'ג' },
+        { letter: 'ד', name: 'דלת', word: 'Door', image: '🚪', sound: 'ד' },
+        { letter: 'ה', name: 'הא', word: 'Mountain', image: '⛰️', sound: 'ה' },
+        { letter: 'ו', name: 'וו', word: 'Rose', image: '🌹', sound: 'ו' },
+        { letter: 'ז', name: 'זין', word: 'Zebra', image: '🦓', sound: 'ז' },
+        // { letter: 'ח', name: 'חית', word: 'Cat', image: '🐱', sound: 'ח' },
+        { letter: 'ט', name: 'טית', word: 'Lamb', image: '🐑', sound: 'ט' },
+        { letter: 'י', name: 'יוד', word: 'Hand', image: '👋', sound: 'י' },
+        { letter: 'כּ', name: 'כף', word: 'Star', image: '⭐', sound: 'כּ' },
+        { letter: 'ל', name: 'למד', word: 'Lion', image: '🦁', sound: 'ל' },
+        { letter: 'מ', name: 'מם', word: 'Water', image: '💧', sound: 'מ' },
+        { letter: 'נ', name: 'נון', word: 'Snake', image: '🐍', sound: 'נ' },
+        { letter: 'ס', name: 'סמך', word: 'Books', image: '📚', sound: 'ס' },
+        { letter: 'ע', name: 'עין', word: 'Eye', image: '👁️', sound: 'ע' },
+        { letter: 'פּ', name: 'פה', word: 'Mouth', image: '👄', sound: 'פּ' },
+        { letter: 'צ', name: 'צדי', word: 'Plant', image: '🌱', sound: 'צ' },
+        // { letter: 'ק', name: 'קוף', word: 'Monkey', image: '🐵', sound: 'ק' },
+        { letter: 'ר', name: 'ריש', word: 'Head', image: '👤', sound: 'ר' },
+        { letter: 'שׁ', name: 'שין', word: 'Sun', image: '☀️', sound: 'שׁ' },
+        { letter: 'תּ', name: 'תו', word: 'Apple', image: '🍎', sound: 'תּ' },
+  
+        { letter: 'א', name: 'אלף', word: 'Bus', image: '🚌', sound: 'א' },
+        { letter: 'א', name: 'אלף', word: 'Pineapple', image: '🍍', sound: 'א' },
+        { letter: 'א', name: 'אלף', word: 'Watermelon', image: '🍉', sound: 'א' },
+        { letter: 'א', name: 'אלף', word: 'Avocado', image: '🥑', sound: 'א' },
+        // { letter: 'ק', name: 'קוף', word: 'Box', image: '📦', sound: 'ק' },
+        // { letter: 'א', name: 'אלף', word: 'Car', image: '🚗', sound: 'א' },
+        { letter: 'א', name: 'אלף', word: 'Motorcycle', image: '🛵', sound: 'א' },
+        { letter: 'א', name: 'אלף', word: 'Bycycle', image: '🚲', sound: 'א' },
+        { letter: 'א', name: 'אלף', word: 'Ambulance', image: '🚑', sound: 'א' },
+        { letter: 'א', name: 'אלף', word: 'Cranberries', image: '🫐', sound: 'א' },
+        { letter: 'בּ', name: 'בית', word: 'Bottle', image: '🍼', sound: 'בּ' },
+        { letter: 'בּ', name: 'בית', word: 'Banana', image: '🍌', sound: 'בּ' },
+        { letter: 'בּ', name: 'בית', word: 'House', image: '🏠', sound: 'בּ' },
+        { letter: 'בּ', name: 'בית', word: 'Duck', image: '🦆', sound: 'בּ' },
+        { letter: 'בּ', name: 'בית', word: 'Foset', image: '🚰', sound: 'בּ' },
+        { letter: 'בּ', name: 'בית', word: 'Screw', image: '🔩', sound: 'בּ' },
+        { letter: 'בּ', name: 'בית', word: 'Pretzels', image: '🥨', sound: 'בּ' },
+        { letter: 'בּ', name: 'בית', word: 'Onion', image: '🧅', sound: 'בּ' },
+        { letter: 'בּ', name: 'בית', word: 'Thunder', image: '🌩️', sound: 'בּ' },
+        { letter: 'ג', name: 'גימל', word: 'Guitar', image: '🎸', sound: 'ג' },
+        { letter: 'ג', name: 'גימל', word: 'Cheese', image: '🧀', sound: 'ג' },
+        { letter: 'ג', name: 'גימל', word: 'Ice-cream', image: '🍦', sound: 'ג' },
+        { letter: 'ג', name: 'גימל', word: 'Wheel', image: '🛞', sound: 'ג' },
+        { letter: 'ג', name: 'גימל', word: 'Carrot', image: '🥕', sound: 'ג' },
+        { letter: 'ג', name: 'גימל', word: 'Rain', image: '🌧️', sound: 'ג' },
+        { letter: 'ד', name: 'דלת', word: 'Dolphin', image: '🐬', sound: 'ד' },
+        { letter: 'ד', name: 'דלת', word: 'Fish', image: '🐠', sound: 'ד' },
+        { letter: 'ד', name: 'דלת', word: 'Flag', image: '🏳️', sound: 'ד' },
+        { letter: 'ד', name: 'דלת', word: 'Bee', image: '🐝', sound: 'ד' },
+        { letter: 'ה', name: 'הא', word: 'Helicopter', image: '🚁', sound: 'ה' },
+        // { letter: 'ו', name: 'וו', word: 'Volcano', image: '🌋', sound: 'ו' },
+        { letter: 'ו', name: 'וו', word: 'Curtain', image: '🪟', sound: 'ו' },
+        { letter: 'ז', name: 'זין', word: 'Olive', image: '🫒', sound: 'ז' },
+        { letter: 'ח', name: 'חית', word: 'Wheat', image: '🌾', sound: 'ח' },
+        { letter: 'ח', name: 'חית', word: 'Milk', image: '🥛', sound: 'ח' },
+        { letter: 'ח', name: 'חית', word: 'Eggplant', image: '🍆', sound: 'ח' },
+        { letter: 'ח', name: 'חית', word: 'Shirt', image: '👕', sound: 'ח' },
+        { letter: 'ט', name: 'טית', word: 'Telephone', image: '☎️', sound: 'ט' },
+        { letter: 'ט', name: 'טית', word: 'Peacock', image: '🦚', sound: 'ט' },
+        { letter: 'ט', name: 'טית', word: 'Tractor', image: '🚜', sound: 'ט' },
+        // { letter: 'י', name: 'יוד', word: 'Yogurt', image: '🥛', sound: 'י' },
+        // { letter: 'י', name: 'יוד', word: 'Moon', image: '🌙', sound: 'י' },
+        { letter: 'י', name: 'יוד', word: 'Dove', image: '🕊️', sound: 'י' },
+        { letter: 'י', name: 'יוד', word: 'Diamond', image: '💎', sound: 'י' },
+        { letter: 'י', name: 'יוד', word: 'Wine', image: '🍾', sound: 'י' },
+        { letter: 'כּ', name: 'כף', word: 'Spoon', image: '🥄', sound: 'כּ' },
+        { letter: 'כּ', name: 'כף', word: 'Crown', image: '👑', sound: 'כּ' },
+        { letter: 'כּ', name: 'כף', word: 'Ball', image: '⚽', sound: 'כּ' },
+        { letter: 'כּ', name: 'כף', word: 'Glove', image: '🧤', sound: 'כּ' },
+        { letter: 'כּ', name: 'כף', word: 'Cap', image: '🧢', sound: 'כּ' },
+        // { letter: 'כּ', name: 'כף', word: 'Violin', image: '🎻', sound: 'כּ' },
+        { letter: 'כּ', name: 'כף', word: 'Fire-truck', image: '🚒', sound: 'כּ' },
+        // { letter: 'כּ', name: 'כף', word: 'Road', image: '🛣️', sound: 'כּ' },
+        { letter: 'ל', name: 'למד', word: 'Lemon', image: '🍋', sound: 'ל' },
+        { letter: 'ל', name: 'למד', word: 'Heart', image: '❤️', sound: 'ל' },
+        { letter: 'ל', name: 'למד', word: 'Bread', image: '🍞', sound: 'ל' },
+        { letter: 'ל', name: 'למד', word: 'Moon', image: '🌙', sound: 'ל' },
+        { letter: 'מ', name: 'מם', word: 'Bed', image: '🛏️', sound: 'מ' },
+        { letter: 'מ', name: 'מם', word: 'Airplane', image: '✈️', sound: 'מ' },
+        { letter: 'מ', name: 'מם', word: 'Computer', image: '💻', sound: 'מ' },
+        { letter: 'מ', name: 'מם', word: 'Umbrella', image: '☂️', sound: 'מ' },
+        { letter: 'מ', name: 'מם', word: 'Mirror', image: '🪞', sound: 'מ' },
+        { letter: 'מ', name: 'מם', word: 'Cucumber', image: '🥒', sound: 'מ' },
+        { letter: 'מ', name: 'מם', word: 'Screw-driver', image: '🪛', sound: 'מ' },
+        { letter: 'מ', name: 'מם', word: 'Key', image: '🔑', sound: 'מ' },
+        { letter: 'מ', name: 'מם', word: 'Glasses', image: '👓', sound: 'מ' },
+        { letter: 'מ', name: 'מם', word: 'Truck', image: '🚚', sound: 'מ' },
+        { letter: 'מ', name: 'מם', word: 'Police', image: '🚔', sound: 'מ' },
+        { letter: 'נ', name: 'נון', word: 'Shoe', image: '👟', sound: 'נ' },
+        { letter: 'נ', name: 'נון', word: 'Candle', image: '🕯️', sound: 'נ' },
+        { letter: 'ס', name: 'סמך', word: 'Sandwich', image: '🥪', sound: 'ס' },
+        { letter: 'ס', name: 'סמך', word: 'Horse', image: '🐴', sound: 'ס' },
+        { letter: 'ס', name: 'סמך', word: 'Boat', image: '⛵', sound: 'ס' },
+        { letter: 'ס', name: 'סמך', word: 'Soap', image: '🧴', sound: 'ס' },
+        { letter: 'ע', name: 'עין', word: 'Eagle', image: '🦅', sound: 'ע' },
+        { letter: 'ע', name: 'עין', word: 'Pencil', image: '✏️', sound: 'ע' },
+        { letter: 'ע', name: 'עין', word: 'Cake', image: '🍰', sound: 'ע' },
+        { letter: 'ע', name: 'עין', word: 'Pen', image: '🖊️', sound: 'ע' },
+        { letter: 'ע', name: 'עין', word: 'Cart', image: '🛒', sound: 'ע' },
+        { letter: 'ע', name: 'עין', word: 'Chicken', image: '🍗', sound: 'ע' },
+        { letter: 'ע', name: 'עין', word: 'Cookie', image: '🍪', sound: 'ע' },
+        { letter: 'פּ', name: 'פה', word: 'Penguin', image: '🐧', sound: 'פּ' },
+        { letter: 'פּ', name: 'פה', word: 'Butterfly', image: '🦋', sound: 'פּ' },
+        { letter: 'פּ', name: 'פה', word: 'Flower', image: '🌺', sound: 'פּ' },
+        { letter: 'פּ', name: 'פה', word: 'Elephant', image: '🐘', sound: 'פּ' },
+        { letter: 'פּ', name: 'פה', word: 'Hammer', image: '🔨', sound: 'פּ' },
+        { letter: 'פּ', name: 'פה', word: 'Pop-corn', image: '🍿', sound: 'פּ' },
+        { letter: 'פּ', name: 'פה', word: 'Flashlight', image: '🔦', sound: 'פּ' },
+        // { letter: 'צ', name: 'צדי', word: 'Turtle', image: '🐢', sound: 'צ' },
+        { letter: 'צ', name: 'צדי', word: 'Bird', image: '🐦', sound: 'צ' },
+        { letter: 'ק', name: 'קוף', word: 'Kangaroo', image: '🦘', sound: 'ק' },
+        { letter: 'ק', name: 'קוף', word: 'Rainbow', image: '🌈', sound: 'ק' },
+        { letter: 'ק', name: 'קוף', word: 'Nest', image: '🪺', sound: 'ק' },
+        { letter: 'ק', name: 'קוף', word: 'Scooter', image: '🛴', sound: 'ק' },
+        { letter: 'ר', name: 'ריש', word: 'Robot', image: '🤖', sound: 'ר' },
+        { letter: 'ר', name: 'ריש', word: 'Train', image: '🚂', sound: 'ר' },
+        // { letter: 'ר', name: 'ריש', word: 'Wind', image: '🌬️', sound: 'ר' },
+        { letter: 'ר', name: 'ריש', word: 'Doctor', image: '👨‍⚕️', sound: 'ר' },
+        { letter: 'ר', name: 'ריש', word: 'Microphone', image: '🎤', sound: 'ר' },
+        { letter: 'ר', name: 'ריש', word: 'Traffic-light', image: '🚦', sound: 'ר' },
+        { letter: 'שׁ', name: 'שין', word: 'Clock', image: '🕰️', sound: 'שׁ' },
+        { letter: 'שׁ', name: 'שין', word: 'Tooth', image: '🦷', sound: 'שׁ' },
+        { letter: 'שׁ', name: 'שין', word: 'Garlic', image: '🧄', sound: 'שׁ' },
+        // { letter: 'ש', name: 'שין', word: 'Shark', image: '🦈', sound: 'ש' },
+        { letter: 'תּ', name: 'תו', word: 'Strawberry', image: '🍓', sound: 'תּ' },
+        { letter: 'תּ', name: 'תו', word: 'Orange', image: '🍊', sound: 'תּ' },
+        { letter: 'תּ', name: 'תו', word: 'Drum', image: '🥁', sound: 'תּ' },
+        { letter: 'תּ', name: 'תו', word: 'Parrot', image: '🦜', sound: 'תּ' },
+        { letter: 'תּ', name: 'תו', word: 'Rooster', image: '🐓', sound: 'תּ' },
+        { letter: 'תּ', name: 'תו', word: 'Corn', image: '🌽', sound: 'תּ' },
+        { letter: 'תּ', name: 'תו', word: 'Backpack', image: '🎒', sound: 'תּ' },
+        { letter: 'תּ', name: 'תו', word: 'Medicine', image: '💊', sound: 'תּ' }
+      ];
+  
+      let currentLetter;
+      let score = 5;
+      let successfulAnswers = 0;
+      let questionNumber = 1;
+  
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
         }
-
-        shuffleArray(answerOptions);
-
-        answerOptions.forEach(option => {
-          const button = document.createElement('button');
-          button.textContent = option.letter;
-          button.onclick = () => checkAnswer(option);
-          options.appendChild(button);
-        });
-
-        loaderContainer.style.display = 'none';
-        repeatButton.style.display = 'block';
-
-        // Load the audio file dynamically
-        letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/names/${currentLetter.word}.mp3`;
-        letterSound.addEventListener('loadeddata', () => {
-          letterSound.play(); // Play the sound only after it's loaded
-        });
-        letterSound.addEventListener('error', (event) => {
-          console.error('Audio error:', event);
-        });
-        document.getElementById('repeat-button').addEventListener('click', () => {
-          letterSound.currentTime = 0; // Reset to the beginning
-          letterSound.play();
-        });
-      }, 1000);
-    }
-
-    function checkAnswer(selectedAnswer) {
-      const result = document.getElementById('result');
-      const scoreDisplay = document.getElementById('score');
-      const options = document.getElementById('options');
-      const successSound = document.getElementById('success-sound');
-      const errorSound = document.getElementById('error-sound');
-
-      options.querySelectorAll('button').forEach(button => {
-        button.disabled = true;
-      });
-
-      if (selectedAnswer === currentLetter) {
-        result.textContent = 'נכון מאוד! 🎉';
-        result.style.color = 'green';
-        if (score < 5) score++;
-        successfulAnswers++;
-        successSound.play();
-      } else {
-        result.textContent = `אופס, התשובה הנכונה היא ${currentLetter.letter} (${currentLetter.name}).`;
-        result.style.color = 'red';
-        if (score > 0) score--;
-        successfulAnswers = 0;
-        errorSound.play();
       }
-
-      scoreDisplay.textContent = 'כוכבים: ' + '⭐'.repeat(score);
-      localStorage.setItem('score', 100/10 * successfulAnswers);
+  
+      function newRound() {
+        const imageDisplay = document.getElementById('image-display');
+        const options = document.getElementById('options');
+        const result = document.getElementById('result');
+        const loaderContainer = document.getElementById('loader-container');
+        const questionCounter = document.getElementById('question-counter');
+        const letterSound = document.getElementById('letter-sound'); // Get the audio element
+        const repeatButton = document.getElementById('repeat-button'); // Repeat button
+  
+        questionCounter.textContent = `${questionNumber}/10`;
+  
+        loaderContainer.style.display = 'flex';
+        repeatButton.style.display = 'none';
+        imageDisplay.textContent = '';
+        options.innerHTML = '';
+        result.textContent = '';
+  
+        setTimeout(() => {
+          currentLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
+          
+          imageDisplay.textContent = currentLetter.image;
+  
+          let answerOptions = [currentLetter];
+          while (answerOptions.length < 3) {
+            const randomLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
+            if (!answerOptions.some(option => option.letter === randomLetter.letter)) { // Check the 'letter' property
+              answerOptions.push(randomLetter);
+            }
+          }
+  
+          shuffleArray(answerOptions);
+  
+          answerOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.textContent = option.letter;
+            button.onclick = () => checkAnswer(option);
+            options.appendChild(button);
+          });
+  
+          loaderContainer.style.display = 'none';
+          repeatButton.style.display = 'block';
+  
+          // Load the audio file dynamically
+          letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/names/${currentLetter.word}.mp3`;
+          letterSound.addEventListener('loadeddata', () => {
+            letterSound.play(); // Play the sound only after it's loaded
+          });
+          letterSound.addEventListener('error', (event) => {
+            console.error('Audio error:', event);
+          });
+          document.getElementById('repeat-button').addEventListener('click', () => {
+            letterSound.currentTime = 0; // Reset to the beginning
+            letterSound.play();
+          });
+        }, 1000);
+      }
+  
+      function checkAnswer(selectedAnswer) {
+        const result = document.getElementById('result');
+        const options = document.getElementById('options');
+        const successSound = document.getElementById('success-sound');
+        const errorSound = document.getElementById('error-sound');
+        const letterSound = document.getElementById('error-letter-sound'); // Get the audio element
+  
+        options.querySelectorAll('button').forEach(button => {
+          button.disabled = true;
+        });
+  
+        if (selectedAnswer === currentLetter) {
+          result.textContent = 'נכון מאוד! 🎉';
+          result.style.color = 'green';
+          if (score < 5) score++;
+          successfulAnswers++;
+          successSound.play();
+          continueGame();
+        } else {
+          result.textContent = `אופס, התשובה הנכונה היא ${currentLetter.letter} (${currentLetter.name}).`;
+          result.style.color = 'red';
+          if (score > 0) score--;
+          successfulAnswers = 0;
+          errorSound.play();
+          
+          setTimeout(() => {
+            let soundsPlayed = 0;
+            const playSounds = () => {
+              if (soundsPlayed === 0) {
+                letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/narriation-wrong-answer.mp3`;
+              } else if (soundsPlayed === 1) {
+                letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/letters/${currentLetter.letter}.mp3`;
+              }
+  
+              letterSound.onloadeddata = () => {
+                letterSound.play();
+              };
+  
+              letterSound.onended = () => {
+                soundsPlayed++;
+                if (soundsPlayed < 2) {
+                  playSounds();
+                } else {
+                  continueGame();
+                }
+              };
+            };
+  
+            playSounds();
+          }, 1000);
+        }
+      }
       
-      questionNumber++;
-      
-      if (score === 0) {
-        setTimeout(() => {
-          endGame();
-        }, 1000);
-      } else if (questionNumber > 10 && score >= 4) {
-        setTimeout(() => {
-          celebrate();
-        }, 1000);
-      } else if (questionNumber > 10) {
-        setTimeout(() => {
-          endGame();
-        }, 1000);
-      } else {
-        setTimeout(() => {
-          newRound();
-        }, 2000);
+      function continueGame() {
+        const scoreDisplay = document.getElementById('score');
+        scoreDisplay.textContent = 'כוכבים: ' + '⭐'.repeat(score);
+        localStorage.setItem('score', 100/10 * successfulAnswers);
+        
+        questionNumber++;
+        
+        if (score === 0) {
+          setTimeout(() => {
+            endGame();
+          }, 1000);
+        } else if (questionNumber > 10 && score >= 4) {
+          setTimeout(() => {
+            celebrate();
+          }, 1000);
+        } else if (questionNumber > 10) {
+          setTimeout(() => {
+            endGame();
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            newRound();
+          }, 2000);
+        }
       }
-    }
-
-    function celebrate() {
-      let localScore = localStorage.getItem('score', score);
-      document.getElementById('celebration-score').innerText = localScore;
-
-      const celebration = document.getElementById('celebration');
-      const celebrationSound = document.getElementById('celebration-sound');
-      celebration.style.display = 'flex';
-      celebrationSound.play();
-
-      for (let i = 0; i < 100; i++) {
-        createConfetti();
+  
+      function celebrate() {
+        let localScore = localStorage.getItem('score', score);
+        document.getElementById('celebration-score').innerText = localScore;
+  
+        const celebration = document.getElementById('celebration');
+        const celebrationSound = document.getElementById('celebration-sound');
+        celebration.style.display = 'flex';
+        celebrationSound.play();
+  
+        for (let i = 0; i < 100; i++) {
+          createConfetti();
+        }
+  
+        setTimeout(() => {
+          celebration.style.display = 'none';
+          resetGame();
+        }, 15000);
       }
-
-      setTimeout(() => {
-        celebration.style.display = 'none';
+  
+      function endGame() {
+        alert('המשחק נגמר! נסה שוב להשיג יותר כוכבים!');
         resetGame();
-      }, 15000);
-    }
-
-    function endGame() {
-      alert('המשחק נגמר! נסה שוב להשיג יותר כוכבים!');
-      resetGame();
-    }
-
-    function resetGame() {
-      score = 5;
-      successfulAnswers = 0;
-      questionNumber = 1;
-      document.getElementById('score').textContent = 'כוכבים: ' + '⭐'.repeat(5);
-      newRound();
-    }
-
-    function createConfetti() {
-      const confetti = document.createElement('div');
-      confetti.classList.add('confetti');
-      confetti.style.left = Math.random() * 100 + 'vw';
-      confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
-      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-      document.body.appendChild(confetti);
-
-      setTimeout(() => {
-        confetti.remove();
-      }, 5000);
-    }
-
-    document.getElementById('start-button').addEventListener('click', () => {
-      newRound();
-      document.getElementById('start-button').style.display = 'none';
-    });
-  </script>
-</body>
-</html>
+      }
+  
+      function resetGame() {
+        score = 5;
+        successfulAnswers = 0;
+        questionNumber = 1;
+        document.getElementById('score').textContent = 'כוכבים: ' + '⭐'.repeat(5);
+        newRound();
+      }
+  
+      function createConfetti() {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        document.body.appendChild(confetti);
+  
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+  
+      document.getElementById('start-button').addEventListener('click', () => {
+        newRound();
+        document.getElementById('start-button').style.display = 'none';
+      });
+    </script>
+  </body>
+  </html>
+  
