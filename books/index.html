@@ -276,7 +276,7 @@
           // cart = [];
           // updateCart();
           localStorage.setItem('orderData', JSON.stringify({ children, cart }));
-          window.location.href = 'books/checkout';
+          window.location.href = 'checkout';
           $('.add-to-cart').removeClass('btn-remove').html('<i class="fas fa-cart-plus"></i> Add');
         } else {
           alert('Your cart is empty. Please add some books before checking out.');
