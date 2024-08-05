@@ -111,7 +111,7 @@
       
       // Load data from localStorage on page load
       const storedData = JSON.parse(localStorage.getItem('orderData'));
-      if (storedData) {
+      if (storedData && storedData.children && storedData.cart) {
         children = storedData.children;
         cart = storedData.cart;
       }

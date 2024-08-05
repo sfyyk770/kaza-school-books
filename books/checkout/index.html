@@ -459,6 +459,7 @@
       let orderData = JSON.parse(localStorage.getItem('orderData'));
       const TAX_RATE = 0.08875; // 8.875%
       let SUBTOTAL = 0;
+      let TOTAL = 0;
 
       // Function to update the order summary content
       function updateOrderSummary() {
@@ -508,15 +509,33 @@
       function updateTotal() {
         let tax = SUBTOTAL * TAX_RATE;
         let shippingCost = 5.99;
-        let total = SUBTOTAL + tax + shippingCost;
+        TOTAL = SUBTOTAL + tax + shippingCost;
 
         $('#tax-amount').text('$' + tax.toFixed(2));
         $('#shipping-cost').text('$' + shippingCost.toFixed(2));
-        $('#total-cost').text('$' + total.toFixed(2));
+        $('#total-cost').text('$' + TOTAL.toFixed(2));
       }
 
       $('#shipping-payment-form').submit(function(e) {
         e.preventDefault();
+
+        // Get form data
+        const name = $('#name').val(), email = $('#email').val(), phone = $('#phone').val(), zip = $('#zip').val(), address = $('#address').val(), city = $('#city').val(), state = $('#state').val();
+        const paymentMethod = $('.payment-option.selected').attr('id');
+
+        // Create form data object
+        const formData = { name, email, phone, zip, address, city, state, paymentMethod, total: TOTAL.toFixed(2) };
+
+        // Get existing orderData from localStorage
+        let orderData = JSON.parse(localStorage.getItem('orderData'));
+
+        // Add form data to orderData
+        orderData.formData = formData;
+
+        // Update orderData in localStorage
+        localStorage.setItem('orderData', JSON.stringify(orderData));
+
+        // Generate order number
         let orderNumber = 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
         $('#order-number').text(orderNumber);
         $('#confirm-email').text($('#email').val());
