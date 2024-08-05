@@ -318,55 +318,24 @@
       <div class="order-summary">
         <h2>Order Summary</h2>
         
-        <div class="child-order">
-          <div class="child-name">Emma Johnson - 3rd Grade</div>
-          <div class="order-item">
-            <span>Third Grade Math</span>
-            <span>$24.99</span>
-          </div>
-          <div class="order-item">
-            <span>Advanced Reading: Grade 3</span>
-            <span>$19.99</span>
-          </div>
-          <div class="order-item">
-            <span>Exploring Nature</span>
-            <span>$28.99</span>
-          </div>
-          <div class="child-subtotal">Subtotal: $73.97</div>
+        <div id="order-summary-content">
+          <!-- Order summary content will be dynamically added here -->
         </div>
-
-        <div class="child-order">
-          <div class="child-name">Liam Smith - 5th Grade</div>
-          <div class="order-item">
-            <span>Fifth Grade Math</span>
-            <span>$28.99</span>
-          </div>
-          <div class="order-item">
-            <span>Advanced Literature: Grade 5</span>
-            <span>$23.99</span>
-          </div>
-          <div class="order-item">
-            <span>Earth and Space Science</span>
-            <span>$31.99</span>
-          </div>
-          <div class="child-subtotal">Subtotal: $84.97</div>
-        </div>
-
         <div class="order-subtotal">
           <span>Subtotal:</span>
-          <span>$158.94</span>
+          <span id="subtotal-cost"></span>
         </div>
         <div class="order-tax">
           <span>Tax (8.875%):</span>
-          <span id="tax-amount">$14.11</span>
+          <span id="tax-amount"></span>
         </div>
         <div class="order-shipping">
           <span>Shipping:</span>
-          <span id="shipping-cost">$0.00</span>
+          <span id="shipping-cost"></span>
         </div>
         <div class="order-total">
           <span>Total:</span>
-          <span id="total-cost">$173.05</span>
+          <span id="total-cost"></span>
         </div>
       </div>
 
@@ -480,15 +449,42 @@
       <p>Your order has been successfully processed.</p>
       <p>Order number: <span id="order-number"></span></p>
       <p>We'll send a confirmation email to <span id="confirm-email"></span> shortly.</p>
-      <p>Happy reading!</p>
     </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
-      console.log(JSON.parse(localStorage.getItem('orderData')));
+      // let orderData = JSON.parse(localStorage.getItem('orderData') ?? '{"children":[{"name":"kjnkfdvd","school":"roosevelt-high","grade":"2"}],"cart":[{"id":203,"title":"Our Planet Earth","price":26.99,"child":"kjnkfdvd"},{"id":202,"title":"Reading Comprehension: Grade 2","price":17.99,"child":"kjnkfdvd"}]}');
+      let orderData = JSON.parse(localStorage.getItem('orderData'));
       const TAX_RATE = 0.08875; // 8.875%
+      let SUBTOTAL = 0;
+
+      // Function to update the order summary content
+      function updateOrderSummary() {
+        const orderSummaryContent = $('#order-summary-content');
+        orderSummaryContent.empty(); // Clear previous content
+
+        let subtotal = 0;
+
+        orderData.children.forEach(child => {
+          const childOrder = $('<div class="child-order"></div>');
+          childOrder.append(`<div class="child-name">${child.name} - ${child.grade} Grade</div>`);
+
+          const cartItems = orderData.cart.filter(item => item.child === child.name);
+          cartItems.forEach(item => {
+            const orderItem = $('<div class="order-item"></div>');
+            orderItem.append(`<span>${item.title}</span>`);
+            orderItem.append(`<span>$${item.price.toFixed(2)}</span>`);
+            childOrder.append(orderItem);
+            subtotal += parseFloat(item.price);
+          });
+          SUBTOTAL =+ subtotal;
+          childOrder.append(`<div class="child-subtotal">Subtotal: $${subtotal.toFixed(2)}</div>`);
+          orderSummaryContent.append(childOrder);
+          subtotal = 0; // Reset subtotal for the next child
+        });
+      }
 
       $('.payment-option').click(function() {
         $('.payment-option').removeClass('selected');
@@ -510,10 +506,9 @@
       });
 
       function updateTotal() {
-        let subtotal = 158.94;
-        let tax = subtotal * TAX_RATE;
-        let shippingCost = parseFloat($('.shipping-option.selected').data('cost'));
-        let total = subtotal + tax + shippingCost;
+        let tax = SUBTOTAL * TAX_RATE;
+        let shippingCost = 5.99;
+        let total = SUBTOTAL + tax + shippingCost;
 
         $('#tax-amount').text('$' + tax.toFixed(2));
         $('#shipping-cost').text('$' + shippingCost.toFixed(2));
@@ -539,6 +534,7 @@
       });
 
       // Initial update
+      updateOrderSummary();
       updateTotal();
     });
   </script>
