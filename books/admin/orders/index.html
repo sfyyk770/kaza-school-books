@@ -547,6 +547,40 @@
         // Add more detailed order data here...
       ];
 
+      // Check for local storage item
+      // const cartData = JSON.parse(localStorage.getItem('cartData')  ?? '{"children":[{"name":"kjnkfdvd","school":"roosevelt-high","grade":"2"}],"cart":[{"id":203,"title":"Our Planet Earth","price":26.99,"child":"kjnkfdvd"},{"id":202,"title":"Reading Comprehension: Grade 2","price":17.99,"child":"kjnkfdvd"}]}');
+      const cartData = JSON.parse(localStorage.getItem('cartData'));
+      if (cartData) {
+        // Convert cartData to ordersData format
+        const newOrder = {
+          id: `#${Date.now()}`, // Generate a unique ID
+          customer: cartData.children[0].name,
+          email: 'unknown@example.com', // You'll need a way to get the email
+          phone: 'unknown', // You'll need a way to get the phone number
+          date: new Date().toISOString().slice(0, 10), // Get today's date
+          total: '$0.00', // Calculate total below
+          status: 'pending',
+          shippingAddress: 'unknown', // You'll need a way to get the shipping address
+          items: cartData.cart.map(item => ({
+            name: item.title,
+            quantity: 1, // Assuming each item is ordered once
+            price: `$${item.price}`
+          }))
+        };
+
+        // Calculate total
+        newOrder.total = newOrder.items.reduce((sum, item) => {
+          return sum + (parseFloat(item.price.replace('$', '')));
+        }, 0);
+        newOrder.total = `$${newOrder.total.toFixed(2)}`;
+
+        // Add the new order to ordersData
+        ordersData.push(newOrder);
+
+        // Clear local storage after adding to ordersData
+        localStorage.removeItem('cartData');
+      }
+
       let currentPage = 1;
       let rowsPerPage = 10;
 
