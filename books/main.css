@@ -266,6 +266,7 @@
     justify-content: space-between;
     margin-bottom: 15px;
     text-align: left;
+    max-height: 170px;
   }
 
   .book:hover {
@@ -302,6 +303,7 @@
 
   .book-list.list-mode .add-to-cart {
     margin-left: 20px;
+    max-width: 180px;
   }
 
   #cart {
@@ -437,7 +439,7 @@
     }
 
     .child-actions {
-      margin-top: 20px;
+      margin-top: 0px;
       align-items: flex-start;
     }
 
@@ -538,7 +540,6 @@
   }
 
   .cart-child-total {
-    font-weight: 600;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -546,7 +547,11 @@
     padding: 10px 0;
   }
 
-  .cart-child-total::after {
+  .cart-child-total .cart-child-price{
+    font-weight: 600;
+  }
+
+  .cart-child-name::after {
     content: '\f107';
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
@@ -554,15 +559,15 @@
     margin-left: 10px;
   }
 
-  .cart-child-total.active::after {
+  .cart-child-name.active::after {
     transform: rotate(180deg);
   }
 
   .cart-child-name {
     font-weight: 600;
     font-size: 1.1rem;
-    margin-bottom: 10px;
-    color: var(--primary-color);
+    margin: auto;
+    /* color: var(--primary-color); */
   }
 
   .child-books {
@@ -575,4 +580,27 @@
 
   .child-books.active {
     display: block;
+  }
+
+  @media screen and (max-width: 768px) {
+    .child-header {
+      margin-bottom: 0px;
+    }
+    .child-info {
+      padding: 10px;
+    }
+    .child-books {
+      padding: 0;
+      margin-top: 0;
+    }
+    .book {
+      max-height: 140px;
+    }
+  }
+
+  /* FOR LARGE SCREENS ONLY */
+  @media screen and (min-width: 768px) {
+    .hero-text {
+      max-width: 70%;
+    }
   }
