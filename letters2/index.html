@@ -492,31 +492,32 @@
           successfulAnswers = 0;
           errorSound.play();
           
-          setTimeout(() => {
-            let soundsPlayed = 0;
-            const playSounds = () => {
-              if (soundsPlayed === 0) {
-                letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/narriation-wrong-answer.mp3`;
-              } else if (soundsPlayed === 1) {
-                letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/letters/${currentLetter.letter}.mp3`;
-              }
+          // setTimeout(() => {
+          //   let soundsPlayed = 0;
+          //   const playSounds = () => {
+          //     if (soundsPlayed === 0) {
+          //       letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/narriation-wrong-answer.mp3`;
+          //     } else if (soundsPlayed === 1) {
+          //       letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/letters/${currentLetter.letter}.mp3`;
+          //     }
   
-              letterSound.onloadeddata = () => {
-                letterSound.play();
-              };
+          //     letterSound.onloadeddata = () => {
+          //       letterSound.play();
+          //     };
   
-              letterSound.onended = () => {
-                soundsPlayed++;
-                if (soundsPlayed < 2) {
-                  playSounds();
-                } else {
-                  continueGame();
-                }
-              };
-            };
+          //     letterSound.onended = () => {
+          //       soundsPlayed++;
+          //       if (soundsPlayed < 2) {
+          //         playSounds();
+          //       } else {
+          //         continueGame();
+          //       }
+          //     };
+          //   };
   
-            playSounds();
-          }, 1000);
+          //   playSounds();
+          // }, 1000);
+          continueGame();
         }
       }
       
