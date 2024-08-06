@@ -445,7 +445,58 @@
         answerOptions.forEach(option => {
           const button = document.createElement('button');
           button.textContent = option.letter;
-          button.onclick = () => checkAnswer(option);
+          button.onclick = (option) => {
+            const result = document.getElementById('result');
+            const options = document.getElementById('options');
+            const successSound = document.getElementById('success-sound');
+            const errorSound = document.getElementById('error-sound');
+            const letterSound = document.getElementById('error-letter-sound'); // Get the audio element
+
+            options.querySelectorAll('button').forEach(button => {
+              button.disabled = true;
+            });
+
+            if (selectedAnswer === currentLetter) {
+              result.textContent = 'נכון מאוד! 🎉';
+              result.style.color = 'green';
+              if (score < 5) score++;
+              successfulAnswers++;
+              successSound.play();
+              continueGame();
+            } else {
+              result.textContent = `אופס, התשובה הנכונה היא ${currentLetter.letter} (${currentLetter.name}).`;
+              result.style.color = 'red';
+              if (score > 0) score--;
+              successfulAnswers = 0;
+              errorSound.play();
+              
+              setTimeout(() => {
+                let soundsPlayed = 0;
+                const playSounds = () => {
+                  if (soundsPlayed === 0) {
+                    letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/narriation-wrong-answer.mp3`;
+                  } else if (soundsPlayed === 1) {
+                    letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/letters/${currentLetter.letter}.mp3`;
+                  }
+
+                  letterSound.onloadeddata = () => {
+                    letterSound.play();
+                  };
+
+                  letterSound.onended = () => {
+                    soundsPlayed++;
+                    if (soundsPlayed < 2) {
+                      playSounds();
+                    } else {
+                      continueGame();
+                    }
+                  };
+                };
+
+                playSounds();
+              }, 500);
+            }
+          };
           options.appendChild(button);
         });
 
@@ -465,59 +516,6 @@
           letterSound.play();
         });
       }, 1000);
-    }
-
-    function checkAnswer(selectedAnswer) {
-      const result = document.getElementById('result');
-      const options = document.getElementById('options');
-      const successSound = document.getElementById('success-sound');
-      const errorSound = document.getElementById('error-sound');
-      const letterSound = document.getElementById('error-letter-sound'); // Get the audio element
-
-      options.querySelectorAll('button').forEach(button => {
-        button.disabled = true;
-      });
-
-      if (selectedAnswer === currentLetter) {
-        result.textContent = 'נכון מאוד! 🎉';
-        result.style.color = 'green';
-        if (score < 5) score++;
-        successfulAnswers++;
-        successSound.play();
-        continueGame();
-      } else {
-        result.textContent = `אופס, התשובה הנכונה היא ${currentLetter.letter} (${currentLetter.name}).`;
-        result.style.color = 'red';
-        if (score > 0) score--;
-        successfulAnswers = 0;
-        errorSound.play();
-        
-        setTimeout(() => {
-          let soundsPlayed = 0;
-          const playSounds = () => {
-            if (soundsPlayed === 0) {
-              letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/narriation-wrong-answer.mp3`;
-            } else if (soundsPlayed === 1) {
-              letterSound.src = `https://sfyyk770.github.io/kaza-school-books/letters/sounds/letters/${currentLetter.letter}.mp3`;
-            }
-
-            letterSound.onloadeddata = () => {
-              letterSound.play();
-            };
-
-            letterSound.onended = () => {
-              soundsPlayed++;
-              if (soundsPlayed < 2) {
-                playSounds();
-              } else {
-                continueGame();
-              }
-            };
-          };
-
-          playSounds();
-        }, 1000);
-      }
     }
     
     function continueGame() {
