@@ -1,6 +1,6 @@
 :root {
-    --primary-color: #6c5ce7;
-    --secondary-color: #00b894;
+    --primary-color: #1f2f5c;
+    --secondary-color: #b8374f;
     --accent-color: #fdcb6e;
     --background-color: #f8f9fa;
     --text-color: #2d3436;
@@ -47,6 +47,80 @@
 
   .logo i {
     margin-right: 15px;
+  }
+
+  .custom-dropdown {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .custom-dropdown label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+  .dropdown-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  .selected-school {
+    font-size: 1rem;
+  }
+
+  .fas.fa-chevron-down {
+    font-size: 1rem;
+    color: #333;
+  }
+
+  .dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    list-style: none;
+    display: none; /* Hide by default */
+    z-index: 1;
+  }
+
+  .dropdown-list li {
+    padding: 5px 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+  }
+
+  .dropdown-list li:last-child {
+    border-bottom: none;
+  }
+
+  .school-logo {
+    width: 20px; /* Adjust width as needed */
+    height: 20px; /* Adjust height as needed */
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  .custom-dropdown.open .dropdown-list {
+    display: block;
+  }
+
+  footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-align: center;
   }
 
   nav ul {
@@ -113,7 +187,7 @@
   }
 
   .btn:hover {
-    background: #00a38d;
+    background: #444;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
@@ -560,7 +634,13 @@
   }
 
   .cart-child-name.active::after {
+    content: '\f107';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    display: inline-block;
     transform: rotate(180deg);
+    transition: transform 0.3s ease;
+    margin-left: 10px;
   }
 
   .cart-child-name {
