@@ -29,6 +29,10 @@
     padding: 40px 20px;
   }
 
+  .logo-image {
+    max-width: 250px;
+  }
+
   header {
     background: var(--primary-color);
     color: var(--white);
@@ -165,7 +169,7 @@
   }
 
   p {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     font-size: 1.1rem;
   }
 
@@ -675,6 +679,13 @@
     }
     .book {
       max-height: 140px;
+    }
+    .logo-image {
+      max-width: 150px;
+      margin-left: 15px;
+    }
+    .container {
+      padding: 20px 10px;
     }
   }
 
