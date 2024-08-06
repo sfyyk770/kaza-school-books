@@ -433,7 +433,7 @@
           imageDisplay.textContent = currentLetter.image;
   
           let answerOptions = [currentLetter];
-          while (answerOptions.length < 3) {
+          while (answerOptions.length < 2) {
             const randomLetter = hebrewAlphabet[Math.floor(Math.random() * hebrewAlphabet.length)];
             if (!answerOptions.some(option => option.letter === randomLetter.letter)) { // Check the 'letter' property
               answerOptions.push(randomLetter);
