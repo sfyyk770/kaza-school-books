@@ -200,7 +200,7 @@
     color: var(--accent-color);
   }
 
-  .category-filter select,
+  .status-filter select,
   #rows-per-page {
     padding: 10px;
     border: 1px solid #ddd;
@@ -236,7 +236,7 @@
     color: var(--white);
   }
 
-  .stock-badge {
+  .status-badge {
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -244,9 +244,11 @@
     text-transform: uppercase;
   }
 
-  .in-stock { background-color: #c3e6cb; color: #155724; }
-  .low-stock { background-color: #ffeeba; color: #856404; }
-  .out-of-stock { background-color: #f8d7da; color: #721c24; }
+  .status-pending { background-color: #ffeeba; color: #856404; }
+  .status-processing { background-color: #b8daff; color: #004085; }
+  .status-shipped { background-color: #c3e6cb; color: #155724; }
+  .status-delivered { background-color: #d4edda; color: #155724; }
+  .status-cancelled { background-color: #f8d7da; color: #721c24; }
 
   .modal {
     display: none;
@@ -286,13 +288,13 @@
     cursor: pointer;
   }
 
-  .book-details {
+  .order-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
 
-  .book-details h3 {
+  .order-details h3 {
     grid-column: 1 / -1;
     border-bottom: 2px solid #e0e0e0;
     padding-bottom: 10px;
@@ -300,43 +302,47 @@
     color: var(--primary-color);
   }
 
-  .book-cover {
+  .order-items {
     grid-column: 1 / -1;
-    text-align: center;
   }
 
-  .book-cover img {
-    max-width: 200px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 4px;
+  .order-items table {
+    width: 100%;
+    margin-top: 10px;
+    box-shadow: none;
   }
 
-  #editBookForm,
-  #addBookForm {
+  .order-items th, .order-items td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .order-items th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+  }
+
+  #editOrderForm {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
 
-  #editBookForm .form-group,
-  #addBookForm .form-group {
+  #editOrderForm .form-group {
     margin-bottom: 15px;
   }
 
-  #editBookForm label,
-  #addBookForm label {
+  #editOrderForm label {
     display: block;
     margin-bottom: 5px;
     font-weight: 600;
     color: #555;
   }
 
-  #editBookForm input,
-  #editBookForm select,
-  #editBookForm textarea,
-  #addBookForm input,
-  #addBookForm select,
-  #addBookForm textarea {
+  #editOrderForm input,
+  #editOrderForm select,
+  #editOrderForm textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -345,41 +351,65 @@
     transition: var(--transition);
   }
 
-  #editBookForm input:focus,
-  #editBookForm select:focus,
-  #editBookForm textarea:focus,
-  #addBookForm input:focus,
-  #addBookForm select:focus,
-  #addBookForm textarea:focus {
+  #editOrderForm input:focus,
+  #editOrderForm select:focus,
+  #editOrderForm textarea:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
   }
 
-  #editBookForm textarea,
-  #addBookForm textarea {
+  #editOrderForm textarea {
     height: 100px;
     resize: vertical;
   }
 
-  #editBookForm .full-width,
-  #addBookForm .full-width {
+  #editOrderForm .full-width {
     grid-column: 1 / -1;
   }
 
-  #updateBookBtn,
-  #addBookBtn {
+  #editOrderItems {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: 10px;
+  }
+
+  #editOrderItems th,
+  #editOrderItems td {
+    padding: 10px;
+    text-align: left;
+    border: none;
+  }
+
+  #editOrderItems th {
+    background-color: #f1f3f5;
+    font-weight: 600;
+    border-radius: 4px;
+  }
+
+  #editOrderItems td {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+
+  #editOrderItems input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  #addItemBtn {
+    margin-top: 15px;
+  }
+
+  #updateOrderBtn {
     grid-column: 1 / -1;
     justify-self: center;
     margin-top: 20px;
     padding: 12px 24px;
     font-size: 1rem;
-    background-color: var(--primary-color);
-    color: var(--white);
-  }
-
-  #updateBookBtn:hover,
-  #addBookBtn:hover {
-    background-color: #3a7abd;
   }
 
   .sort-icon {
@@ -456,7 +486,7 @@
     background-color: #e69500;
   }
 
-  .add-book-btn {
+  .print-label-btn {
     background-color: var(--secondary-color);
     color: var(--white);
     padding: 10px 20px;
@@ -465,83 +495,9 @@
     cursor: pointer;
     transition: var(--transition);
     font-size: 0.9rem;
-    margin-right: 10px;
-  }
-
-  .add-book-btn:hover {
-    background-color: #45b363;
-  }
-
-  #addBookModal .modal-content {
-    max-width: 600px;
-  }
-
-  #addBookForm .form-group {
-    margin-bottom: 20px;
-  }
-
-  #addBookForm label {
-    font-weight: 600;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  #addBookForm input,
-  #addBookForm select,
-  #addBookForm textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-
-  #addBookForm input:focus,
-  #addBookForm select:focus,
-  #addBookForm textarea:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
-  }
-
-  #addBookBtn {
-    background-color: var(--secondary-color);
-    color: var(--white);
-    padding: 12px 24px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 1rem;
-    margin-top: 20px;
-    width: 100%;
-  }
-
-  #addBookBtn:hover {
-    background-color: #45b363;
-  }
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .modal-header h2 {
-    margin: 0;
-  }
-
-  #viewBookModal .modal-content,
-  #editBookModal .modal-content {
-    max-width: 800px;
-  }
-
-  .book-actions {
-    display: flex;
-    justify-content: flex-end;
     margin-top: 20px;
   }
 
-  .book-actions .btn {
-    margin-left: 10px;
+  .print-label-btn:hover {
+    background-color: #45b363;
   }
