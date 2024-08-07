@@ -445,7 +445,7 @@
             row.insertCell(1).textContent = item.store;
             row.insertCell(2).textContent = item.product;
             row.insertCell(3).textContent = getCategoryInHebrew(item.category);
-            row.insertCell(4).textContent = `₪${parseFloat(item.price).toFixed(2)}`;
+            row.insertCell(4).textContent = `$${parseFloat(item.price).toFixed(2)}`;
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'מחק';
             deleteButton.onclick = () => deletePrice(index);
@@ -478,7 +478,7 @@
           bestPricesList.forEach(item => {
             const row = bestPricesTable.insertRow();
             row.insertCell(0).textContent = item.product;
-            row.insertCell(1).textContent = `₪${parseFloat(item.price).toFixed(2)}`;
+            row.insertCell(1).textContent = `$${parseFloat(item.price).toFixed(2)}`;
             row.insertCell(2).textContent = item.store;
             row.insertCell(3).textContent = new Date(item.date).toLocaleDateString('he-IL');
             row.classList.add('best-price');
@@ -555,12 +555,12 @@
                   beginAtZero: true,
                   title: {
                     display: true,
-                    text: 'מחיר (₪)',
+                    text: 'מחיר ($)',
                     color: '#212529'
                   },
                   ticks: {
                     callback: function(value, index, values) {
-                      return '₪' + value.toFixed(2);
+                      return '$' + value.toFixed(2);
                     },
                     color: '#212529'
                   },
@@ -600,9 +600,9 @@
           const maxPrice = Math.max(...prices);
           const cheapestItem = productPrices.find(item => parseFloat(item.price) === minPrice);
     
-          document.getElementById('averagePrice').textContent = `₪${averagePrice.toFixed(2)}`;
-          document.getElementById('minPrice').textContent = `₪${minPrice.toFixed(2)}`;
-          document.getElementById('maxPrice').textContent = `₪${maxPrice.toFixed(2)}`;
+          document.getElementById('averagePrice').textContent = `$${averagePrice.toFixed(2)}`;
+          document.getElementById('minPrice').textContent = `$${minPrice.toFixed(2)}`;
+          document.getElementById('maxPrice').textContent = `$${maxPrice.toFixed(2)}`;
           document.getElementById('cheapestStore').textContent = cheapestItem ? cheapestItem.store : 'לא נמצא';
         }
     
