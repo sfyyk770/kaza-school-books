@@ -41,6 +41,34 @@ $(document).ready(function() {
         {id: 505, title: "World History: Ancient Civilizations", price: 27.99, image: defaultBookImage}
       ]
     };
+
+    const schoolsAndGrades = [
+        {
+            name: 'Lubavitch Yeshiva',
+            logo: 'public/uploads/logos/Lubavitch-Yeshiva-Logo-Color.png',
+            grades: ['1', '2', '3', '4', '5']
+        },
+        {
+            name: 'Ohleyi Torah',
+            logo: 'public/uploads/logos/Oholei-Torah-Logo-Color.png',
+            grades: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח']
+        },
+        {
+            name: 'Beis Rvika',
+            logo: 'public/uploads/logos/Beis-Rvika-Logo-Color.png',
+            grades: ['1st Grade', '2nd Grade', '3rd Grade', '4th Grade', '5th Grade', '6th Grade', '7th Grade', '8th Grade', '9th Grade', '10th Grade', '11th Grade', '12th Grade']
+        }
+    ]
+
+    // Build Schools List
+    schoolsAndGrades.forEach(school => {
+        let childrenHTML = `
+          <li data-value="${school.name}" data-logo="${school.logo}">
+            <img src="${school.logo}" alt="${school.name}" class="school-logo">
+            ${school.name}
+          </li>`;
+        $('#custom-dropdown-1 .dropdown-list').append(childrenHTML);
+    });
     
     // Load data from localStorage on page load
     const storedData = JSON.parse(localStorage.getItem('orderData'));
@@ -261,10 +289,6 @@ $(document).ready(function() {
     checkMobileAndSetListMode();
     $(window).resize(checkMobileAndSetListMode);
 
-  });
-  
-  
-  $(document).ready(function() {
     // Function to handle dropdown clicks
     function handleDropdownClick(dropdownId) {
       const dropdownButton = $(`#${dropdownId} .dropdown-button`);
@@ -287,14 +311,15 @@ $(document).ready(function() {
           const schoolSelect = $(`#${dropdownId} input[type="hidden"]`);
           schoolSelect.val(selectedValue);
 
-          // Update the school logo TOFIX
-          // const schoolLogo = dropdownButton.find('.school-logo');
-          // if (selectedLogo) {
-          //   schoolLogo.attr('src', selectedLogo);
-          //   schoolLogo.show();
-          // } else {
-          //   schoolLogo.hide();
-          // }
+            // Build Schools List
+            if (dropdownId === 'custom-dropdown-1') {
+                let thisSchool = schoolsAndGrades.find(school => school.name === selectedValue);
+                thisSchool.grades.forEach((garde, i) => {
+                    let childrenHTML = `
+                    <li data-value="${i}">${garde}</li>`;
+                    $('#custom-dropdown-2 .dropdown-list').append(childrenHTML);
+                });
+            }
 
           // Close the dropdown
           customDropdown.removeClass('open');
@@ -309,9 +334,7 @@ $(document).ready(function() {
       });
     }
 
-    // Call the function for each dropdown
-    // handleDropdownClick('custom-dropdown-1');
-    // handleDropdownClick('custom-dropdown-2');
+    // Call the function for all dropdowns
     document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
       handleDropdownClick(dropdown.id);
     });
