@@ -236,137 +236,173 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(function() {
-        const ordersData = [
-          {
-            id: "#1001",
-            customer: "John Doe",
-            email: "john.doe@example.com",
-            phone: "+1 (555) 123-4567",
-            date: "2023-05-01",
-            total: "$125.99",
-            status: "shipped",
-            shippingAddress: "123 Main St, Anytown, USA 12345",
-            items: [
-              { name: "The Great Gatsby", quantity: 1, price: "$15.99" },
-              { name: "To Kill a Mockingbird", quantity: 2, price: "$12.99" },
-              { name: "1984", quantity: 1, price: "$11.99" }
-            ]
-          },
-          {
-            id: "#1002",
-            customer: "Jane Smith",
-            email: "jane.smith@example.com",
-            phone: "+1 (555) 987-6543",
-            date: "2023-05-02",
-            total: "$89.50",
-            status: "processing",
-            shippingAddress: "456 Elm St, Somewhere, USA 67890",
-            items: [
-              { name: "Pride and Prejudice", quantity: 1, price: "$10.99" },
-              { name: "The Catcher in the Rye", quantity: 1, price: "$13.99" }
-            ]
-          },
-          {
-            id: "#1003",
-            customer: "Bob Johnson",
-            email: "bob.johnson@example.com",
-            phone: "+1 (555) 246-8135",
-            date: "2023-05-03",
-            total: "$210.75",
-            status: "delivered",
-            shippingAddress: "789 Oak St, Elsewhere, USA 13579",
-            items: [
-              { name: "The Hobbit", quantity: 1, price: "$14.99" },
-              { name: "Harry Potter and the Sorcerer's Stone", quantity: 1, price: "$24.99" },
-              { name: "The Lord of the Rings Trilogy", quantity: 1, price: "$39.99" }
-            ]
-          },
-          {
-            id: "#1004",
-            customer: "Alice Williams",
-            email: "alice.williams@example.com",
-            phone: "+1 (555) 369-2580",
-            date: "2023-05-04",
-            total: "$45.99",
-            status: "pending",
-            shippingAddress: "101 Pine St, Newtown, USA 24680",
-            items: [
-              { name: "The Alchemist", quantity: 1, price: "$12.99" },
-              { name: "The Little Prince", quantity: 1, price: "$9.99" }
-            ]
-          },
-          {
-            id: "#1005",
-            customer: "Charlie Brown",
-            email: "charlie.brown@example.com",
-            phone: "+1 (555) 147-2589",
-            date: "2023-05-05",
-            total: "$178.95",
-            status: "cancelled",
-            shippingAddress: "202 Maple Ave, Oldtown, USA 13579",
-            items: [
-              { name: "The Da Vinci Code", quantity: 1, price: "$14.99" },
-              { name: "The Hunger Games Trilogy", quantity: 1, price: "$29.99" },
-              { name: "The Chronicles of Narnia", quantity: 1, price: "$34.99" }
-            ]
-          }
-        ];
+        const API_URL = 'https://b7a0-2607-fb90-fe9b-b8a-e9a9-3731-5872-1c01.ngrok-free.app/api/orders';
+        // const API_URL = 'http://localhost:3030/api/orders';
+
+        // const ordersData = [
+        //   {
+        //     id: "#1001",
+        //     customer: "John Doe",
+        //     email: "john.doe@example.com",
+        //     phone: "+1 (555) 123-4567",
+        //     date: "2023-05-01",
+        //     total: "$125.99",
+        //     status: "shipped",
+        //     shippingAddress: "123 Main St, Anytown, USA 12345",
+        //     items: [
+        //       { name: "The Great Gatsby", quantity: 1, price: "$15.99" },
+        //       { name: "To Kill a Mockingbird", quantity: 2, price: "$12.99" },
+        //       { name: "1984", quantity: 1, price: "$11.99" }
+        //     ]
+        //   },
+        //   {
+        //     id: "#1002",
+        //     customer: "Jane Smith",
+        //     email: "jane.smith@example.com",
+        //     phone: "+1 (555) 987-6543",
+        //     date: "2023-05-02",
+        //     total: "$89.50",
+        //     status: "processing",
+        //     shippingAddress: "456 Elm St, Somewhere, USA 67890",
+        //     items: [
+        //       { name: "Pride and Prejudice", quantity: 1, price: "$10.99" },
+        //       { name: "The Catcher in the Rye", quantity: 1, price: "$13.99" }
+        //     ]
+        //   },
+        //   {
+        //     id: "#1003",
+        //     customer: "Bob Johnson",
+        //     email: "bob.johnson@example.com",
+        //     phone: "+1 (555) 246-8135",
+        //     date: "2023-05-03",
+        //     total: "$210.75",
+        //     status: "delivered",
+        //     shippingAddress: "789 Oak St, Elsewhere, USA 13579",
+        //     items: [
+        //       { name: "The Hobbit", quantity: 1, price: "$14.99" },
+        //       { name: "Harry Potter and the Sorcerer's Stone", quantity: 1, price: "$24.99" },
+        //       { name: "The Lord of the Rings Trilogy", quantity: 1, price: "$39.99" }
+        //     ]
+        //   },
+        //   {
+        //     id: "#1004",
+        //     customer: "Alice Williams",
+        //     email: "alice.williams@example.com",
+        //     phone: "+1 (555) 369-2580",
+        //     date: "2023-05-04",
+        //     total: "$45.99",
+        //     status: "pending",
+        //     shippingAddress: "101 Pine St, Newtown, USA 24680",
+        //     items: [
+        //       { name: "The Alchemist", quantity: 1, price: "$12.99" },
+        //       { name: "The Little Prince", quantity: 1, price: "$9.99" }
+        //     ]
+        //   },
+        //   {
+        //     id: "#1005",
+        //     customer: "Charlie Brown",
+        //     email: "charlie.brown@example.com",
+        //     phone: "+1 (555) 147-2589",
+        //     date: "2023-05-05",
+        //     total: "$178.95",
+        //     status: "cancelled",
+        //     shippingAddress: "202 Maple Ave, Oldtown, USA 13579",
+        //     items: [
+        //       { name: "The Da Vinci Code", quantity: 1, price: "$14.99" },
+        //       { name: "The Hunger Games Trilogy", quantity: 1, price: "$29.99" },
+        //       { name: "The Chronicles of Narnia", quantity: 1, price: "$34.99" }
+        //     ]
+        //   }
+        // ];
   
         let currentPage = 1;
         let rowsPerPage = 10;
         let sortColumn = 'id';
         let sortOrder = 'asc';
         let filters = {};
-  
-        function renderTable() {
-          const tableBody = $('#orders-table tbody');
-          tableBody.empty();
-  
-          let filteredData = ordersData.filter(order => {
-            return Object.keys(filters).every(key => {
-              if (!filters[key]) return true;
-              return order[key].toString().toLowerCase().includes(filters[key].toLowerCase());
+        let totalItems = 0;
+
+        function showLoader() {
+          $('.loader').css('display', 'flex');
+        }
+
+        function hideLoader() {
+          $('.loader').css('display', 'none');
+        }
+
+        async function fetchOrders() {
+          showLoader();
+          try {
+            const queryParams = new URLSearchParams({
+              page: currentPage,
+              limit: rowsPerPage,
+              sort: sortColumn,
+              order: sortOrder,
+              ...filters
             });
-          });
-  
-          filteredData.sort((a, b) => {
-            if (a[sortColumn] < b[sortColumn]) return sortOrder === 'asc' ? -1 : 1;
-            if (a[sortColumn] > b[sortColumn]) return sortOrder === 'asc' ? 1 : -1;
-            return 0;
-          });
-  
-          const startIndex = (currentPage - 1) * rowsPerPage;
-          const endIndex = startIndex + rowsPerPage;
-          const pageData = filteredData.slice(startIndex, endIndex);
-  
-          pageData.forEach(order => {
-            const row = `
-              <tr>
-                <td>${order.id}</td>
-                <td>${order.customer}</td>
-                <td>${order.email}</td>
-                <td>${order.phone}</td>
-                <td>${order.date}</td>
-                <td>${order.total}</td>
-                <td><span class="status-badge status-${order.status}">${order.status}</span></td>
-                <td class="action-buttons">
-                  <button class="btn btn-view" data-id="${order.id}"><i class="fas fa-eye"></i> View</button>
-                  <button class="btn btn-edit" data-id="${order.id}"><i class="fas fa-edit"></i> Edit</button>
-                  <button class="btn btn-delete" data-id="${order.id}"><i class="fas fa-trash"></i> Delete</button>
-                </td>
-              </tr>
-            `;
-            tableBody.append(row);
-          });
-  
-          updatePagination(filteredData.length);
+            
+            const response = await fetch(`${API_URL}?${queryParams}`);
+            console.log(response);
+            
+            if (!response.ok) {
+              throw new Error('API request failed');
+            }
+            const data = await response.json();
+            totalItems = data.total;
+            return data.orders;
+          } catch (error) {
+            console.error('Error fetching orders:', error);
+            // totalItems = fallbackOrdersData.length;
+            return hideLoader();
+          } finally {
+            hideLoader();
+          }
         }
   
-        function updatePagination(totalItems) {
+        async function renderTable() {
+          const orders = await fetchOrders();
+          console.log(orders);
+          
+          const tableBody = $('#orders-table tbody');
+          tableBody.empty();
+
+          if (orders?.length === 0) {
+            const noResultsRow = `
+              <tr>
+                <td colspan="8" class="no-results">No results found</td>
+              </tr>
+            `;
+            tableBody.append(noResultsRow);
+          } else {
+            orders.forEach(order => {
+              const row = `
+                <tr>
+                  <td>${order.id}</td>
+                  <td>${order.customer}</td>
+                  <td>${order.email}</td>
+                  <td>${order.phone}</td>
+                  <td>${order.date}</td>
+                  <td>${order.total}</td>
+                  <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+                  <td class="action-buttons">
+                    <button class="btn btn-view" data-id="${order.id}"><i class="fas fa-eye"></i> View</button>
+                    <button class="btn btn-edit" data-id="${order.id}"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn btn-delete" data-id="${order.id}"><i class="fas fa-trash"></i> Delete</button>
+                  </td>
+                </tr>
+              `;
+              tableBody.append(row);
+            });
+          }
+
+          updatePagination();
+        }
+
+        function updatePagination() {
           const totalPages = Math.ceil(totalItems / rowsPerPage);
           $('#page-info').text(`Page ${currentPage} of ${totalPages}`);
           $('#prev-page').toggleClass('disabled', currentPage === 1);
-          $('#next-page').toggleClass('disabled', currentPage === totalPages);
+          $('#next-page').toggleClass('disabled', currentPage === totalPages || totalItems === 0);
         }
   
         $('#prev-page').click(function(e) {
