@@ -1,0 +1,857 @@
+<html><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SchoolBookExpress Admin - Orders Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --accent-color: #f39c12;
+    --background-color: #ecf0f1;
+    --text-color: #2c3e50;
+    --white: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  header {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 20px 0;
+    box-shadow: var(--shadow);
+  }
+
+  .logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo i {
+    margin-right: 10px;
+  }
+
+  nav ul {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+  }
+
+  nav li {
+    margin-left: 20px;
+  }
+
+  nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 400;
+    transition: var(--transition);
+  }
+
+  nav a:hover {
+    color: var(--accent-color);
+  }
+
+  h1, h2, h3 {
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    display: inline-block;
+    background: var(--secondary-color);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .btn:hover {
+    background: #27ae60;
+    transform: translateY(-2px);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+  }
+
+  th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: var(--primary-color);
+    color: var(--white);
+  }
+
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 5px;
+  }
+
+  .action-buttons .btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+
+  .btn-view {
+    background: var(--primary-color);
+  }
+
+  .btn-view:hover {
+    background: #2980b9;
+  }
+
+  .btn-edit {
+    background: var(--accent-color);
+  }
+
+  .btn-edit:hover {
+    background: #d35400;
+  }
+
+  .btn-delete {
+    background: #e74c3c;
+  }
+
+  .btn-delete:hover {
+    background: #c0392b;
+  }
+
+  .filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+
+  .search-bar input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px 0 0 5px;
+    font-size: 1rem;
+  }
+
+  .search-bar .btn {
+    border-radius: 0 5px 5px 0;
+  }
+
+  .status-filter select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .pagination .btn {
+    margin: 0 5px;
+  }
+
+  .status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .status-pending { background-color: #f1c40f; color: #fff; }
+  .status-processing { background-color: #3498db; color: #fff; }
+  .status-shipped { background-color: #2ecc71; color: #fff; }
+  .status-delivered { background-color: #27ae60; color: #fff; }
+  .status-cancelled { background-color: #e74c3c; color: #fff; }
+
+  #rows-per-page {
+    padding: 5px;
+    margin-left: 10px;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 5px;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .order-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .order-details h3 {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  .order-items {
+    grid-column: 1 / -1;
+  }
+
+  .order-items table {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .order-items th, .order-items td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .order-items th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  #editOrderForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  #editOrderForm .form-group {
+    margin-bottom: 15px;
+  }
+
+  #editOrderForm label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  #editOrderForm input,
+  #editOrderForm select,
+  #editOrderForm textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  #editOrderForm textarea {
+    height: 100px;
+    resize: vertical;
+  }
+
+  #editOrderForm .full-width {
+    grid-column: 1 / -1;
+  }
+
+  #editOrderItems {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  #editOrderItems th,
+  #editOrderItems td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #editOrderItems th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  #editOrderItems input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+  }
+
+  #addItemBtn {
+    margin-top: 10px;
+  }
+
+  #updateOrderBtn {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/admin" class="logo"><i class="fas fa-book-open"></i> SchoolBookExpress Admin</a>
+      <nav>
+        <ul>
+          <li><a href="/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="/admin/books"><i class="fas fa-book"></i> Books</a></li>
+          <li><a href="/admin/orders"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+          <li><a href="/admin/users"><i class="fas fa-users"></i> Users</a></li>
+          <li><a href="/admin/settings"><i class="fas fa-cog"></i> Settings</a></li>
+          <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Manage Orders</h1>
+    
+    <div class="filters">
+      <div class="search-bar">
+        <input type="text" placeholder="Search orders...">
+        <button class="btn"><i class="fas fa-search"></i> Search</button>
+      </div>
+      <div class="status-filter">
+        <select>
+          <option value="">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div>
+        <label for="rows-per-page">Rows per page:</label>
+        <select id="rows-per-page">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+    </div>
+
+    <table id="orders-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table rows will be dynamically populated here -->
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <a href="#" class="btn" id="prev-page"><i class="fas fa-chevron-left"></i> Previous</a>
+      <span id="page-info">Page 1 of 1</span>
+      <a href="#" class="btn" id="next-page">Next <i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <!-- View Order Modal -->
+  <div id="viewOrderModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Order Details</h2>
+      <div id="orderDetails" class="order-details">
+        <!-- Order details will be dynamically populated here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Order Modal -->
+  <div id="editOrderModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Edit Order</h2>
+      <form id="editOrderForm">
+        <div class="form-group">
+          <label for="editOrderId">Order ID:</label>
+          <input type="text" id="editOrderId" readonly>
+        </div>
+        <div class="form-group">
+          <label for="editOrderDate">Order Date:</label>
+          <input type="date" id="editOrderDate">
+        </div>
+        <div class="form-group">
+          <label for="editCustomerName">Customer Name:</label>
+          <input type="text" id="editCustomerName">
+        </div>
+        <div class="form-group">
+          <label for="editCustomerEmail">Customer Email:</label>
+          <input type="email" id="editCustomerEmail">
+        </div>
+        <div class="form-group">
+          <label for="editCustomerPhone">Customer Phone:</label>
+          <input type="tel" id="editCustomerPhone">
+        </div>
+        <div class="form-group">
+          <label for="editStatus">Status:</label>
+          <select id="editStatus">
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="form-group full-width">
+          <label for="editShippingAddress">Shipping Address:</label>
+          <textarea id="editShippingAddress"></textarea>
+        </div>
+        <div class="form-group full-width">
+          <h3>Order Items</h3>
+          <table id="editOrderItems">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Order items will be dynamically populated here -->
+            </tbody>
+          </table>
+          <button type="button" id="addItemBtn" class="btn">Add Item</button>
+        </div>
+        <button type="submit" id="updateOrderBtn" class="btn">Update Order</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      const ordersData = [
+        {
+          id: "#1001",
+          customer: "John Doe",
+          email: "john.doe@example.com",
+          phone: "+1 (555) 123-4567",
+          date: "2023-05-01",
+          total: "$125.99",
+          status: "shipped",
+          shippingAddress: "123 Main St, Anytown, USA 12345",
+          items: [
+            { name: "The Great Gatsby", quantity: 1, price: "$15.99" },
+            { name: "To Kill a Mockingbird", quantity: 2, price: "$12.99" },
+            { name: "1984", quantity: 1, price: "$11.99" }
+          ]
+        },
+        {
+          id: "#1002",
+          customer: "Jane Smith",
+          email: "jane.smith@example.com",
+          phone: "+1 (555) 987-6543",
+          date: "2023-05-02",
+          total: "$89.50",
+          status: "processing",
+          shippingAddress: "456 Elm St, Somewhere, USA 67890",
+          items: [
+            { name: "Pride and Prejudice", quantity: 1, price: "$10.99" },
+            { name: "The Catcher in the Rye", quantity: 1, price: "$13.99" }
+          ]
+        },
+        {
+          id: "#1003",
+          customer: "Bob Johnson",
+          email: "bob.johnson@example.com",
+          phone: "+1 (555) 246-8135",
+          date: "2023-05-03",
+          total: "$210.75",
+          status: "delivered",
+          shippingAddress: "789 Oak St, Elsewhere, USA 13579",
+          items: [
+            { name: "The Hobbit", quantity: 1, price: "$14.99" },
+            { name: "Harry Potter and the Sorcerer's Stone", quantity: 1, price: "$24.99" },
+            { name: "The Lord of the Rings Trilogy", quantity: 1, price: "$39.99" }
+          ]
+        },
+        // Add more detailed order data here...
+      ];
+
+      // Check for local storage item
+      // const cartData = JSON.parse(localStorage.getItem('orderData')  ?? '{"children":[{"name":"kjnkfdvd","school":"lincoln-elementary","grade":"2"}],"cart":[{"id":203,"title":"Our Planet Earth","price":26.99,"child":"kjnkfdvd"},{"id":202,"title":"Reading Comprehension: Grade 2","price":17.99,"child":"kjnkfdvd"},{"id":201,"title":"Second Grade Math","price":22.99,"child":"kjnkfdvd"}],"formData":{"name":"jlkj","email":"aa@aa.com","phone":"jk","zip":"ljk","address":"jkl","city":"kl","state":"AL","paymentMethod":"credit-card-option","total":"79.99"}}');
+      const cartData = JSON.parse(localStorage.getItem('orderData'));
+      
+      
+      if (cartData) {
+        // Convert cartData to ordersData format
+        const newOrder = {
+          id: `#${Date.now()}`, // Generate a unique ID
+          customer: cartData.formData.name, // Get customer name from formData
+          email: cartData.formData.email, // Get customer email from formData
+          phone: cartData.formData.phone, // Get customer phone from formData
+          date: new Date().toISOString().slice(0, 10), // Get today's date
+          total: '$'+cartData.formData.total ?? '0.00', // Calculate total below
+          status: 'pending',
+          shippingAddress: `${cartData.formData.address}, ${cartData.formData.city}, ${cartData.formData.state} ${cartData.formData.zip}`, // Construct shipping address
+          items: cartData.cart.map(item => ({
+            name: item.title,
+            quantity: 1, // Assuming each item is ordered once
+            price: `$${item.price}`
+          }))
+        };
+
+        // Calculate total
+        // newOrder.total = newOrder.items.reduce((sum, item) => {
+        //   return sum + (parseFloat(item.price.replace('$', '')));
+        // }, 0);
+        // newOrder.total = `$${newOrder.total.toFixed(2)}`;
+
+        // Add the new order to ordersData
+        ordersData.push(newOrder);
+        ordersData.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort orders by date in descending order
+
+        // Clear local storage after adding to ordersData
+        localStorage.removeItem('cartData');
+      }
+
+      let currentPage = 1;
+      let rowsPerPage = 10;
+
+      function renderTable() {
+        const tableBody = $('#orders-table tbody');
+        tableBody.empty();
+
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const pageData = ordersData.slice(startIndex, endIndex);
+
+        pageData.forEach(order => {
+          const row = `
+            <tr>
+              <td>${order.id}</td>
+              <td>${order.customer}</td>
+              <td>${order.date}</td>
+              <td>${order.total}</td>
+              <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+              <td class="action-buttons">
+                <button class="btn btn-view" data-id="${order.id}"><i class="fas fa-eye"></i> View</button>
+                <button class="btn btn-edit" data-id="${order.id}"><i class="fas fa-edit"></i> Edit</button>
+                <button class="btn btn-delete" data-id="${order.id}"><i class="fas fa-trash"></i> Delete</button>
+              </td>
+            </tr>
+          `;
+          tableBody.append(row);
+        });
+
+        updatePagination();
+      }
+
+      function updatePagination() {
+        const totalPages = Math.ceil(ordersData.length / rowsPerPage);
+        $('#page-info').text(`Page ${currentPage} of ${totalPages}`);
+        $('#prev-page').toggleClass('disabled', currentPage === 1);
+        $('#next-page').toggleClass('disabled', currentPage === totalPages);
+      }
+
+      $('#prev-page').click(function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+        }
+      });
+
+      $('#next-page').click(function(e) {
+        e.preventDefault();
+        const totalPages = Math.ceil(ordersData.length / rowsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderTable();
+        }
+      });
+
+      $('#rows-per-page').change(function() {
+        rowsPerPage = parseInt($(this).val());
+        currentPage = 1;
+        renderTable();
+      });
+
+      $('.search-bar .btn').click(function() {
+        const searchTerm = $('.search-bar input').val().toLowerCase();
+        const filteredData = ordersData.filter(order => 
+          Object.values(order).some(value => 
+            value.toString().toLowerCase().includes(searchTerm)
+          )
+        );
+        renderFilteredTable(filteredData);
+      });
+
+      $('.status-filter select').change(function() {
+        const selectedStatus = $(this).val().toLowerCase();
+        const filteredData = selectedStatus ? 
+          ordersData.filter(order => order.status === selectedStatus) : 
+          ordersData;
+        renderFilteredTable(filteredData);
+      });
+
+      function renderFilteredTable(filteredData) {
+        const tableBody = $('#orders-table tbody');
+        tableBody.empty();
+
+        filteredData.forEach(order => {
+          const row = `
+            <tr>
+              <td>${order.id}</td>
+              <td>${order.customer}</td>
+              <td>${order.date}</td>
+              <td>${order.total}</td>
+              <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+              <td class="action-buttons">
+                <button class="btn btn-view" data-id="${order.id}"><i class="fas fa-eye"></i> View</button>
+                <button class="btn btn-edit" data-id="${order.id}"><i class="fas fa-edit"></i> Edit</button>
+                <button class="btn btn-delete" data-id="${order.id}"><i class="fas fa-trash"></i> Delete</button>
+              </td>
+            </tr>
+          `;
+          tableBody.append(row);
+        });
+
+        // Reset pagination for filtered results
+        currentPage = 1;
+        updatePagination();
+      }
+
+      // Initial render
+      renderTable();
+
+      // View Order
+      $(document).on('click', '.btn-view', function() {
+        const orderId = $(this).data('id');
+        const order = ordersData.find(o => o.id === orderId);
+        
+        const orderDetailsHTML = `
+          <div>
+            <h3>Order Information</h3>
+            <p><strong>Order ID:</strong> ${order.id}</p>
+            <p><strong>Date:</strong> ${order.date}</p>
+            <p><strong>Status:</strong> <span class="status-badge status-${order.status}">${order.status}</span></p>
+            <p><strong>Total:</strong> ${order.total}</p>
+          </div>
+          <div>
+            <h3>Customer Information</h3>
+            <p><strong>Name:</strong> ${order.customer}</p>
+            <p><strong>Email:</strong> ${order.email}</p>
+            <p><strong>Phone:</strong> ${order.phone}</p>
+          </div>
+          <div>
+            <h3>Shipping Address</h3>
+            <p>${order.shippingAddress}</p>
+          </div>
+          <div class="order-items">
+            <h3>Order Items</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${order.items.map(item => `
+                  <tr>
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.price}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+        
+        $('#orderDetails').html(orderDetailsHTML);
+        $('#viewOrderModal').css('display', 'block');
+      });
+
+      // Edit Order
+      $(document).on('click', '.btn-edit', function() {
+        const orderId = $(this).data('id');
+        const order = ordersData.find(o => o.id === orderId);
+        
+        $('#editOrderId').val(order.id);
+        $('#editOrderDate').val(order.date);
+        $('#editCustomerName').val(order.customer);
+        $('#editCustomerEmail').val(order.email);
+        $('#editCustomerPhone').val(order.phone);
+        $('#editStatus').val(order.status);
+        $('#editShippingAddress').val(order.shippingAddress);
+
+        const itemsTable = $('#editOrderItems tbody');
+        itemsTable.empty();
+        order.items.forEach((item, index) => {
+          itemsTable.append(`
+            <tr>
+              <td><input type="text" name="itemName[]" value="${item.name}"></td>
+              <td><input type="number" name="itemQuantity[]" value="${item.quantity}"></td>
+              <td><input type="text" name="itemPrice[]" value="${item.price}"></td>
+              <td><button type="button" class="btn btn-delete removeItem">Remove</button></td>
+            </tr>
+          `);
+        });
+
+        $('#editOrderModal').css('display', 'block');
+      });
+
+      // Add new item to order
+      $('#addItemBtn').click(function() {
+        $('#editOrderItems tbody').append(`
+          <tr>
+            <td><input type="text" name="itemName[]" value=""></td>
+            <td><input type="number" name="itemQuantity[]" value="1"></td>
+            <td><input type="text" name="itemPrice[]" value="$0.00"></td>
+            <td><button type="button" class="btn btn-delete removeItem">Remove</button></td>
+          </tr>
+        `);
+      });
+
+      // Remove item from order
+      $(document).on('click', '.removeItem', function() {
+        $(this).closest('tr').remove();
+      });
+
+      // Update Order
+      $('#editOrderForm').submit(function(e) {
+        e.preventDefault();
+        const orderId = $('#editOrderId').val();
+        const orderIndex = ordersData.findIndex(o => o.id === orderId);
+
+        if (orderIndex > -1) {
+          ordersData[orderIndex] = {
+            id: orderId,
+            customer: $('#editCustomerName').val(),
+            email: $('#editCustomerEmail').val(),
+            phone: $('#editCustomerPhone').val(),
+            date: $('#editOrderDate').val(),
+            status: $('#editStatus').val(),
+            shippingAddress: $('#editShippingAddress').val(),
+            items: [],
+            total: "$0.00" // This should be recalculated based on updated items
+          };
+
+          $('#editOrderItems tbody tr').each(function() {
+            const item = {
+              name: $(this).find('input[name="itemName[]"]').val(),
+              quantity: parseInt($(this).find('input[name="itemQuantity[]"]').val()),
+              price: $(this).find('input[name="itemPrice[]"]').val()
+            };
+            ordersData[orderIndex].items.push(item);
+          });
+
+          // Recalculate total
+          const total = ordersData[orderIndex].items.reduce((sum, item) => {
+            return sum + (parseFloat(item.price.replace('$', '')) * item.quantity);
+          }, 0);
+          ordersData[orderIndex].total = `$${total.toFixed(2)}`;
+
+          renderTable();
+          $('#editOrderModal').css('display', 'none');
+        }
+      });
+
+      // Delete Order
+      $(document).on('click', '.btn-delete', function() {
+        const orderId = $(this).data('id');
+        if (confirm(`Are you sure you want to delete Order ${orderId}?`)) {
+          const index = ordersData.findIndex(o => o.id === orderId);
+          if (index > -1) {
+            ordersData.splice(index, 1);
+            renderTable();
+          }
+        }
+      });
+
+      // Close modals
+      $('.close').click(function() {
+        $('.modal').css('display', 'none');
+      });
+
+      $(window).click(function(event) {
+        if ($(event.target).hasClass('modal')) {
+          $('.modal').css('display', 'none');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
