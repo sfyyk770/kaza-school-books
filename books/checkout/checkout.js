@@ -50,13 +50,23 @@ $(document).ready(function() {
       updateTotal();
     });
 
-    function updateTotal() {
-      let tax = SUBTOTAL * TAX_RATE;
-      let shippingCost = Number($('#shipping-cost-value').val()) ?? 0;
-      TOTAL = SUBTOTAL + tax + shippingCost;
+    async function updateTotal() {
+      const selectedOption = document.querySelector('.shipping-option.selected');
+      const shippingCostValue = selectedOption.dataset.cost;
 
+      let tax = SUBTOTAL * TAX_RATE;
+      
+      if (shippingCostValue > 0) {
+        const shipmentRates = await getShippoRates();
+        let shippingCost = Number(shipmentRates[1].amount);
+        
+        TOTAL = SUBTOTAL + tax + shippingCost;
+        $('#shipping-cost').text('$' + shippingCost.toFixed(2));
+        $('.order-shipping').show();
+      } else TOTAL = SUBTOTAL + tax, $('.order-shipping').hide();
+
+      $('#subtotal-cost').text('$' + SUBTOTAL.toFixed(2));
       $('#tax-amount').text('$' + tax.toFixed(2));
-    //   $('#shipping-cost').text('$' + shippingCost.toFixed(2));
       $('#total-cost').text('$' + TOTAL.toFixed(2));
     }
 
@@ -105,12 +115,7 @@ $(document).ready(function() {
 
         $('#shipping-cost-value').val(shippingCostValue);
         $('#shipping-cost-label').text(shippingCostLabel);
-        if (shippingCostValue === 0) $('#order-shipping').css('display', 'none');
-        updateTotal();
     }
-    
-    // Call the function initially to set the default shipping cost
-    updateShippingCost();
     
     // Add an event listener to update the shipping cost when a shipping option is selected
     document.querySelectorAll('.shipping-option').forEach(option => {
@@ -169,7 +174,6 @@ $(document).ready(function() {
         }
 
         const data = await response.json();
-        console.log(data.rates);
         return data.rates;
         
       } catch (error) {
@@ -177,9 +181,9 @@ $(document).ready(function() {
         return null;
       }
     }
-    getShippoRates();
 
     // Initial update
     updateOrderSummary();
     updateTotal();
+    updateShippingCost();
   });
