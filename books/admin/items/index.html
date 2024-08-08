@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SchoolBookExpress Admin - Orders Management</title>
+    <title>SchoolBookExpress Admin - Items Management</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
     <link href="../styles.css" rel="stylesheet">
@@ -17,7 +17,7 @@
           <ul>
             <li><a href="/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
             <li><a href="/admin/books"><i class="fas fa-book"></i> Books</a></li>
-            <li><a href="/admin/orders"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+            <li><a href="/admin/orders"><i class="fas fa-shopping-cart"></i> Items</a></li>
             <li><a href="/admin/users"><i class="fas fa-users"></i> Users</a></li>
             <li><a href="/admin/settings"><i class="fas fa-cog"></i> Settings</a></li>
             <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
@@ -27,7 +27,7 @@
     </header>
       
     <div class="container">
-      <h1>Manage Orders</h1>
+      <h1>Manage Items</h1>
       
       <div class="filters">
         <div class="search-bar">
@@ -60,12 +60,12 @@
         <thead>
           <tr>
             <th>
-              Order ID
+              Item ID
               <i class="fas fa-sort sort-icon" data-column="id"></i>
               <span class="column-filter">
                 <i class="fas fa-filter column-filter-icon" data-column="id"></i>
                 <div class="column-filter-dropdown">
-                  <input type="text" placeholder="Filter Order ID">
+                  <input type="text" placeholder="Filter Item ID">
                   <button>Apply</button>
                 </div>
               </span>
@@ -159,31 +159,31 @@
       </div>
     </div>
   
-    <!-- View Order Modal -->
+    <!-- View Item Modal -->
     <div id="viewOrderModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <h2>Order Details</h2>
+        <h2>Item Details</h2>
         <div id="orderDetails" class="order-details">
-          <!-- Order details will be dynamically populated here -->
+          <!-- Item details will be dynamically populated here -->
         </div>
         <button class="print-label-btn"><i class="fas fa-print"></i> Print Shipping Label</button>
       </div>
     </div>
   
-    <!-- Edit Order Modal -->
+    <!-- Edit Item Modal -->
     <div id="editOrderModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Edit Order</h2>
         <form id="editOrderForm">
           <div class="form-group">
-            <label for="editOrderId">Order ID:</label>
-            <input type="text" id="editOrderId" readonly>
+            <label for="editItemId">Item ID:</label>
+            <input type="text" id="editItemId" readonly>
           </div>
           <div class="form-group">
-            <label for="editOrderDate">Order Date:</label>
-            <input type="date" id="editOrderDate">
+            <label for="editItemDate">Item Date:</label>
+            <input type="date" id="editItemDate">
           </div>
           <div class="form-group">
             <label for="editCustomerName">Customer Name:</label>
@@ -236,86 +236,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(function() {
-        const API_URL = 'https://b7a0-2607-fb90-fe9b-b8a-e9a9-3731-5872-1c01.ngrok-free.app/api/orders';
-        // const API_URL = 'http://localhost:3030/api/orders';
+        const API_URL = 'https://b7a0-2607-fb90-fe9b-b8a-e9a9-3731-5872-1c01.ngrok-free.app/api/items';
+        // const API_URL = 'http://localhost:3030/api/items';
 
         const ordersData = [];
-        // const ordersData = [
-        //   {
-        //     id: "#1001",
-        //     customer: "John Doe",
-        //     email: "john.doe@example.com",
-        //     phone: "+1 (555) 123-4567",
-        //     date: "2023-05-01",
-        //     total: "$125.99",
-        //     status: "shipped",
-        //     shippingAddress: "123 Main St, Anytown, USA 12345",
-        //     items: [
-        //       { name: "The Great Gatsby", quantity: 1, price: "$15.99" },
-        //       { name: "To Kill a Mockingbird", quantity: 2, price: "$12.99" },
-        //       { name: "1984", quantity: 1, price: "$11.99" }
-        //     ]
-        //   },
-        //   {
-        //     id: "#1002",
-        //     customer: "Jane Smith",
-        //     email: "jane.smith@example.com",
-        //     phone: "+1 (555) 987-6543",
-        //     date: "2023-05-02",
-        //     total: "$89.50",
-        //     status: "processing",
-        //     shippingAddress: "456 Elm St, Somewhere, USA 67890",
-        //     items: [
-        //       { name: "Pride and Prejudice", quantity: 1, price: "$10.99" },
-        //       { name: "The Catcher in the Rye", quantity: 1, price: "$13.99" }
-        //     ]
-        //   },
-        //   {
-        //     id: "#1003",
-        //     customer: "Bob Johnson",
-        //     email: "bob.johnson@example.com",
-        //     phone: "+1 (555) 246-8135",
-        //     date: "2023-05-03",
-        //     total: "$210.75",
-        //     status: "delivered",
-        //     shippingAddress: "789 Oak St, Elsewhere, USA 13579",
-        //     items: [
-        //       { name: "The Hobbit", quantity: 1, price: "$14.99" },
-        //       { name: "Harry Potter and the Sorcerer's Stone", quantity: 1, price: "$24.99" },
-        //       { name: "The Lord of the Rings Trilogy", quantity: 1, price: "$39.99" }
-        //     ]
-        //   },
-        //   {
-        //     id: "#1004",
-        //     customer: "Alice Williams",
-        //     email: "alice.williams@example.com",
-        //     phone: "+1 (555) 369-2580",
-        //     date: "2023-05-04",
-        //     total: "$45.99",
-        //     status: "pending",
-        //     shippingAddress: "101 Pine St, Newtown, USA 24680",
-        //     items: [
-        //       { name: "The Alchemist", quantity: 1, price: "$12.99" },
-        //       { name: "The Little Prince", quantity: 1, price: "$9.99" }
-        //     ]
-        //   },
-        //   {
-        //     id: "#1005",
-        //     customer: "Charlie Brown",
-        //     email: "charlie.brown@example.com",
-        //     phone: "+1 (555) 147-2589",
-        //     date: "2023-05-05",
-        //     total: "$178.95",
-        //     status: "cancelled",
-        //     shippingAddress: "202 Maple Ave, Oldtown, USA 13579",
-        //     items: [
-        //       { name: "The Da Vinci Code", quantity: 1, price: "$14.99" },
-        //       { name: "The Hunger Games Trilogy", quantity: 1, price: "$29.99" },
-        //       { name: "The Chronicles of Narnia", quantity: 1, price: "$34.99" }
-        //     ]
-        //   }
-        // ];
-  
         let currentPage = 1;
         let rowsPerPage = 10;
         let sortColumn = 'id';
@@ -331,7 +255,7 @@
           $('.loader').css('display', 'none');
         }
 
-        async function fetchOrders() {
+        async function fetchItems() {
           showLoader();
           try {
             const queryParams = new URLSearchParams({
@@ -353,7 +277,7 @@
             return data.data;
           } catch (error) {
             console.error('Error fetching orders:', error);
-            // totalItems = fallbackOrdersData.length;
+            // totalItems = fallbackItemsData.length;
             return hideLoader();
           } finally {
             hideLoader();
@@ -361,7 +285,7 @@
         }
   
         async function renderTable() {
-          const orders = await fetchOrders();
+          const orders = await fetchItems();
           
           const tableBody = $('#orders-table tbody');
           tableBody.empty();
@@ -374,20 +298,19 @@
             `;
             tableBody.append(noResultsRow);
           } else {
-            orders.forEach(order => {
+            orders.forEach(item => {
               const row = `
                 <tr>
-                  <td>${order.serial}</td>
-                  <td>${order.customer}</td>
-                  <td>${order.email}</td>
-                  <td>${order.phone}</td>
-                  <td>${order.date}</td>
-                  <td>${'$'+order.prices.total}</td>
-                  <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+                  <td>${item.sku}</td>
+                  <td>${item.name}</td>
+                  <td>${item.email}</td>
+                  <td>${item.phone}</td>
+                  <td>${formatDate(item.createdAt)}</td>
+                  <td>${item.weight}</td>
+                  <td><span class="status-badge status-${item.status}">${item.status}</span></td>
                   <td class="action-buttons">
-                    <button class="btn btn-view" data-id="${order._id}"><i class="fas fa-eye"></i> View</button>
-                    <button class="btn btn-edit" data-id="${order._id}"><i class="fas fa-edit"></i> Edit</button>
-                    <button class="btn btn-delete" data-id="${order._id}"><i class="fas fa-trash"></i> Delete</button>
+                    <button class="btn btn-view" data-id="${item._id}"><i class="fas fa-eye"></i> View</button>
+                    <button class="btn btn-edit" data-id="${item._id}"><i class="fas fa-edit"></i> Edit</button>
                   </td>
                 </tr>
               `;
@@ -490,48 +413,27 @@
   
         $('#orders-table').on('click', '.btn-view', function() {
           const orderId = $(this).data('id');
-          const order = ordersData.find(o => o._id === orderId);
+          const item = ordersData.find(o => o._id === orderId);
           const modal = $('#viewOrderModal');
           const orderDetails = $('#orderDetails');
   
           orderDetails.html(`
             <div>
               <h3>Order Information</h3>
-              <p><strong>Order ID:</strong> ${order.serial}</p>
-              <p><strong>Date:</strong> ${order.date}</p>
-              <p><strong>Status:</strong> <span class="status-badge status-${order.status}">${order.status}</span></p>
-              <p><strong>Total:</strong> ${order.total}</p>
+              <p><strong>Order ID:</strong> ${item.serial}</p>
+              <p><strong>Date:</strong> ${item.date}</p>
+              <p><strong>Status:</strong> <span class="status-badge status-${item.status}">${item.status}</span></p>
+              <p><strong>Total:</strong> ${item.total}</p>
             </div>
             <div>
               <h3>Customer Information</h3>
-              <p><strong>Name:</strong> ${order.customer}</p>
-              <p><strong>Email:</strong> ${order.email}</p>
-              <p><strong>Phone:</strong> ${order.phone}</p>
+              <p><strong>Name:</strong> ${item.customer}</p>
+              <p><strong>Email:</strong> ${item.email}</p>
+              <p><strong>Phone:</strong> ${item.phone}</p>
             </div>
             <div>
               <h3>Shipping Address</h3>
-              <p>${order.shippingAddress}</p>
-            </div>
-            <div class="order-items">
-              <h3>Order Items</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${order.items.map(item => `
-                    <tr>
-                      <td>${item.name}</td>
-                      <td>${item.quantity}</td>
-                      <td>${item.price}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
+              <p>${item.shippingAddress}</p>
             </div>
           `);
   
@@ -540,29 +442,28 @@
   
         $('#orders-table').on('click', '.btn-edit', function() {
           const orderId = $(this).data('id');
-          const order = ordersData.find(o => o._id === orderId);
+          const item = ordersData.find(o => o._id === orderId);
           const modal = $('#editOrderModal');
   
-          $('#editOrderId').val(order.id);
-          $('#editOrderDate').val(order.date);
-          $('#editCustomerName').val(order.customer);
-          $('#editCustomerEmail').val(order.email);
-          $('#editCustomerPhone').val(order.phone);
-          $('#editStatus').val(order.status);
-          $('#editShippingAddress').val(order.shippingAddress);
+          $('#editOrderId').val(item.id);
+          $('#editOrderDate').val(item.date);
+          $('#editCustomerName').val(item.customer);
+          $('#editCustomerEmail').val(item.email);
+          $('#editCustomerPhone').val(item.phone);
+          $('#editStatus').val(item.status);
+          $('#editShippingAddress').val(item.shippingAddress);
   
           const itemsTable = $('#editOrderItems tbody');
           itemsTable.empty();
-          order.items.forEach((item, index) => {
-            itemsTable.append(`
-              <tr>
-                <td><input type="text" name="items[${index}][name]" value="${item.name}"></td>
-                <td><input type="number" name="items[${index}][quantity]" value="${item.quantity}"></td>
-                <td><input type="text" name="items[${index}][price]" value="${item.price}"></td>
-                <td><button type="button" class="btn btn-delete-item">Remove</button></td>
-              </tr>
-            `);
-          });
+          // item.items.forEach((item, index) => {
+          //   itemsTable.append(`
+          //     <tr>
+          //       <td><input type="text" name="items[${index}][name]" value="${item.name}"></td>
+          //       <td><input type="number" name="items[${index}][quantity]" value="${item.quantity}"></td>
+          //       <td><input type="text" name="items[${index}][price]" value="${item.price}"></td>
+          //     </tr>
+          //   `);
+          // });
   
           modal.css('display', 'block');
         });
@@ -575,35 +476,8 @@
               <td><input type="text" name="items[${newIndex}][name]"></td>
               <td><input type="number" name="items[${newIndex}][quantity]"></td>
               <td><input type="text" name="items[${newIndex}][price]"></td>
-              <td><button type="button" class="btn btn-delete-item">Remove</button></td>
             </tr>
           `);
-        });
-  
-        $('#editOrderItems').on('click', '.btn-delete-item', function() {
-          $(this).closest('tr').remove();
-        });
-  
-        $('#editOrderForm').submit(function(e) {
-          e.preventDefault();
-          // Here you would typically send the form data to the server
-          // For this example, we'll just close the modal
-          $('#editOrderModal').css('display', 'none');
-          alert('Order updated successfully!');
-        });
-  
-        $('#orders-table').on('click', '.btn-delete', function() {
-          const orderId = $(this).data('id');
-          if (confirm(`Are you sure you want to delete order ${orderId}?`)) {
-            // Here you would typically send a delete request to the server
-            // For this example, we'll just remove the order from our local data
-            const index = ordersData.findIndex(o => o.id === orderId);
-            if (index !== -1) {
-              ordersData.splice(index, 1);
-              renderTable();
-              alert('Order deleted successfully!');
-            }
-          }
         });
   
         $('.close').click(function() {
@@ -629,6 +503,11 @@
         });
   
         renderTable();
+
+        function formatDate(dateString) {
+          const date = new Date(dateString);
+          return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        }
       });
     </script>
   </body>
