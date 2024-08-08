@@ -92,7 +92,7 @@ $(document).ready(function() {
       const transformedOrder = transformOrderData(orderData);
       
       // Send the transformed data to the API
-      fetch('http://localhost:3030/api/orders', {
+      fetch('https://kaza-ecom-backend-scwto35wca-uc.a.run.app/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

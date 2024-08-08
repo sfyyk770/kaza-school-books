@@ -1,0 +1,460 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judaica World Books - Edit Book</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <link href="../../styles.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="icon" href="https://www.judaica-world.com/media/favicon/default/favicon_2__1.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="https://www.judaica-world.com/media/favicon/default/favicon_2__1.jpg" type="image/x-icon">
+    </head>
+    <body>
+      <header>
+        <div class="container">
+            <a href="/" class="logo"><img src="../../../public/uploads/judaica-world_logo.png" alt="judaica-world_logo" class="logo-image"></a>
+          <nav>
+            <ul>
+              <li><a href="/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+              <li><a href="/admin/books"><i class="fas fa-book"></i> Books</a></li>
+              <li><a href="/admin/orders"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+              <li><a href="/admin/users"><i class="fas fa-users"></i> Users</a></li>
+              <li><a href="/admin/settings"><i class="fas fa-cog"></i> Settings</a></li>
+              <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <div class="container">
+        <div class="edit-book-form">
+          <h1>Edit Book</h1>
+          <div class="tabs">
+            <button class="tab active" data-tab="general">General Info</button>
+            <button class="tab" data-tab="images">Images</button>
+            <button class="tab" data-tab="variants">Variants</button>
+            <button class="tab" data-tab="categories">Categories</button>
+            <button class="tab" data-tab="additional">Additional Info</button>
+          </div>
+          <form id="editBookForm" enctype="multipart/form-data">
+            <div id="generalTab" class="tab-content active">
+              <div class="form-row">
+                <div class="form-col">
+                  <label for="title">Title</label>
+                  <input type="text" id="title" name="title" value="" required>
+                </div>
+                <div class="form-col">
+                  <label for="author">Author</label>
+                  <input type="text" id="author" name="author" value="">
+                </div>
+                <div class="form-col">
+                  <label for="isbn">ISBN</label>
+                  <input type="text" id="isbn" name="isbn" value="">
+                </div>
+              </div>
+    
+              <div class="form-row">
+                <div class="form-col">
+                  <label for="status">Status</label>
+                  <select id="status" name="status" required>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
+                    <option value="OUT_OF_STOCK">Out of Stock</option>
+                    <option value="COMING">Coming Soon</option>
+                  </select>
+                </div>
+              </div>
+    
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" required></textarea>
+              </div>
+            </div>
+    
+            <div id="imagesTab" class="tab-content">
+              <div class="form-group">
+                <label>Book Images</label>
+                <div id="imageInputs">
+                  
+                </div>
+                <button type="button" class="add-image-btn">+ Add Image</button>
+                <div class="image-preview" id="imagePreview">
+                  
+                </div>
+              </div>
+            </div>
+    
+            <div id="variantsTab" class="tab-content">
+              <div class="variations-container">
+                <h2>Book Variations</h2>
+                <div id="variationsContainer">
+                  
+                </div>
+                <button type="button" class="add-variation-btn">+ Add Variation</button>
+              </div>
+            </div>
+    
+            <div id="categoriesTab" class="tab-content">
+              <h2>Book Categories</h2>
+              <div class="category-tree">
+                <ul>
+                  <li>
+                    <span class="toggle"></span>
+                    <input type="checkbox" id="fiction" name="category[]" value="fiction">
+                    <label for="fiction">Fiction</label>
+                    <ul>
+                      <li>
+                        <input type="checkbox" id="classics" name="category[]" value="classics">
+                        <label for="classics">Classics</label>
+                      </li>
+                      <li>
+                        <input type="checkbox" id="contemporary" name="category[]" value="contemporary">
+                        <label for="contemporary">Contemporary</label>
+                      </li>
+                      <li>
+                        <input type="checkbox" id="mystery" name="category[]" value="mystery">
+                        <label for="mystery">Mystery</label>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="toggle"></span>
+                    <input type="checkbox" id="non-fiction" name="category[]" value="non-fiction">
+                    <label for="non-fiction">Non-Fiction</label>
+                    <ul>
+                      <li>
+                        <input type="checkbox" id="biography" name="category[]" value="biography">
+                        <label for="biography">Biography</label>
+                      </li>
+                      <li>
+                        <input type="checkbox" id="history" name="category[]" value="history">
+                        <label for="history">History</label>
+                      </li>
+                      <li>
+                        <input type="checkbox" id="science" name="category[]" value="science">
+                        <label for="science">Science</label>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="toggle"></span>
+                    <input type="checkbox" id="children" name="category[]" value="children">
+                    <label for="children">Children's</label>
+                    <ul>
+                      <li>
+                        <input type="checkbox" id="picture-books" name="category[]" value="picture-books">
+                        <label for="picture-books">Picture Books</label>
+                      </li>
+                      <li>
+                        <input type="checkbox" id="middle-grade" name="category[]" value="middle-grade">
+                        <label for="middle-grade">Middle Grade</label>
+                      </li>
+                      <li>
+                        <input type="checkbox" id="young-adult" name="category[]" value="young-adult">
+                        <label for="young-adult">Young Adult</label>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+    
+            <div id="additionalTab" class="tab-content">
+              <h2>Additional Information</h2>
+              <div class="additional-info">
+                <!-- <div class="additional-info-item">
+                    <input type="text" name="additionalInfoKey[]" placeholder="Key" value="Publication Date">
+                    <input type="text" name="additionalInfoValue[]" placeholder="Value" value="July 11, 1960">
+                    <button type="button" class="remove-info-btn">-</button>
+                  </div>
+                  <div class="additional-info-item">
+                    <input type="text" name="additionalInfoKey[]" placeholder="Key" value="Pages">
+                    <input type="text" name="additionalInfoValue[]" placeholder="Value" value="281">
+                    <button type="button" class="remove-info-btn">-</button>
+                  </div>
+                  <div class="additional-info-item">
+                    <input type="text" name="additionalInfoKey[]" placeholder="Key" value="Language">
+                    <input type="text" name="additionalInfoValue[]" placeholder="Value" value="English">
+                    <button type="button" class="remove-info-btn">-</button>
+                  </div> -->
+              </div>
+              <button type="button" class="add-info-btn">+ Add Info</button>
+            </div>
+    
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+              <a href="/admin/books" class="btn btn-cancel"><i class="fas fa-times"></i> Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <footer>
+        <div class="container">
+          <p style="margin: 0;">&copy; 2024 Judaica World. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+      <script>
+        $(document).ready(function() {
+          fetchCategoryData();
+          fetchBookData(window.location.href.split('id=')[1]);
+
+          $('.tab').click(function() {
+            $('.tab').removeClass('active');
+            $('.tab-content').removeClass('active');
+            $(this).addClass('active');
+            $('#' + $(this).data('tab') + 'Tab').addClass('active');
+          });
+    
+          $('#editBookForm').submit(function(e) {
+            e.preventDefault();
+            const id = window.location.href.split('id=')[1];
+
+            let imageInputs = $('#imageInputs input[type="file"]');
+            let fileValues = [];
+            $('input[name="bookImages[]"]').each(function() {
+              let imageUrl = $(this).val();
+              if (imageUrl) fileValues.push(imageUrl);
+            });
+            
+            let obj = { title: $('#title').val(), description: $('#description').val(), status: $('#status').val(), isbn: $('#isbn').val(), images: fileValues }
+
+            $.ajax({
+              url: `https://kaza-ecom-backend-scwto35wca-uc.a.run.app/api/items/${id}`,
+              method: 'PATCH',
+              data: obj,
+              success: function(data) {
+                alert('Book updated successfully!');
+                // window.location.href = '/admin/items';
+              },
+              error: function(error) {
+                console.error('Error updating book:', error);
+                alert('An error occurred while updating the book.');
+              }
+            });
+          });
+    
+          function updateImagePreviews() {
+            $('#imagePreview').empty();
+            $('input[name="bookImages[]"]').each(function() {
+              let imageUrl = $(this).val();
+              if (imageUrl) {
+                $('#imagePreview').append(`<img src="${imageUrl}" alt="Book image preview">`);
+              }
+            });
+          }
+    
+          $(document).on('input', 'input[name="bookImages[]"]', updateImagePreviews);
+    
+          $('.add-image-btn').click(function() {
+            let newInput = `
+              <div class="image-input">
+                <input type="text" name="bookImages[]" placeholder="Enter image URL">
+                <input type="file" name="bookImageFiles[]" accept="image/*">
+                <button type="button" class="upload-btn">Upload</button>
+                <button type="button" class="remove-image-btn">-</button>
+              </div>
+            `;
+            $('#imageInputs').append(newInput);
+          });
+    
+          $(document).on('click', '.remove-image-btn', function() {
+            $(this).closest('.image-input').remove();
+            updateImagePreviews();
+          });
+    
+          $(document).on('click', '.upload-btn', function() {
+            $(this).siblings('input[type="file"]').click();
+          });
+    
+          $(document).on('change', 'input[type="file"]', function() {
+            let file = this.files[0];
+            let reader = new FileReader();
+            let textInput = $(this).siblings('input[type="text"]');
+            
+            reader.onload = function(e) {
+              textInput.val(e.target.result);
+              updateImagePreviews();
+            }
+            
+            if (file) {
+              reader.readAsDataURL(file);
+            }
+          });
+    
+          // Book Variations
+          let variationCount = 1;
+    
+          $('.add-variation-btn').click(function() {
+            variationCount++;
+            let newVariation = `
+              <div class="variation">
+                <div class="variation-header">
+                  <span class="variation-title">Variation ${variationCount}</span>
+                  <button type="button" class="remove-variation-btn">Remove</button>
+                </div>
+                <div class="form-row">
+                  <div class="form-col">
+                    <label for="variationType${variationCount}">Type</label>
+                    <select name="variationType[]" required>
+                      <option value="paperback">Paperback</option>
+                      <option value="hardcover">Hardcover</option>
+                      <option value="ebook">E-book</option>
+                      <option value="audiobook">Audiobook</option>
+                    </select>
+                  </div>
+                  <div class="form-col">
+                    <label for="variationPrice${variationCount}">Price ($)</label>
+                    <input type="number" name="variationPrice[]" step="0.01" required>
+                  </div>
+                  <div class="form-col">
+                    <label for="variationStock${variationCount}">Stock</label>
+                    <input type="number" name="variationStock[]" required>
+                  </div>
+                </div>
+              </div>
+            `;
+            $('#variationsContainer').append(newVariation);
+          });
+    
+          $(document).on('click', '.remove-variation-btn', function() {
+            $(this).closest('.variation').remove();
+          });
+    
+          // Additional Info
+          $('.add-info-btn').click(function() {
+            let newInfo = `
+              <div class="additional-info-item">
+                <input type="text" name="additionalInfoKey[]" placeholder="Key">
+                <input type="text" name="additionalInfoValue[]" placeholder="Value">
+                <button type="button" class="remove-info-btn">-</button>
+              </div>
+            `;
+            $('.additional-info').append(newInfo);
+          });
+    
+          $(document).on('click', '.remove-info-btn', function() {
+            $(this).closest('.additional-info-item').remove();
+          });
+    
+          // Category Tree
+          $('.category-tree .toggle').click(function() {
+            $(this).toggleClass('open');
+            $(this).siblings('ul').toggleClass('open');
+          });
+    
+          $('.category-tree input[type="checkbox"]').change(function() {
+            let $this = $(this);
+            let $childCheckboxes = $this.closest('li').find('ul input[type="checkbox"]');
+            
+            if ($this.is(':checked')) {
+              $childCheckboxes.prop('checked', true);
+              $this.parents('ul').siblings('input[type="checkbox"]').prop('checked', true);
+            } else {
+              $childCheckboxes.prop('checked', false);
+            }
+          });
+    
+          // Fetch data from API and update form fields
+          function fetchBookData(bookId) {
+            $.ajax({
+              url: `https://kaza-ecom-backend-scwto35wca-uc.a.run.app/api/items/${bookId}`,
+              method: 'GET',
+              success: function(data) {
+                // Update form fields with data from API
+                $('#title').val(data.title);
+                $('#author').val(data.author);
+                $('#isbn').val(data.isbn);
+                $('#status').val(data.status);
+                $('#description').val(data.description);
+                
+                // Update images
+                $('#imageInputs').empty();
+                data.images.forEach(imageUrl => {
+                  let newInput = `
+                    <div class="image-input">
+                      <input type="text" name="bookImages[]" placeholder="Enter image URL" value="${imageUrl}">
+                      <input type="file" name="bookImageFiles[]" accept="image/*">
+                      <button type="button" class="upload-btn">Upload</button>
+                      <button type="button" class="remove-image-btn">-</button>
+                    </div>
+                  `;
+                  $('#imageInputs').append(newInput);
+                });
+                updateImagePreviews();
+                
+                // Update variations
+                $('#variationsContainer').empty();
+                data.variations?.forEach((variation, index) => {
+                  let newVariation = `
+                    <div class="variation">
+                      <div class="variation-header">
+                        <span class="variation-title">Variation ${index + 1}</span>
+                        <button type="button" class="remove-variation-btn">Remove</button>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-col">
+                          <label for="variationType${index + 1}">Type</label>
+                          <select name="variationType[]" required>
+                            <option value="paperback" ${variation.type === 'paperback' ? 'selected' : ''}>Paperback</option>
+                            <option value="hardcover" ${variation.type === 'hardcover' ? 'selected' : ''}>Hardcover</option>
+                            <option value="ebook" ${variation.type === 'ebook' ? 'selected' : ''}>E-book</option>
+                            <option value="audiobook" ${variation.type === 'audiobook' ? 'selected' : ''}>Audiobook</option>
+                          </select>
+                        </div>
+                        <div class="form-col">
+                          <label for="variationPrice${index + 1}">Price ($)</label>
+                          <input type="number" name="variationPrice[]" step="0.01" value="${variation.price}" required>
+                        </div>
+                        <div class="form-col">
+                          <label for="variationStock${index + 1}">Stock</label>
+                          <input type="number" name="variationStock[]" value="${variation.stock}" required>
+                        </div>
+                                          </div>
+                    </div>
+                  `;
+                  $('#variationsContainer').append(newVariation);
+                });
+                
+                // Update categories
+                $('.category-tree input[type="checkbox"]').each(function() {
+                  $(this).prop('checked', false);
+                });
+                data.categories.forEach(category => {
+                  $(`#${category}`).prop('checked', true);
+                });
+                
+                // Update additional info
+                $('.additional-info').empty();
+                data.additionalInfo?.forEach((info, index) => {
+                  let newInfo = `
+                    <div class="additional-info-item">
+                      <input type="text" name="additionalInfoKey[]" placeholder="Key" value="${info.key}">
+                      <input type="text" name="additionalInfoValue[]" placeholder="Value" value="${info.value}">
+                      <button type="button" class="remove-info-btn">-</button>
+                    </div>
+                  `;
+                  $('.additional-info').append(newInfo);
+                });
+              }
+            });
+          }
+          
+          function fetchCategoryData() {
+            $.ajax({
+              url: `https://kaza-ecom-backend-scwto35wca-uc.a.run.app/api/categories/`,
+              method: 'GET',
+              success: function(data) {
+                console.log(data);
+                
+              }
+            });
+          }
+        });
+      </script>
+    </body>
+</html>
+

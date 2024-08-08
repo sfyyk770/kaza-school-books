@@ -115,13 +115,13 @@ $(document).ready(function() {
       } else {
         children.forEach((child, index) => {
           childrenHTML += `
-            <div class="child-info fade-in">
+            <div id="child-${index}" class="child-info fade-in">
               <div class="child-header">
                 <div class="child-details">
                   <h3>${child.name}</h3>
                   <p><i class="fas fa-school child-info-icon"></i> School: ${child.school}</p>
                   <p><i class="fas fa-graduation-cap child-info-icon"></i> Grade: ${child.grade}</p>
-                  <p><i class="fas fa-list-ol child-info-icon"></i> Books: ${child.booksCount ?? 0}</p>
+                  <p><i class="fas fa-list-ol child-info-icon"></i> Books: <span class="child-books-count">${child.booksCount}</span></p>
                 </div>
                 <div class="child-actions">
                   <button class="btn toggle-books" data-index="${index}"><i class="fas fa-book"></i> Load Books</button>
@@ -204,6 +204,7 @@ $(document).ready(function() {
     function updateCart() {
       let cartHTML = '';
       let total = 0;
+      const childBookCounts = {};
       
       if (cart.length === 0) {
         $('#cart').hide();
@@ -213,9 +214,12 @@ $(document).ready(function() {
         cart.forEach(item => {
           if (!childTotals[item.child]) {
             childTotals[item.child] = 0;
+            childBookCounts[item.child] = 0;
           }
           childTotals[item.child] += parseFloat(item.price);
           total += parseFloat(item.price);
+          childBookCounts[item.child]++;
+          $('.child-books-count').html(childBookCounts[item.child]);
         });
         
         Object.keys(childTotals).forEach(child => {
@@ -267,6 +271,10 @@ $(document).ready(function() {
       $(this).closest('.child-info').find('.book-list').addClass('list-mode');
     });
     
+    children.forEach(child => {
+      child.booksCount = childBookCounts[child.name] || 0;
+    });
+
     // Initialize the children list
     updateChildrenList();
     // Initialize the cart
