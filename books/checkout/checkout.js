@@ -1,6 +1,8 @@
 $(document).ready(function() {
     // let orderData = JSON.parse(localStorage.getItem('orderData') ?? '{"children":[{"name":"kjnkfdvd","school":"roosevelt-high","grade":"2"}],"cart":[{"id":203,"title":"Our Planet Earth","price":26.99,"child":"kjnkfdvd"},{"id":202,"title":"Reading Comprehension: Grade 2","price":17.99,"child":"kjnkfdvd"}]}');
     let orderData = JSON.parse(localStorage.getItem('orderData'));
+    console.log(localStorage.getItem('orderData'));
+    
     const TAX_RATE = 0.08875; // 8.875%
     let SUBTOTAL = 0;
     let TOTAL = 0;
@@ -86,8 +88,20 @@ $(document).ready(function() {
       // Add form data to orderData
       orderData.formData = formData;
 
-      // Update orderData in localStorage
-      localStorage.setItem('orderData', JSON.stringify(orderData));
+      // Usage
+      const transformedOrder = transformOrderData(orderData);
+      
+      // Send the transformed data to the API
+      fetch('http://localhost:3030/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(transformedOrder)
+      })
+      .then(response => response.json())
+      .then(data => console.log('Success:', data))
+      .catch((error) => console.error('Error:', error));
 
       // Generate order number
       let orderNumber = 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
@@ -181,6 +195,50 @@ $(document).ready(function() {
         return null;
       }
     }
+
+    function transformOrderData(orderData) {
+        // Helper function to calculate total price
+        const calculateTotal = (cart) => {
+          return cart.reduce((total, item) => total + item.price, 0);
+        };
+      
+        // Transform the data
+        const transformedData = {
+          status: 'PENDING',
+          shipping_included: true,
+          items: orderData.cart.map(item => ({
+            type: 'BOOK',
+            sku: `${item.id}`,
+            description: item.title,
+            size: 'Standard',
+            weight: 1.0,
+            img_url: 'https://example.com/default-book.jpg'
+          })),
+          address: {
+            address: orderData.formData.address,
+            city: orderData.formData.city,
+            lat: 0, // You'll need to implement geocoding to get actual coordinates
+            lng: 0, // You'll need to implement geocoding to get actual coordinates
+            floor: '1',
+            state: orderData.formData.state
+          },
+          customer_data: {
+            name: orderData.formData.name,
+            phone: orderData.formData.phone,
+            email: orderData.formData.email
+          },
+          customer_notes: '',
+          prices: {
+            subtotal: calculateTotal(orderData.cart),
+            shipping: 0, // You may want to calculate this based on your business logic
+            discount: 0,
+            total: calculateTotal(orderData.cart) // Add shipping if applicable
+          },
+          total_distance: 0 // You'll need to calculate this based on delivery address
+        };
+      
+        return transformedData;
+      }
 
     // Initial update
     updateOrderSummary();
