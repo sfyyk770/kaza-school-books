@@ -15,11 +15,11 @@
         <a href="/" class="logo"><img src="../../public/uploads/judaica-world_logo.png" alt="judaica-world_logo" class="logo-image"></a>
         <nav>
           <ul>
-            <li><a href="/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="/admin/books"><i class="fas fa-book"></i> Books</a></li>
-            <li><a href="/admin/orders"><i class="fas fa-shopping-cart"></i> Items</a></li>
-            <li><a href="/admin/users"><i class="fas fa-users"></i> Users</a></li>
-            <li><a href="/admin/settings"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="/admin/orders"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+            <li><a href="/admin/items"><i class="fas fa-book"></i> Items</a></li>
+            <!-- <li><a href="/admin/users"><i class="fas fa-users"></i> Users</a></li>
+            <li><a href="/admin/settings"><i class="fas fa-cog"></i> Settings</a></li> -->
             <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
           </ul>
         </nav>
@@ -442,30 +442,31 @@
   
         $('#orders-table').on('click', '.btn-edit', function() {
           const orderId = $(this).data('id');
-          const item = ordersData.find(o => o._id === orderId);
-          const modal = $('#editOrderModal');
+          window.location.href = `/admin/items/edit?id=${orderId}`;
+          // const item = ordersData.find(o => o._id === orderId);
+          // const modal = $('#editOrderModal');
   
-          $('#editOrderId').val(item.id);
-          $('#editOrderDate').val(item.date);
-          $('#editCustomerName').val(item.customer);
-          $('#editCustomerEmail').val(item.email);
-          $('#editCustomerPhone').val(item.phone);
-          $('#editStatus').val(item.status);
-          $('#editShippingAddress').val(item.shippingAddress);
+          // $('#editOrderId').val(item.id);
+          // $('#editOrderDate').val(item.date);
+          // $('#editCustomerName').val(item.customer);
+          // $('#editCustomerEmail').val(item.email);
+          // $('#editCustomerPhone').val(item.phone);
+          // $('#editStatus').val(item.status);
+          // $('#editShippingAddress').val(item.shippingAddress);
   
-          const itemsTable = $('#editOrderItems tbody');
-          itemsTable.empty();
-          // item.items.forEach((item, index) => {
-          //   itemsTable.append(`
-          //     <tr>
-          //       <td><input type="text" name="items[${index}][name]" value="${item.name}"></td>
-          //       <td><input type="number" name="items[${index}][quantity]" value="${item.quantity}"></td>
-          //       <td><input type="text" name="items[${index}][price]" value="${item.price}"></td>
-          //     </tr>
-          //   `);
-          // });
+          // const itemsTable = $('#editOrderItems tbody');
+          // itemsTable.empty();
+          // // item.items.forEach((item, index) => {
+          // //   itemsTable.append(`
+          // //     <tr>
+          // //       <td><input type="text" name="items[${index}][name]" value="${item.name}"></td>
+          // //       <td><input type="number" name="items[${index}][quantity]" value="${item.quantity}"></td>
+          // //       <td><input type="text" name="items[${index}][price]" value="${item.price}"></td>
+          // //     </tr>
+          // //   `);
+          // // });
   
-          modal.css('display', 'block');
+          // modal.css('display', 'block');
         });
   
         $('#addItemBtn').click(function() {

@@ -15,11 +15,11 @@
             <a href="/" class="logo"><img src="../../../public/uploads/judaica-world_logo.png" alt="judaica-world_logo" class="logo-image"></a>
           <nav>
             <ul>
-              <li><a href="/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-              <li><a href="/admin/books"><i class="fas fa-book"></i> Books</a></li>
+              <li><a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
               <li><a href="/admin/orders"><i class="fas fa-shopping-cart"></i> Orders</a></li>
-              <li><a href="/admin/users"><i class="fas fa-users"></i> Users</a></li>
-              <li><a href="/admin/settings"><i class="fas fa-cog"></i> Settings</a></li>
+              <li><a href="/admin/items"><i class="fas fa-book"></i> Items</a></li>
+              <!-- <li><a href="/admin/users"><i class="fas fa-users"></i> Users</a></li>
+              <li><a href="/admin/settings"><i class="fas fa-cog"></i> Settings</a></li> -->
               <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
           </nav>
@@ -228,7 +228,7 @@
               data: obj,
               success: function(data) {
                 alert('Book updated successfully!');
-                // window.location.href = '/admin/items';
+                window.location.href = '/admin/items';
               },
               error: function(error) {
                 console.error('Error updating book:', error);
