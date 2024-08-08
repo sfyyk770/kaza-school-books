@@ -44,18 +44,18 @@ $(document).ready(function() {
 
     const schoolsAndGrades = [
         {
-            name: 'Lubavitch Yeshiva',
-            logo: 'public/uploads/logos/Lubavitch-Yeshiva-Logo-Color.png',
-            grades: ['1', '2', '3', '4', '5']
+            name: 'ULY Crown',
+            logo: 'public/uploads/logos/uly-logo.png',
+            grades: ['פרי וואן איי', 'כיתה א׳', 'כיתה ב׳', 'כיתה ג׳', 'כיתה ד׳', 'כיתה ה׳', 'כיתה ו׳', 'כיתה ז׳', 'כיתה ח׳' ]
         },
         {
             name: 'Ohleyi Torah',
             logo: 'public/uploads/logos/Oholei-Torah-Logo-Color.png',
-            grades: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח']
+            grades: ['כיתה ד׳', 'כיתה ה׳', 'כיתה ו׳', 'כיתה ז׳', 'כיתה ח׳']
         },
         {
-            name: 'Beis Rvika',
-            logo: 'public/uploads/logos/Beis-Rvika-Logo-Color.png',
+            name: 'Beis Rivka',
+            logo: 'public/uploads/logos/br-logo.png',
             grades: ['1st Grade', '2nd Grade', '3rd Grade', '4th Grade', '5th Grade', '6th Grade', '7th Grade', '8th Grade', '9th Grade', '10th Grade', '11th Grade', '12th Grade']
         }
     ]
@@ -313,6 +313,7 @@ $(document).ready(function() {
 
             // Build Schools List
             if (dropdownId === 'custom-dropdown-1') {
+                $('#custom-dropdown-2 .dropdown-list').html('<li data-value="">Select Grade</li>')
                 let thisSchool = schoolsAndGrades.find(school => school.name === selectedValue);
                 thisSchool.grades.forEach((garde, i) => {
                     let childrenHTML = `
