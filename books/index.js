@@ -156,28 +156,36 @@ $(document).ready(function() {
       updateCart();
     }
     
-    $(document).on('click', '.toggle-books', function() {
+    $(document).on('click', '.toggle-books', async function() {
       const childIndex = $(this).data('index');
       const $childBooks = $(`#child-books-${childIndex}`);
       const $button = $(this);
       
+      // Get Books Fro API
+      const response = await fetch(`https://kaza-ecom-backend-scwto35wca-uc.a.run.app/api/items`);
+      // const response = await fetch(`https://kaza-ecom-backend-scwto35wca-uc.a.run.app/api/items?school=${children[childIndex].school}&grade=${children[childIndex].grade}`);
+      if (!response.ok) console.log(response);
+      const data = await response.json();
+      // totalItems = data.total;
+
       if ($childBooks.hasClass('active')) {
         $childBooks.removeClass('active');
         $button.html('<i class="fas fa-book"></i> Load Books');
       } else {
         const child = children[childIndex];
-        const books = booksByGrade[child.grade];
+        // const books = booksByGrade[child.grade];
+        const books = data.data;
         
         let bookHTML = '<div class="book-list">';
         books.forEach(book => {
-          const isInCart = cart.some(item => item.id === book.id && item.child === child.name);
+          const isInCart = cart.some(item => item._id === book._id && item.child === child.name);
           bookHTML += `
             <div class="book fade-in">
-              <img src="${book.image}" alt="${book.title}" class="book-image">
+              <img src="${book.images?.[0] ?? defaultBookImage}" alt="${book.title}" class="book-image">
               <div class="book-info">
                 <h3>${book.title}</h3>
                 <p>$${book.price}</p>
-                <button class="btn ${isInCart ? 'btn-remove' : ''} add-to-cart" data-id="${book.id}" data-title="${book.title}" data-price="${book.price}" data-child="${child.name}">
+                <button class="btn ${isInCart ? 'btn-remove' : ''} add-to-cart" data-id="${book._id}" data-title="${book.title}" data-price="${book.price}" data-child="${child.name}">
                   <i class="fas ${isInCart ? 'fa-trash-alt' : 'fa-cart-plus'}"></i> ${isInCart ? 'Remove' : 'Add'}
                 </button>
               </div>
@@ -195,13 +203,13 @@ $(document).ready(function() {
     
     $(document).on('click', '.add-to-cart', function() {
       const book = {
-        id: $(this).data('id'),
+        _id: $(this).data('id'),
         title: $(this).data('title'),
         price: $(this).data('price'),
         child: $(this).data('child')
       };
       
-      const existingBookIndex = cart.findIndex(item => item.id === book.id && item.child === book.child);
+      const existingBookIndex = cart.findIndex(item => item._id === book._id && item.child === book.child);
       
       if (existingBookIndex === -1) {
         cart.push(book);
@@ -253,6 +261,7 @@ $(document).ready(function() {
       
       $('#cart-items').html(cartHTML);
       $('#cart-total').text(total.toFixed(2));
+      localStorage.setItem('orderData', JSON.stringify({ children, cart }));
     }
     
     $(document).on('click', '.cart-child-total', function() {

@@ -695,3 +695,11 @@
       max-width: 70%;
     }
   }
+
+  .view-toggle {
+    display: none;
+  }
+
+  .view-toggle.active {
+    display: flex;
+  }
