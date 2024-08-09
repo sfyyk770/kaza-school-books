@@ -302,9 +302,9 @@
               const row = `
                 <tr>
                   <td>${item.sku}</td>
-                  <td>${item.name}</td>
-                  <td>${item.email}</td>
-                  <td>${item.phone}</td>
+                  <td>${item.title}</td>
+                  <td>${item.author ?? ''}</td>
+                  <td>${item.stock}</td>
                   <td>${formatDate(item.createdAt)}</td>
                   <td>${item.weight}</td>
                   <td><span class="status-badge status-${item.status}">${item.status}</span></td>
