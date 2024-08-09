@@ -98,6 +98,8 @@
     list-style: none;
     display: none; /* Hide by default */
     z-index: 1;
+    max-height: 35svh;
+    overflow-y: auto;
   }
 
   .dropdown-list li {
