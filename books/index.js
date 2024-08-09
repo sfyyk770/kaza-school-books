@@ -49,13 +49,28 @@ $(document).ready(function() {
             grades: ['פרי וואן איי', 'כיתה א׳', 'כיתה ב׳', 'כיתה ג׳', 'כיתה ד׳', 'כיתה ה׳', 'כיתה ו׳', 'כיתה ז׳', 'כיתה ח׳' ]
         },
         {
-            name: 'Ohleyi Torah',
-            logo: 'public/uploads/logos/Oholei-Torah-Logo-Color.png',
-            grades: ['כיתה ד׳', 'כיתה ה׳', 'כיתה ו׳', 'כיתה ז׳', 'כיתה ח׳']
+          name: 'Ohleyi Torah',
+          logo: 'public/uploads/logos/Oholei-Torah-Logo-Color.png',
+          grades: ['כיתה ד׳', 'כיתה ה׳', 'כיתה ו׳', 'כיתה ז׳', 'כיתה ח׳', 'מתיבתא - שיעור א׳', 'מתיבתא - שיעור ב׳', 'מתיבתא - שיעור ג׳', '׳זאל - שיעור א', 'זאל - שיעור ב׳', 'זאל - שיעור ג׳', 'זאל - שיעור ד׳']
         },
         {
-            name: 'Beis Rivka',
-            logo: 'public/uploads/logos/br-logo.png',
+          name: 'Chovevi Torah',
+          logo: 'public/uploads/logos/yct-logo.svg',
+          grades: ['מתיבתא - שיעור א׳', 'מתיבתא - שיעור ב׳', 'מתיבתא - שיעור ג׳', '׳זאל - שיעור א', 'זאל - שיעור ב׳', 'זאל - שיעור ג׳']
+        },
+        {
+          name: 'Beis Rivka',
+          logo: 'public/uploads/logos/br-logo.png',
+          grades: ['1st Grade', '2nd Grade', '3rd Grade', '4th Grade', '5th Grade', '6th Grade', '7th Grade', '8th Grade', '9th Grade', '10th Grade', '11th Grade', '12th Grade']
+        },
+        {
+          name: 'Chader Chabad Morristown',
+          logo: 'public/uploads/logos/ccm-logo.webp',
+          grades: ['כיתה ב׳', 'כיתה ג׳', 'כיתה ד׳', 'כיתה ה׳', 'כיתה ו׳', 'כיתה ז׳', 'כיתה ח׳' ]
+        },
+        {
+            name: 'Bnos Menachem',
+            logo: 'public/uploads/logos/bm-logo.jpg',
             grades: ['1st Grade', '2nd Grade', '3rd Grade', '4th Grade', '5th Grade', '6th Grade', '7th Grade', '8th Grade', '9th Grade', '10th Grade', '11th Grade', '12th Grade']
         }
     ]
@@ -121,7 +136,7 @@ $(document).ready(function() {
                   <h3>${child.name}</h3>
                   <p><i class="fas fa-school child-info-icon"></i> School: ${child.school}</p>
                   <p><i class="fas fa-graduation-cap child-info-icon"></i> Grade: ${child.grade}</p>
-                  <p><i class="fas fa-list-ol child-info-icon"></i> Books: <span class="child-books-count">${child.booksCount}</span></p>
+                  <p><i class="fas fa-list-ol child-info-icon"></i> Books: <span class="child-books-count">${child.booksCount ?? 0}</span></p>
                 </div>
                 <div class="child-actions">
                   <button class="btn toggle-books" data-index="${index}"><i class="fas fa-book"></i> Load Books</button>
@@ -211,7 +226,7 @@ $(document).ready(function() {
       } else {
         $('#cart').show();
         const childTotals = {};
-        cart.forEach(item => {
+        cart.forEach((item, i) => {
           if (!childTotals[item.child]) {
             childTotals[item.child] = 0;
             childBookCounts[item.child] = 0;
@@ -219,7 +234,7 @@ $(document).ready(function() {
           childTotals[item.child] += parseFloat(item.price);
           total += parseFloat(item.price);
           childBookCounts[item.child]++;
-          $('.child-books-count').html(childBookCounts[item.child]);
+          $('#child-'+i+' .child-books-count').html(childBookCounts[item.child]);
         });
         
         Object.keys(childTotals).forEach(child => {
@@ -269,10 +284,6 @@ $(document).ready(function() {
       $(this).addClass('active');
       $(this).siblings('.grid-view').removeClass('active');
       $(this).closest('.child-info').find('.book-list').addClass('list-mode');
-    });
-    
-    children.forEach(child => {
-      child.booksCount = childBookCounts[child.name] || 0;
     });
 
     // Initialize the children list
